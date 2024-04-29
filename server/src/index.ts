@@ -5,6 +5,8 @@ dotenv.config()
 
 import { port } from "./config/config";
 
+import './database/database'
+
 const app = express()
 
 app.set('port', port)
