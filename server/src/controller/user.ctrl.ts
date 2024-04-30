@@ -5,13 +5,13 @@ import Role from '../models/role'
 
 import { default_role } from "../config/config";
 
-import { hashText } from "../helper/encrypt";
+import { compareHash, generateUserToken, hashText } from "../helper/encrypt";
 
 export const users = async (req: Request, res: Response): Promise<Response> => {
 
     try {
 
-        const users = await User.find()
+        const users = await User.find().limit(5).select("fullname")
 
         return res.status(200).json(users)
 
@@ -27,7 +27,30 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
     try {
 
-        return res.status(200).json({ message: "login" })
+        const user = await User.findOne({ email })
+
+        if(!user) {
+            return res.status(400).json({ message: "Fields do not match" })
+        }
+
+        const comparePassword = await compareHash(password, user.password)
+
+        if(!comparePassword) {
+            return res.status(400).json({ message: "Fields do not match" })
+        }
+
+        const userLoggedIn = await User.findOne({ email }).select("-password -email")
+
+        if(!userLoggedIn) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const token = generateUserToken(user._id)
+
+        return res.status(200).json({
+            token,
+            user: userLoggedIn
+        })
 
     } catch (error) {
         throw error
@@ -37,9 +60,40 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
 export const register = async (req: Request, res: Response): Promise<Response> => {
 
+    const { fullname, nickname, email, password } = req.body
+
     try {
 
-        return res.status(200).json({ message: "register" })
+        const role = await Role.findOne({ role: `${default_role}` })
+
+        if(!role) {
+            return res.status(400).json({ message: "Role does not exists" })
+        }
+
+        const passwordHashed = await hashText(password)
+
+        const newUser = new User({
+            fullname,
+            nickname,
+            email,
+            password: passwordHashed,
+            role: role._id
+        })
+
+        const userSaved = await newUser.save()
+
+        const user = await User.findById(userSaved._id).select("-password -email -phone")
+
+        if(!user) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const token = generateUserToken(user._id)
+
+        return res.status(200).json({
+            user,
+            token
+        })
 
     } catch (error) {
         throw error
@@ -55,21 +109,24 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
 
         let userRole
 
-        if(role) {
+        if (role) {
             userRole = await Role.findOne({ role })
         } else {
             userRole = await Role.findOne({ role: `${default_role}` })
         }
 
+        if(!userRole) {
+            return res.status(400).json({ message: "Role does not exists" })
+        }
+
         const passwordHashed = await hashText(password)
-        const emailHashed = await hashText(email)
 
         const newUser = new User({
             fullname,
             nickname,
-            email: emailHashed,
+            email,
             password: passwordHashed,
-            role: userRole?._id
+            role: userRole._id
         })
 
         await newUser.save()

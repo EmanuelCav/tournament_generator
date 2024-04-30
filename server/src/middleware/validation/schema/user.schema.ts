@@ -32,3 +32,14 @@ export const createUserSchema = z.object({
     }),
     role: z.string().trim().optional()
 })
+
+export const loginUserSchema = z.object({
+    email: z.string().trim().min(1, {
+        message: "There are empty fields. Please Complete"
+    }).email({
+        message: "Email format is not valid"
+    }),
+    password: z.string().trim().min(1, {
+        message: "There are empty fields. Please Complete"
+    })
+})
