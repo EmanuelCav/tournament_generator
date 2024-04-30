@@ -6,6 +6,7 @@ export interface IUser extends Document {
     nickname: String;
     email: String;
     phone: String;
+    role: Types.ObjectId;
     status: boolean;
     password: string;
     created_at: NativeDate;
