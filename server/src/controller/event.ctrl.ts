@@ -1,10 +1,14 @@
 import { Request, Response } from "express";
 
+import Event from '../models/event'
+
 export const events = async (req: Request, res: Response): Promise<Response> => {
 
     try {
 
-        return res.status(200).json({ message: "events" })
+        const events = await Event.find()
+
+        return res.status(200).json(events)
         
     } catch (error) {
         throw error
@@ -14,9 +18,17 @@ export const events = async (req: Request, res: Response): Promise<Response> => 
 
 export const event = async (req: Request, res: Response): Promise<Response> => {
 
+    const { id } = req.params
+
     try {
 
-        return res.status(200).json({ message: "event" })
+        const event = await Event.findById(id)
+
+        if(!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        return res.status(200).json(event)
         
     } catch (error) {
         throw error
@@ -38,9 +50,19 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
 
 export const removeEvent = async (req: Request, res: Response): Promise<Response> => {
 
+    const { id } = req.params
+
     try {
 
-        return res.status(200).json({ message: "removeEvent" })
+        const event = await Event.findById(id)
+
+        if(!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        await Event.findByIdAndDelete(id)
+
+        return res.status(200).json({ message: "Event removed successfully" })
         
     } catch (error) {
         throw error
@@ -50,7 +72,15 @@ export const removeEvent = async (req: Request, res: Response): Promise<Response
 
 export const updateEvent = async (req: Request, res: Response): Promise<Response> => {
 
+    const { id } = req.params
+
     try {
+
+        const event = await Event.findById(id)
+
+        if(!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
 
         return res.status(200).json({ message: "updateEvent" })
         
@@ -58,4 +88,4 @@ export const updateEvent = async (req: Request, res: Response): Promise<Response
         throw error
     }
 
-}
+} 
