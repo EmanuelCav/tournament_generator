@@ -40,6 +40,16 @@ const eventSchema = new Schema({
         ref: 'Competitor'
     }],
 
+    teams: [{
+        types: Types.ObjectId,
+        ref: 'Team'
+    }],
+
+    matchs: [{
+        types: Types.ObjectId,
+        ref: 'Match'
+    }],
+
     comments: [{
         types: Types.ObjectId,
         ref: 'Comment'

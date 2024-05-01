@@ -10,11 +10,12 @@ import { port } from "./config/config";
 
 import './database/database'
 
-import categoryCtrl from './routes/category.routes'
-import commentCtrl from './routes/comment.routes'
-import eventCtrl from './routes/event.routes'
-import roleCtrl from './routes/role.routes'
-import userCtrl from './routes/user.routes'
+import categoryRoute from './routes/category.routes'
+import commentRoute from './routes/comment.routes'
+import eventRoute from './routes/event.routes'
+import roleRoute from './routes/role.routes'
+import statusRoute from './routes/status.routes'
+import userRoute from './routes/user.routes'
 
 const app = express()
 
@@ -25,11 +26,12 @@ app.use(cors())
 app.use(express.json({ limit: '30mb' }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 
-app.use(categoryCtrl)
-app.use(commentCtrl)
-app.use(eventCtrl)
-app.use(roleCtrl)
-app.use(userCtrl)
+app.use(categoryRoute)
+app.use(commentRoute)
+app.use(eventRoute)
+app.use(roleRoute)
+app.use(statusRoute)
+app.use(userRoute)
 
 app.use(express.static(path.join(__dirname, "../public")))
 

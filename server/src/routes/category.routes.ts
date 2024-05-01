@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import * as categoryCtrl from '../controller/category.ctrl'
+import * as categoriesCtrl from '../controller/category.ctrl'
 
 import categoryValid from '../middleware/validation/validation/category.valid'
 
@@ -9,8 +9,8 @@ import admin from '../middleware/auth/admin'
 
 const router = Router()
 
-router.get('/categories', categoryCtrl.categories)
-router.post('/categories', [auth, admin], categoryValid, categoryCtrl.createCategory)
-router.delete('/categories/:id', [auth, admin], categoryCtrl.removeCategory)
+router.get('/categories', categoriesCtrl.categories)
+router.post('/categories', [auth, admin], categoryValid, categoriesCtrl.createCategory)
+router.delete('/categories/:id', [auth, admin], categoriesCtrl.removeCategory)
 
 export default router

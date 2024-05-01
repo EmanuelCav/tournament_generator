@@ -14,8 +14,22 @@ export interface IEvent extends Document {
     description: String;
     image: Types.ObjectId;
     category: Types.ObjectId;
+    status: Types.ObjectId;
     admin: Types.ObjectId;
-    users: Types.ObjectId[];
+    competitors: Types.ObjectId[];
+    teams: Types.ObjectId[];
+    matchs: Types.ObjectId[];
+    created_at: NativeDate;
+    updated_at: NativeDate;
+}
+
+export interface IMatch extends Document {
+    _id: Types.ObjectId;
+    local: Types.ObjectId;
+    targetLocal: Number;
+    visitant: Types.ObjectId;
+    targetVisitant: Number;
+    schedule: Date;
     created_at: NativeDate;
     updated_at: NativeDate;
 }
@@ -23,6 +37,20 @@ export interface IEvent extends Document {
 export interface ICategory extends Document {
     _id: Types.ObjectId;
     category: String;
+    created_at: NativeDate;
+    updated_at: NativeDate;
+}
+
+export interface ITeam extends Document {
+    _id: Types.ObjectId;
+    name: String;
+    event: Types.ObjectId;
+    victory: Number;
+    defeat: Number;
+    draw: Number;
+    points: Number;
+    favor: Number;
+    against: Number;
     created_at: NativeDate;
     updated_at: NativeDate;
 }

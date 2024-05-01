@@ -16,7 +16,7 @@ export const createCategory = async (req: Request, res: Response): Promise<Respo
 
     try {
 
-        return res.status(200).json({ message: "createCategory" })
+        return res.status(200).json({ message: "createCategories" })
         
     } catch (error) {
         throw error
