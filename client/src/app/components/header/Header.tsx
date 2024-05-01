@@ -7,7 +7,7 @@ const Header = () => {
     return (
         <Box>
             <AppBar sx={{
-                background: '#ffffff',
+                background: '#87d2ab',
                 padding: 1,
                 zIndex: 6
             }}>

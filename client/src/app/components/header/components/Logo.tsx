@@ -1,10 +1,12 @@
-import { Box, Typography } from "@mui/material"
+import { Box } from "@mui/material"
 
 const Logo = () => {
     return (
-        <Box>
-            <Typography>Logo</Typography>
-        </Box>
+        <Box
+            component="img"
+            src="/header.png"
+            alt="logo"
+        />
     )
 }
 

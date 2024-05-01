@@ -26,32 +26,32 @@ const eventSchema = new Schema({
     },
 
     admin: {
-        types: Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'User'
     },
 
     status: {
-        types: Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Status'
     },
 
     competitors: [{
-        types: Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Competitor'
     }],
 
     teams: [{
-        types: Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Team'
     }],
 
     matchs: [{
-        types: Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Match'
     }],
 
     comments: [{
-        types: Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Comment'
     }]
 
