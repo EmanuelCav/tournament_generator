@@ -1,11 +1,19 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Container } from '@mui/material'
+
+import CategoryText from './components/categoriesInfo/CategoryText'
+import CategoryImage from './components/categoriesInfo/CategoryImage'
 
 const Matchdays = () => {
     return (
-        <Box sx={{
+        <Box display="flex" justifyContent='center' alignItems='center' flexWrap='wrap' sx={{
             height: '100vh'
         }}>
-            <Typography>Matchdays</Typography>
+            <Container fixed maxWidth="lg">
+                <Box display="flex" justifyContent='center' alignItems='center' flexWrap='wrap'>
+                    <CategoryText text='All against all' color='#33CC33' />
+                    <CategoryImage image='/fixture.png' />
+                </Box>
+            </Container>
         </Box>
     )
 }
