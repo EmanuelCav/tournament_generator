@@ -1,9 +1,13 @@
 import { AppBar, Box, Toolbar } from "@mui/material"
+import { useNavigate } from 'react-router-dom'
 
 import Logo from "./components/Logo"
 import Navigation from "./components/Navigation"
 
 const Header = () => {
+
+    const navigate = useNavigate()
+
     return (
         <Box>
             <AppBar sx={{
@@ -17,7 +21,7 @@ const Header = () => {
                     alignItems: 'center'
                 }}>
                     <Logo />
-                    <Navigation />
+                    <Navigation navigate={navigate} />
                 </Toolbar>
             </AppBar>
         </Box>

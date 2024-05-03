@@ -1,32 +1,21 @@
+import { NavigateFunction } from 'react-router-dom';
 import { Box, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import PhoneIcon from '@mui/icons-material/Phone';
 import PersonIcon from '@mui/icons-material/Person';
+import ButtonNav from './components/ButtonNav';
 
-const Navigation = () => {
+const Navigation = ({ navigate }: { navigate: NavigateFunction }) => {
+
+    const redirectRoute = (route: string) => {
+        navigate("/" + route)
+    }
+
     return (
         <Box>
-            <Button variant='contained' sx={{
-                mx: 4, backgroundColor: '#33CC33', ":hover": {
-                    backgroundColor: '#6CF96C'
-                }
-            }} startIcon={<AddIcon />}>
-                Start now
-            </Button>
-            <Button variant='contained' sx={{
-                mx: 4, backgroundColor: '#33CC33', ":hover": {
-                    backgroundColor: '#6CF96C'
-                }
-            }} startIcon={<PhoneIcon />}>
-                Contact us
-            </Button>
-            <Button variant='contained' sx={{
-                mx: 4, backgroundColor: '#33CC33', ":hover": {
-                    backgroundColor: '#6CF96C'
-                }
-            }} startIcon={<PersonIcon />}>
-                Log in
-            </Button>
+            <ButtonNav text='Start now' Icon={AddIcon} redirect={redirectRoute} route='auth' />
+            <ButtonNav text='Contact us' Icon={PhoneIcon} redirect={redirectRoute} route='auth' />
+            <ButtonNav text='Log in' Icon={PersonIcon} redirect={redirectRoute} route='auth' />
         </Box>
     )
 }
