@@ -1,17 +1,25 @@
+import { useForm } from "react-hook-form";
 import { Box, Button, TextField } from "@mui/material"
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { FormLoginPropsType } from "../../../types/auth.types"
 
+import { loginSchema } from "../../../schema/user.schema";
+
 const FormLogin = ({ }: FormLoginPropsType) => {
+
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+        resolver: yupResolver(loginSchema)
+    });
+
     return (
-        <Box component='form'>
+        <Box component='form' onSubmit={handleSubmit((data) => {})} onReset={reset as any}>
             <TextField
                 margin="normal"
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
-                // value={email}
                 autoFocus
                 color='success'
                 sx={{
@@ -19,7 +27,6 @@ const FormLogin = ({ }: FormLoginPropsType) => {
                         borderColor: '#33CC33 !important',
                     },
                 }}
-            // onChange={handleChange}
             />
             <TextField
                 margin="normal"
@@ -27,7 +34,6 @@ const FormLogin = ({ }: FormLoginPropsType) => {
                 id="password"
                 label="Password"
                 name="password"
-                // value={password}
                 autoFocus
                 color='success'
                 sx={{
@@ -35,7 +41,6 @@ const FormLogin = ({ }: FormLoginPropsType) => {
                         borderColor: '#33CC33 !important',
                     },
                 }}
-            // onChange={handleChange}
             />
             <Button
                 type="submit"
