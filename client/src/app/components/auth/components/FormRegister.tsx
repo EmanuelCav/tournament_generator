@@ -1,14 +1,18 @@
 import { ChangeEvent, useState } from "react"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Box, Button, TextField } from "@mui/material"
+import { Box, Button, TextField, Typography } from "@mui/material"
 import { useForm } from "react-hook-form"
 
 import PasswordInput from "./components/PasswordInput"
-
-import { registerSchema } from "../../../schema/user.schema"
 import Terms from "./Terms"
 
-const FormRegister = () => {
+import { registerAction } from "../../../server/actions/user.actions"
+
+import { FormAuthPropsType } from "../../../types/auth.types"
+
+import { registerSchema } from "../../../schema/user.schema"
+
+const FormRegister = ({ navigate, dispatch, setIsRegister }: FormAuthPropsType) => {
 
     const [isPassword, setIsPassword] = useState<boolean>(false)
     const [isConfirm, setIsConfirm] = useState<boolean>(false)
@@ -33,7 +37,10 @@ const FormRegister = () => {
     })
 
     return (
-        <Box component="form" onSubmit={handleSubmit((data) => {})} onReset={reset as any}>
+        <Box component="form" onSubmit={handleSubmit((data) => dispatch(registerAction({ navigate, setIsRegister, userData: data })))} onReset={reset as any}>
+            {
+                errors.fullname && <Typography mt={2} color='#f00'>{errors.fullname?.message}</Typography>
+            }
             <TextField
                 {...register("fullname")}
                 margin="normal"
@@ -51,6 +58,9 @@ const FormRegister = () => {
                 autoComplete="off"
                 inputProps={{ maxLength: 50 }}
             />
+            {
+                errors.nickname && <Typography mt={2} color='#f00'>{errors.nickname?.message}</Typography>
+            }
             <TextField
                 {...register("nickname")}
                 margin="normal"
@@ -58,7 +68,6 @@ const FormRegister = () => {
                 id="nickname"
                 label="Nickname"
                 name="nickname"
-                autoFocus
                 color='success'
                 sx={{
                     '&:hover fieldset': {
@@ -68,6 +77,9 @@ const FormRegister = () => {
                 autoComplete="off"
                 inputProps={{ maxLength: 30 }}
             />
+            {
+                errors.email && <Typography mt={2} color='#f00'>{errors.email?.message}</Typography>
+            }
             <TextField
                 {...register("email")}
                 margin="normal"
@@ -75,7 +87,6 @@ const FormRegister = () => {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoFocus
                 color='success'
                 sx={{
                     '&:hover fieldset': {
@@ -83,8 +94,8 @@ const FormRegister = () => {
                     },
                 }}
             />
-            <PasswordInput register={register} view={isPassword} name="password" label="Password" handleView={showPassword} />
-            <PasswordInput register={register} view={isConfirm} name="confirm" label="Confirm Password" handleView={showConfirm} />
+            <PasswordInput register={register} view={isPassword} name="password" label="Password" handleView={showPassword} errors={errors.password} />
+            <PasswordInput register={register} view={isConfirm} name="confirm" label="Confirm Password" handleView={showConfirm} errors={errors.confirm} />
             <Terms status={status} handleChecked={handleChecked} />
             <Button
                 type="submit"

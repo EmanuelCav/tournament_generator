@@ -2,19 +2,19 @@ import { useForm } from "react-hook-form";
 import { Box, Button, TextField, Typography } from "@mui/material"
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { FormLoginPropsType } from "../../../types/auth.types"
+import { FormPropsType } from "../../../types/auth.types"
 
 import { loginSchema } from "../../../schema/user.schema";
 import { loginAction } from "../../../server/actions/user.actions";
 
-const FormLogin = ({ navigate, dispatch }: FormLoginPropsType) => {
+const FormLogin = ({ navigate, dispatch }: FormPropsType) => {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(loginSchema)
     });
 
     return (
-        <Box component='form' onSubmit={handleSubmit((data) => dispatch(loginAction({ navigate, userData: data }) as any))} onReset={reset as any}>
+        <Box component='form' onSubmit={handleSubmit((data) => dispatch(loginAction({ navigate, userData: data })))} onReset={reset as any}>
             {
                 errors.email && <Typography mt={2} color='#f00'>{errors.email?.message}</Typography>
             }

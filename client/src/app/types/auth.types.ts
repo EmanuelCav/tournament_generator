@@ -1,8 +1,8 @@
 import { ChangeEvent, Dispatch } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { FieldError, UseFormRegister } from "react-hook-form";
 import { NavigateFunction } from "react-router-dom"
 
-export type FormLoginPropsType = {
+export type FormPropsType = {
     dispatch: Dispatch<any>;
     navigate: NavigateFunction;
 }
@@ -19,6 +19,7 @@ export type PasswordInputPropsType = {
     label: string;
     name: string;
     handleView: () => void;
+    errors: FieldError | undefined;
 }
 
 export type TermsPropsType = {
