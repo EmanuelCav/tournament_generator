@@ -1,12 +1,20 @@
 import { AppBar, Box, Toolbar } from "@mui/material"
-import { useNavigate } from 'react-router-dom'
+import { useSelector } from "react-redux"
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import Logo from "./components/Logo"
 import Navigation from "./components/Navigation"
 
+import { IReducer } from "../../interface/General"
+
+import { selector } from "../../server/selector"
+
 const Header = () => {
 
+    const user = useSelector((state: IReducer) => selector(state).user)
+
     const navigate = useNavigate()
+    const location = useLocation()
 
     return (
         <Box>
@@ -20,8 +28,8 @@ const Header = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    <Logo />
-                    <Navigation navigate={navigate} />
+                    <Logo navigate={navigate} />
+                    <Navigation navigate={navigate} location={location} isLoggedIn={user.isLoggedIn} />
                 </Toolbar>
             </AppBar>
         </Box>

@@ -56,7 +56,7 @@ const FormLogin = ({ navigate, dispatch }: FormLoginPropsType) => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 1, mb: 2, fontSize: '1.225em' }}
+                sx={{ mt: 2, mb: 2, fontSize: '1.225em' }}
                 color='success'
                 size='large'
             >
