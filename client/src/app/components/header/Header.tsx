@@ -1,5 +1,5 @@
 import { AppBar, Box, Toolbar } from "@mui/material"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import Logo from "./components/Logo"
@@ -15,6 +15,7 @@ const Header = () => {
 
     const navigate = useNavigate()
     const location = useLocation()
+    const dispatch = useDispatch()
 
     return (
         <Box>
@@ -29,7 +30,7 @@ const Header = () => {
                     alignItems: 'center'
                 }}>
                     <Logo navigate={navigate} />
-                    <Navigation navigate={navigate} location={location} isLoggedIn={user.isLoggedIn} />
+                    <Navigation navigate={navigate} location={location} isLoggedIn={user.isLoggedIn} dispatch={dispatch} />
                 </Toolbar>
             </AppBar>
         </Box>

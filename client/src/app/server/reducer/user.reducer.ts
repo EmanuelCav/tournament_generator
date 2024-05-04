@@ -15,10 +15,14 @@ const userSlice = createSlice({
         login: (state, action: PayloadAction<IUserInfo>) => {
             state.user = action.payload
             state.isLoggedIn = true
+        },
+        logout: (state) => {
+            state.user = {}
+            state.isLoggedIn = false
         }
     }
 })
 
-export const { login } = userSlice.actions
+export const { login, logout } = userSlice.actions
 
 export default userSlice.reducer

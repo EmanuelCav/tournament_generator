@@ -1,3 +1,4 @@
+import { Dispatch } from "react";
 import { Location, NavigateFunction } from "react-router-dom";
 
 export type ButtonNavPropsType = {
@@ -11,4 +12,10 @@ export type NavigationPropsType = {
     location: Location<any>;
     navigate: NavigateFunction;
     isLoggedIn: boolean;
+    dispatch: Dispatch<any>;
+}
+
+export type MenuHeaderPropsType = {
+    dispatch: Dispatch<any>;
+    navigate: NavigateFunction;
 }

@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { NavigateFunction } from "react-router-dom";
 
 import * as userApi from "../api/user.api";
 import * as userReducer from "../reducer/user.reducer";
@@ -32,6 +33,20 @@ export const registerAction = createAsyncThunk('users/register', async (register
         registerData.setIsRegister(false)
 
         registerData.navigate('/')
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const logoutAction = createAsyncThunk('users/logout', async (navigate: NavigateFunction, { dispatch }) => {
+
+    try {
+
+        dispatch(userReducer.logout())
+
+        navigate('/')
 
     } catch (error) {
         console.log(error);
