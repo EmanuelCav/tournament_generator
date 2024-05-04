@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import { Outlet, redirect } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 
 import { selector } from "../server/selector"
 
@@ -12,7 +12,7 @@ const PrivateRoute = () => {
     return (
         <>
             {
-                user.isLoggedIn ? <Outlet /> : redirect('/auth')
+                user.isLoggedIn ? <Outlet /> : <Navigate to='/auth' />
             }
         </>
     )

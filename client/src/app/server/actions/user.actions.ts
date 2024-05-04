@@ -21,7 +21,7 @@ export const loginAction = createAsyncThunk('users/login', async (loginData: Log
 
 })
 
-export const registerAction = createAsyncThunk('users/login', async (registerData: RegisterActionPropsType, { dispatch }) => {
+export const registerAction = createAsyncThunk('users/register', async (registerData: RegisterActionPropsType, { dispatch }) => {
 
     try {
 

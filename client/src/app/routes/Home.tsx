@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { redirect } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Box } from '@mui/material'
 
@@ -17,19 +17,26 @@ const Home = () => {
 
   const user = useSelector((state: IReducer) => selector(state).user)
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     if (user.isLoggedIn) {
-      redirect('/events')
+      navigate('/events')
     }
   }, [])
 
   return (
     <Box>
-      <Info />
-      <Matchdays />
-      <Elimination />
-      <Groups />
-      <Swiss />
+      {
+        !user.isLoggedIn &&
+        <>
+          <Info />
+          <Matchdays />
+          <Elimination />
+          <Groups />
+          <Swiss />
+        </>
+      }
     </Box>
   )
 }

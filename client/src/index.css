@@ -8,3 +8,9 @@
   height: calc(100vh - 5em);
   margin-top: 5em;
 }
+
+.no-select {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
+import { Box } from "@mui/material";
 
 import Header from "./app/components/header/Header";
 import Home from "./app/routes/Home";
@@ -10,10 +11,11 @@ import Panel from "./app/routes/Panel";
 import Events from "./app/routes/Events";
 import Event from "./app/routes/Event";
 
-import { Box } from "@mui/material";
+import NotFound from "./app/routes/NotFound";
+import PrivateRoute from "./app/routes/PrivateRoute";
+import Loading from "./app/components/response/Loading";
 
 import { store } from './app/server/store'
-import PrivateRoute from "./app/routes/PrivateRoute";
 
 const persistor = persistStore(store)
 
@@ -23,10 +25,12 @@ function App() {
     <BrowserRouter>
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
+          <Loading />
           <Header />
           <Box mt={10}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="*" element={<NotFound />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/events" element={<Events />} />
               <Route path="/panel" element={<PrivateRoute />}>

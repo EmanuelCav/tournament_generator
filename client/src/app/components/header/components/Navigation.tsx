@@ -2,6 +2,8 @@ import { Box } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import PhoneIcon from '@mui/icons-material/Phone';
 import PersonIcon from '@mui/icons-material/Person';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import CoPresentIcon from '@mui/icons-material/CoPresent';
 
 import ButtonNav from './components/ButtonNav';
 
@@ -18,8 +20,8 @@ const Navigation = ({ navigate, location, isLoggedIn }: NavigationPropsType) => 
             {
                 isLoggedIn ? (
                     <Box>
-                        <ButtonNav text='Profile' Icon={AddIcon} redirect={redirectRoute} route='auth' />
-                        <ButtonNav text='Menu' Icon={AddIcon} redirect={redirectRoute} route='auth' />
+                        <ButtonNav text='Panel' Icon={CoPresentIcon} redirect={redirectRoute} route='auth' />
+                        <ButtonNav text='Menu' Icon={KeyboardArrowDownIcon} redirect={redirectRoute} route='auth' />
                     </Box>
                 ) : (
                     <Box>
