@@ -13,3 +13,8 @@ export interface IUser {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface ILogin {
+    email?: string;
+    password?: string;
+}
