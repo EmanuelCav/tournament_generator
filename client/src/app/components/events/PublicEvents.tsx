@@ -2,9 +2,11 @@ import { Box, Grid, Typography } from "@mui/material"
 
 import PublicEvent from "./publicEvents/PublicEvent"
 
-import { IEvent } from "../../interface/Tournament"
+import { IEvent } from "../../interface/Event"
+import { PublicEventsPropsType } from "../../types/events.types"
 
-const PublicEvents = ({ events }: { events: IEvent[] }) => {
+const PublicEvents = ({ events, navigate }: PublicEventsPropsType) => {
+
     return (
         <Box py={4} px={8}>
             <Typography variant="h3" color='#33cc33'>Public events</Typography>    
@@ -12,7 +14,7 @@ const PublicEvents = ({ events }: { events: IEvent[] }) => {
                 <Grid container spacing={3} wrap="wrap">
                     {
                         events.map((event: IEvent) => {
-                            return <PublicEvent event={event} key={event._id} />
+                            return <PublicEvent event={event} navigate={navigate} key={event._id} />
                         })
                     }
                 </Grid>

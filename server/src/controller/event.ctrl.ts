@@ -24,7 +24,9 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
 
     try {
 
-        const event = await Event.findById(id)
+        // const event = await Event.findById(id)
+        const event = EVENTS[0]
+        
 
         if(!event) {
             return res.status(400).json({ message: "Event does not exists" })

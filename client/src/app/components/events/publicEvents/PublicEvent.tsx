@@ -1,8 +1,13 @@
 import { Button, Card, CardContent, Grid, Typography } from '@mui/material'
 
-import { IEvent } from '../../../interface/Tournament'
+import { PublicEventPropsType } from '../../../types/events.types'
 
-const PublicEvent = ({ event }: { event: IEvent }) => {
+const PublicEvent = ({ event, navigate }: PublicEventPropsType) => {
+
+    const redirectEvent = () => {
+        navigate(`/events/${event._id}`)
+    }
+
     return (
         <Grid item xs={4}>
             <Card sx={{
@@ -22,7 +27,7 @@ const PublicEvent = ({ event }: { event: IEvent }) => {
                         {event.description}
                     </Typography>
                 </CardContent>
-                <Button fullWidth variant='contained' size='medium' color='success'>Join</Button>
+                <Button fullWidth variant='contained' size='medium' color='success' onClick={redirectEvent}>Join</Button>
             </Card>
         </Grid>
     )

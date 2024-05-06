@@ -12,3 +12,8 @@ export type RegisterActionPropsType = {
     userData: IRegister;
     setIsRegister: (isRegister: boolean) => void;
 }
+
+export type EventActionPropsType = {
+    token: string;
+    id: string;
+}
