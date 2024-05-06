@@ -29,7 +29,7 @@ const Header = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    <Logo navigate={navigate} />
+                    <Logo navigate={navigate} isLoggedIn={user.isLoggedIn} />
                     <Navigation navigate={navigate} location={location} isLoggedIn={user.isLoggedIn} dispatch={dispatch} />
                 </Toolbar>
             </AppBar>

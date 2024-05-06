@@ -1,11 +1,15 @@
 import { Box } from "@mui/material"
 
-import { NavigateFunction } from "react-router-dom"
+import { LogoPropsType } from "../../../types/header.types"
 
-const Logo = ({ navigate }: { navigate: NavigateFunction }) => {
+const Logo = ({ navigate, isLoggedIn }: LogoPropsType) => {
 
     const redirectIndex = () => {
-        navigate('/')
+        if(isLoggedIn) {
+            navigate('/events')
+        } else {
+            navigate('/')
+        }
     }
 
     return (
@@ -15,6 +19,7 @@ const Logo = ({ navigate }: { navigate: NavigateFunction }) => {
             alt="logo"
             onClick={redirectIndex}
             sx={{ cursor: 'pointer' }}
+            className="no-select"
         />
     )
 }

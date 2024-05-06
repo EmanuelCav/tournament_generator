@@ -12,6 +12,7 @@ export interface IEvent extends Document {
     _id: Types.ObjectId;
     event: String;
     description: String;
+    id: string;
     image: Types.ObjectId;
     category: Types.ObjectId;
     status: Types.ObjectId;

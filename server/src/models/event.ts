@@ -15,6 +15,12 @@ const eventSchema = new Schema({
         trim: true
     },
 
+    id: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
     image: {
         type: Types.ObjectId,
         ref: 'Image'

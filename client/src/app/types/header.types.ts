@@ -19,3 +19,8 @@ export type MenuHeaderPropsType = {
     dispatch: Dispatch<any>;
     navigate: NavigateFunction;
 }
+
+export type LogoPropsType = {
+    isLoggedIn: boolean;
+    navigate: NavigateFunction;
+}

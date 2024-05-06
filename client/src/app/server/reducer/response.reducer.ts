@@ -4,6 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { IReducerResponse } from '../../interface/Response';
 
 import * as userAction from '../actions/user.actions';
+import * as eventAction from '../actions/game.actions';
 
 export const initialState: IReducerResponse = {
     loading: false
@@ -35,6 +36,16 @@ const responseSlice = createSlice({
             state.loading = false
         })
         builder.addCase(userAction.registerAction.rejected, (state) => {
+            state.loading = false
+        })
+
+        builder.addCase(eventAction.eventsAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.eventsAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.eventsAction.rejected, (state) => {
             state.loading = false
         })
     }

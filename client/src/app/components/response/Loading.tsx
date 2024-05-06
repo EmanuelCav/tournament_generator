@@ -13,6 +13,8 @@ const Loading = () => {
     useEffect(() => {
         if(response.loading) {
             document.body.style.overflow = "hidden"
+        } else {
+            document.body.style.overflow = "auto"
         }
     }, [response.loading])
 

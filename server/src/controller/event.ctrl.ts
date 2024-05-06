@@ -2,13 +2,15 @@ import { Request, Response } from "express";
 
 import Event from '../models/event'
 
+import { EVENTS } from "../helper/mocks";
+
 export const events = async (req: Request, res: Response): Promise<Response> => {
 
     try {
 
         const events = await Event.find()
 
-        return res.status(200).json(events)
+        return res.status(200).json(EVENTS)
         
     } catch (error) {
         throw error

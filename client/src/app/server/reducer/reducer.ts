@@ -1,11 +1,11 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
 import userReducer from './user.reducer'
-import tournamentReducer from './tournament.reducer'
+import eventReducer from './event.reducer'
 import responseReducer from './response.reducer'
 
 export default combineReducers({
     user: userReducer,
-    tournament: tournamentReducer,
+    event: eventReducer,
     response: responseReducer
 })

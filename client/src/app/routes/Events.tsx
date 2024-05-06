@@ -1,9 +1,29 @@
-import { Box, Typography } from '@mui/material'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { Box } from '@mui/material'
+
+import JoinEvent from '../components/events/JoinEvent'
+import PublicEvents from '../components/events/PublicEvents'
+
+import { IReducer } from '../interface/General'
+
+import { eventsAction } from '../server/actions/game.actions'
 
 const Events = () => {
+
+    const event = useSelector((state: IReducer) => state.event)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(eventsAction() as any)
+    }, [])
+    
+
     return (
         <Box>
-            <Typography>Events</Typography>
+            <JoinEvent />
+            <PublicEvents events={event.events} />
         </Box>
     )
 }
