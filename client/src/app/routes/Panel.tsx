@@ -1,9 +1,17 @@
-import { Box, Typography } from "@mui/material"
+import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/material"
+
+import CreatePanel from "../components/panel/CreatePanel"
+import EventsPanel from "../components/panel/EventsPanel"
 
 const Panel = () => {
+
+    const navigate = useNavigate()
+
     return (
         <Box>
-            <Typography>Panel</Typography>
+            <CreatePanel navigate={navigate} />
+            <EventsPanel />
         </Box>
     )
 }

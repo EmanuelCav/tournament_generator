@@ -10,6 +10,7 @@ import Auth from "./app/routes/Auth";
 import Panel from "./app/routes/Panel";
 import Events from "./app/routes/Events";
 import Event from "./app/routes/Event";
+import Create from "./app/routes/Create";
 
 import NotFound from "./app/routes/NotFound";
 import PrivateRoute from "./app/routes/PrivateRoute";
@@ -33,6 +34,9 @@ function App() {
               <Route path="*" element={<NotFound />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/events" element={<Events />} />
+              <Route path="/create" element={<PrivateRoute />}>
+                <Route path="/create" element={<Create />} />
+              </Route>
               <Route path="/panel" element={<PrivateRoute />}>
                 <Route path="/panel" element={<Panel />} />
               </Route>

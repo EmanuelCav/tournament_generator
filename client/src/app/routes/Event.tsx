@@ -26,7 +26,7 @@ const Event = () => {
 
     return (
         <Container fixed maxWidth="lg">
-            <Box display='flex' justifyContent='center' alignItems='center'>
+            <Box display='flex' justifyContent='flex-start' alignItems='flex-start'>
                 <EventsNavigation />
                 <ShowEvent event={event.event} />
             </Box>
