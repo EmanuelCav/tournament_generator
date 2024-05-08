@@ -16,6 +16,7 @@ import eventRoute from './routes/event.routes'
 import roleRoute from './routes/role.routes'
 import statusRoute from './routes/status.routes'
 import userRoute from './routes/user.routes'
+import imageRoute from './routes/image.routes'
 
 const app = express()
 
@@ -32,6 +33,7 @@ app.use(eventRoute)
 app.use(roleRoute)
 app.use(statusRoute)
 app.use(userRoute)
+app.use(imageRoute)
 
 app.use(express.static(path.join(__dirname, "../public")))
 
