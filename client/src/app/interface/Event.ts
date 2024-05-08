@@ -5,8 +5,24 @@ export interface IReducerEvent {
 
 export interface IEvent {
     _id?: string;
-    title?: string;
+    event?: string;
+    category: ICategory;
+    status: IStatus;
     description?: string;
     createdAt?: string;
     updatedAt?: string;
+}
+
+export interface ICategory {
+    _id: string;
+    category: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface IStatus {
+    _id: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
 }

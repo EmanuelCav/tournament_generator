@@ -9,7 +9,7 @@ import admin from '../middleware/auth/admin'
 
 const router = Router()
 
-router.get('/status', stastusCtrl.status)
+router.get('/status', auth, stastusCtrl.status)
 router.post('/status', [auth, admin], statusValid, stastusCtrl.createStatus)
 router.delete('/status/:id', [auth, admin], stastusCtrl.removeStatus)
 

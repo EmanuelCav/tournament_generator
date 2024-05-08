@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 export function createRandomEvent() {
     return {
         _id: faker.string.uuid(),
-        title: faker.commerce.productName(),
+        event: faker.commerce.productName(),
         description: faker.commerce.productDescription(),
         id: faker.string.sample(),
         image: faker.image.url(),
