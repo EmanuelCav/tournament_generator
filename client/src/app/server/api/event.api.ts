@@ -4,6 +4,14 @@ export const eventsApi = async () => {
     return await api.get('/events')
 }
 
+export const userEventApi = async (token: string) => {
+    return await api.get(`/events/users`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
 export const eventApi = async (id: string, token: string) => {
     return await api.get(`/events/${id}`, {
         headers: {

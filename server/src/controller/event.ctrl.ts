@@ -15,7 +15,21 @@ export const events = async (req: Request, res: Response): Promise<Response> => 
 
     try {
 
-        const events = await Event.find()
+        const showEvents = await Event.find()
+
+        return res.status(200).json(EVENTS)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const userEvents = async (req: Request, res: Response): Promise<Response> => {
+
+    try {
+
+        const events = await Event.find({ admin: req.user })
 
         return res.status(200).json(EVENTS)
 

@@ -19,6 +19,20 @@ export const eventsAction = createAsyncThunk('events/events', async (_, { dispat
 
 })
 
+export const userEventsAction = createAsyncThunk('events/userEvents', async (token: string, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.userEventApi(token)
+
+        dispatch(eventReducer.events(data))
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
 export const eventAction = createAsyncThunk('events/event', async (eventData: EventActionPropsType, { dispatch }) => {
 
     try {
