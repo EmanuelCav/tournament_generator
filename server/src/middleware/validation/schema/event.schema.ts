@@ -11,7 +11,7 @@ export const createStatusSchema = z.object({
 export const createCategorySchema = z.object({
     category: z.string().trim().min(1, {
         message: "There are empty fields"
-    }).refine((value) => /^[A-Z]+$/.test(value), {
+    }).refine((value) => /^[A-Z\s]+$/.test(value), {
         message: "Only uppercase letters are allowed"
     })
 })

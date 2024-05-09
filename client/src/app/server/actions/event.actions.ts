@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as eventApi from "../api/event.api";
 import * as eventReducer from "../reducer/event.reducer";
 
-import { EventActionPropsType } from "../../types/action.types";
+import { CreateEventActionPropsType, EventActionPropsType } from "../../types/action.types";
 
 export const eventsAction = createAsyncThunk('events/events', async (_, { dispatch }) => {
 
@@ -26,6 +26,20 @@ export const eventAction = createAsyncThunk('events/event', async (eventData: Ev
         const { data } = await eventApi.eventApi(eventData.id, eventData.token)
 
         dispatch(eventReducer.event(data))
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const createEventAction = createAsyncThunk('events/createevent', async (eventData: CreateEventActionPropsType, { dispatch }) => {    
+
+    try {
+
+        const { data } = await eventApi.createEventApi(eventData.formData, eventData.token)
+
+        dispatch(eventReducer.createEvent(data))
 
     } catch (error) {
         console.log(error);

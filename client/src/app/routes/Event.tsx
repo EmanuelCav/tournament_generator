@@ -6,7 +6,7 @@ import { Box, Container } from '@mui/material'
 import EventsNavigation from '../components/event/EventsNavigation'
 import ShowEvent from '../components/event/ShowEvent'
 
-import { eventAction } from '../server/actions/game.actions';
+import { eventAction } from '../server/actions/event.actions';
 
 import { IReducer } from '../interface/General';
 

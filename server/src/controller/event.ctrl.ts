@@ -53,55 +53,66 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
 
     try {
 
-        const categoryEvent = await Category.findOne({ category })
+        console.log(event);
+        console.log(description);
+        console.log(category);
+        console.log(status);
+        console.log(req.file);        
 
-        if (!categoryEvent) {
-            return res.status(400).json({ message: "Category does not exists" })
-        }
+        // const categoryEvent = await Category.findOne({ category })
 
-        const statusEvent = await Status.findOne({ status })
+        // if (!categoryEvent) {
+        //     return res.status(400).json({ message: "Category does not exists" })
+        // }
 
-        if (!statusEvent) {
-            return res.status(400).json({ message: "Status does not exists" })
-        }
+        // const statusEvent = await Status.findOne({ status })
+
+        // if (!statusEvent) {
+        //     return res.status(400).json({ message: "Status does not exists" })
+        // }
 
         let image
 
         if (req.file) {
 
-            const result = await cloud.uploader.upload(req.file.path)
+            console.log("isFile");
+            
 
-            await unlink(req.file.path)
+            // const result = await cloud.uploader.upload(req.file.path)
 
-            const newImage = new Image({
-                image: result.url,
-                imageId: result.public_id
-            })
+            // await unlink(req.file.path)
 
-            image = await newImage.save()
+            // const newImage = new Image({
+            //     image: result.url,
+            //     imageId: result.public_id
+            // })
+
+            // image = await newImage.save()
 
         } else {
 
-            image = await Image.findById(`${image_default_id}`)
+            console.log("notFile");
+
+            // image = await Image.findById(`${image_default_id}`)
 
         }
 
-        if(!image) {
-            return res.status(400).json({ message: "Image does not exists" })
-        }
+        // if(!image) {
+        //     return res.status(400).json({ message: "Image does not exists" })
+        // }
 
-        const newEvent = new Event({
-            event,
-            description,
-            category: categoryEvent._id,
-            status: statusEvent._id,
-            admin: req.user,
-            image: image._id
-        })
+        // const newEvent = new Event({
+        //     event,
+        //     description,
+        //     category: categoryEvent._id,
+        //     status: statusEvent._id,
+        //     admin: req.user,
+        //     image: image._id
+        // })
 
-        const eventSaved = await newEvent.save()
+        // const eventSaved = await newEvent.save()
 
-        return res.status(200).json(eventSaved)
+        return res.status(400).json("")
 
     } catch (error) {
         throw error

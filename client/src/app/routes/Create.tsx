@@ -1,8 +1,10 @@
+import { useState } from "react"
 import { Box } from "@mui/material"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 
 import HeaderCreate from "../components/create/HeaderCreate"
 import FormCreate from "../components/create/FormCreate"
+import AddTeams from "../components/create/AddTeams"
 
 import { IReducer } from "../interface/General"
 
@@ -12,10 +14,17 @@ const Create = () => {
 
     const user = useSelector((state: IReducer) => selector(state).user)
 
+    const dispatch = useDispatch()
+
+    const [isCreate, setIsCreate] = useState<boolean>(true)
+
     return (
         <Box className="full-screen" display='flex' justifyContent='space-evenly' alignItems='center' flexDirection="column">
             <HeaderCreate />
-            <FormCreate user={user.user}  />
+            {
+                isCreate ? <FormCreate user={user.user} dispatch={dispatch} setIsCreate={setIsCreate} />
+                : <AddTeams />
+            }
         </Box>
     )
 }

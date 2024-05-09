@@ -1,16 +1,29 @@
-import { useState, useEffect } from 'react'
-import { Box, Button, Paper, TextField, Typography, MenuItem } from '@mui/material'
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { Box, Button, Paper, TextField, Typography, MenuItem, InputLabel } from '@mui/material'
 
-import { IUserInfo } from '../../interface/User'
-import { ICategory, IStatus } from '../../interface/Event'
+import { ICategory, ICreateEvent, IStatus } from '../../interface/Event'
+import { FormCreatePropsType } from '../../types/create.types'
 
 import { categoriesApi } from '../../server/api/category.api'
 import { statusApi } from '../../server/api/status.api'
+import { createEventAction } from '../../server/actions/event.actions'
 
-const FormCreate = ({ user }: { user: IUserInfo }) => {
+const FormCreate = ({ user, dispatch }: FormCreatePropsType) => {
+
+    const initialState: ICreateEvent = {
+        event: "",
+        description: "",
+        category: "",
+        status: ""
+    }
+
+    const [eventData, setEventData] = useState<ICreateEvent>(initialState)
+    const [image, setImage] = useState<string>("")
+
+    const { event, description, category, status } = eventData
 
     const [categories, setCategories] = useState<ICategory[]>([])
-    const [status, setStatus] = useState<IStatus[]>([])
+    const [statusData, setStatusData] = useState<IStatus[]>([])
 
     const getCategories = async () => {
 
@@ -30,11 +43,45 @@ const FormCreate = ({ user }: { user: IUserInfo }) => {
         try {
 
             const { data } = await statusApi(user.token!)
-            setStatus(data)
+            setStatusData(data)
 
         } catch (error) {
             console.log(error);
         }
+
+    }
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+
+
+        setEventData({ ...eventData, [name]: value })
+    }
+
+    const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+        const { files } = e.target
+        setImage(files![0] as any)
+    }
+
+    const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
+
+        e.preventDefault()
+
+        const formData = new FormData()
+
+        formData.append("event", event)
+        formData.append("description", description)
+        formData.append("category", category)
+        formData.append("status", status)
+
+        if (image) {
+            formData.append("file", image)
+        }
+
+        dispatch(createEventAction({
+            formData,
+            token: user.token!
+        }))
 
     }
 
@@ -45,8 +92,8 @@ const FormCreate = ({ user }: { user: IUserInfo }) => {
 
     return (
         <Paper elevation={3} sx={{ p: 4, width: '37.33%' }}>
-            <Typography color='#33CC33' variant="h5">Log In</Typography>
-            <Box component="form" noValidate p={2}>
+            <Typography color='#33CC33' variant="h5">Create an event</Typography>
+            <Box component="form" noValidate p={2} onSubmit={handleSumbit}>
                 <TextField
                     required
                     margin="normal"
@@ -54,6 +101,7 @@ const FormCreate = ({ user }: { user: IUserInfo }) => {
                     id="event"
                     label="Title"
                     name="event"
+                    value={event}
                     autoFocus
                     color='success'
                     sx={{
@@ -61,6 +109,7 @@ const FormCreate = ({ user }: { user: IUserInfo }) => {
                             borderColor: '#33CC33 !important',
                         },
                     }}
+                    onChange={handleChange}
                 />
                 <TextField
                     required
@@ -71,26 +120,22 @@ const FormCreate = ({ user }: { user: IUserInfo }) => {
                     id="description"
                     label="Description"
                     name="description"
+                    value={description}
                     color='success'
                     sx={{
                         '&:hover fieldset': {
                             borderColor: '#33CC33 !important'
                         },
                     }}
+                    onChange={handleChange}
                 />
-                <TextField
-                    margin="normal"
-                    type='file'
-                    fullWidth
-                    id="image"
-                    name="image"
-                    color='success'
-                    sx={{
-                        '&:hover fieldset': {
-                            borderColor: '#33CC33 !important'
-                        },
-                    }}
-                />
+                <Box className='image-event-form' display='flex' justifyContent='space-evenly' alignItems='center' flexDirection='column' my={2}>
+                    <Typography variant='h6' my={1}>Tournament image</Typography>
+                    <InputLabel htmlFor="fileInput" sx={{ cursor: 'pointer' }}>
+                        <Box component="img" src="https://image.freepik.com/free-icon/upload-arrow_318-26670.jpg" width={40} height={40} />
+                    </InputLabel>
+                    <input id="fileInput" name='image' type="file" onChange={handleChangeImage} />
+                </Box>
                 <Box my={2} display="flex" justifyContent='space-evenly' alignItems='center'>
                     <TextField
                         required
@@ -98,8 +143,8 @@ const FormCreate = ({ user }: { user: IUserInfo }) => {
                         name="category"
                         select
                         label="Select"
-                        defaultValue="EUR"
                         helperText="Select a tournament event"
+                        onChange={handleChange}
                     >
                         {categories.map((option) => (
                             <MenuItem key={option.category} value={option.category}>
@@ -113,10 +158,10 @@ const FormCreate = ({ user }: { user: IUserInfo }) => {
                         name="status"
                         select
                         label="Select"
-                        defaultValue="PUBLIC"
                         helperText="Select a tournament status"
+                        onChange={handleChange}
                     >
-                        {status.map((option) => (
+                        {statusData.map((option) => (
                             <MenuItem key={option.status} value={option.status}>
                                 {option.status}
                             </MenuItem>

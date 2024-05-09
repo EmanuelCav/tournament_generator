@@ -11,7 +11,7 @@ const router = Router()
 
 router.get('/events', eventCtrl.events)
 router.get('/events/:id', auth, eventCtrl.event)
-router.post('/events', auth, eventValid, upload.single("file"), eventCtrl.createEvent)
+router.post('/events', auth, upload.single("file"), eventValid, eventCtrl.createEvent)
 router.delete('/events/:id', auth, eventCtrl.removeEvent)
 router.put('/events/:id', auth, eventCtrl.updateEvent)
 

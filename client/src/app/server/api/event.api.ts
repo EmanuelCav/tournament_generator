@@ -11,3 +11,12 @@ export const eventApi = async (id: string, token: string) => {
         }
     })
 }
+
+export const createEventApi = async (formData: FormData, token: string) => {
+    return await api.post(`/events`, formData, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

@@ -1,4 +1,4 @@
-import multer from "multer";
+import multer, { FileFilterCallback } from "multer";
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     },
 })
 
-const fileFormat = (mimetype: string, cb: any) => {
+const fileFormat = (mimetype: string, cb: FileFilterCallback) => {
 
     const imagesFormats = /jpg|jpeg|png/
 
@@ -18,7 +18,7 @@ const fileFormat = (mimetype: string, cb: any) => {
     if(isFormatValid) {
         cb(null, true)
     } else {
-        cb("File format is not valid")
+        cb(null, false)
     }
     
 }
@@ -29,6 +29,6 @@ export const upload = multer({
         fileFormat(file.mimetype, cb)
     },
     limits: {
-        fileSize: 1000 * 1000
+        fieldSize: 1000 * 1000
     }
 })

@@ -8,7 +8,7 @@ import PublicEvents from '../components/events/PublicEvents'
 
 import { IReducer } from '../interface/General'
 
-import { eventsAction } from '../server/actions/game.actions'
+import { eventsAction } from '../server/actions/event.actions'
 
 const Events = () => {
 
@@ -21,7 +21,6 @@ const Events = () => {
         dispatch(eventsAction() as any)
     }, [])
     
-
     return (
         <Box>
             <JoinEvent />

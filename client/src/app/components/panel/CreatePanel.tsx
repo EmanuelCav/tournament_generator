@@ -1,6 +1,10 @@
 import { NavigateFunction } from "react-router-dom";
-import { Box, Paper, Typography } from "@mui/material"
+import { Box, } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
+import PublicIcon from '@mui/icons-material/Public';
+import AdjustIcon from '@mui/icons-material/Adjust';
+
+import CardPanel from "./components/createPanel/CardPanel";
 
 const CreatePanel = ({ navigate }: { navigate: NavigateFunction }) => {
 
@@ -8,12 +12,19 @@ const CreatePanel = ({ navigate }: { navigate: NavigateFunction }) => {
         navigate('/create')
     }
 
+    const redirectPublic = () => {
+        navigate('/events')
+    }
+
+    const joinEvent = () => {
+        navigate('/events')
+    }
+
     return (
-        <Box display='flex' justifyContent='center' alignItems='center' p={12}>
-            <Paper className="hvr-bounce-in" sx={{ p: 8, display: 'flex', height: '100%', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column', cursor: 'pointer'}} onClick={redirectCreate}>
-                <Typography variant="h5">Create an event</Typography>
-                <AddIcon color="success" fontSize="large" />
-            </Paper>
+        <Box display='flex' justifyContent='space-around' alignItems='center' width='100%' flexWrap='wrap' p={12}>
+            <CardPanel text="Public events" func={redirectPublic} Icon={PublicIcon} />
+            <CardPanel text="Create an event" func={redirectCreate} Icon={AddIcon} />
+            <CardPanel text="Join an event" func={joinEvent} Icon={AdjustIcon} />
         </Box>
     )
 }

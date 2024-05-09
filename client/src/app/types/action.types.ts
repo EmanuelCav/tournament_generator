@@ -17,3 +17,8 @@ export type EventActionPropsType = {
     token: string;
     id: string;
 }
+
+export type CreateEventActionPropsType = {
+    formData: FormData;
+    token: string;
+}
