@@ -15,5 +15,6 @@ router.get('/events/:id', auth, eventCtrl.event)
 router.post('/events', auth, upload.single("file"), eventValid, eventCtrl.createEvent)
 router.delete('/events/:id', auth, eventCtrl.removeEvent)
 router.put('/events/:id', auth, eventCtrl.updateEvent)
+router.patch('/events/competitors/:id', auth, eventCtrl.joinEvent)
 
 export default router

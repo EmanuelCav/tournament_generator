@@ -5,8 +5,11 @@ import Event from '../models/event'
 import Category from '../models/category'
 import Status from '../models/status'
 import Image from '../models/image'
+import Competitor from '../models/competitor'
+import Role from '../models/role'
+import Team from '../models/team'
 
-import { image_default_id } from "../config/config";
+import { image_default_id, default_role } from "../config/config";
 
 import { EVENTS } from "../helper/mocks";
 import { cloud } from "../helper/cloud";
@@ -174,4 +177,82 @@ export const updateEvent = async (req: Request, res: Response): Promise<Response
         throw error
     }
 
-} 
+}
+
+export const AddTeam = async (req: Request, res: Response): Promise<Response> => {
+
+    const { name } = req.body
+    const { id } = req.params
+
+    try {
+
+        const event = await Event.findById(id)
+
+        if (!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        const newTeam = new Team({
+            name,
+            event: id 
+        })
+
+        const teamSaved = await newTeam.save()
+
+        const eventCompetitor = await Event.findByIdAndUpdate(event._id, {
+            $push: {
+                teams: teamSaved._id
+            }
+        }, {
+            new: true
+        })
+
+        return res.status(200).json(eventCompetitor)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const joinEvent = async (req: Request, res: Response): Promise<Response> => {
+
+    const { id } = req.params
+
+    try {
+
+        const event = await Event.findOne({ id })
+
+        if (!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        const role = await Role.findOne({ role: `${default_role}` })
+
+        if(!role) {
+            return res.status(400).json({ message: "Role does not exists" })
+        }
+
+        const newCompetitor = new Competitor({
+            user: req.user,
+            event: event._id,
+            role: role._id
+        })
+
+        const competitorSaved = await newCompetitor.save()
+
+        const eventCompetitor = await Event.findByIdAndUpdate(event._id, {
+            $push: {
+                competitors: competitorSaved._id
+            }
+        }, {
+            new: true
+        })
+
+        return res.status(200).json(eventCompetitor)
+
+    } catch (error) {
+        throw error
+    }
+
+}
