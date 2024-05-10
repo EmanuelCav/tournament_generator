@@ -132,7 +132,7 @@ const FormCreate = ({ user, dispatch }: FormCreatePropsType) => {
                 <Box className='image-event-form' display='flex' justifyContent='space-evenly' alignItems='center' flexDirection='column' my={2}>
                     <Typography variant='h6' my={1}>Tournament image</Typography>
                     <InputLabel htmlFor="fileInput" sx={{ cursor: 'pointer' }}>
-                        <Box component="img" src="https://image.freepik.com/free-icon/upload-arrow_318-26670.jpg" width={40} height={40} />
+                        <Box component="img" src={image ? URL.createObjectURL(image as any) : "https://res.cloudinary.com/ddfm1znoo/image/upload/v1715201487/tdgb12o8p5lony5sqg99.png"} width={40} height={40} />
                     </InputLabel>
                     <input id="fileInput" name='image' type="file" onChange={handleChangeImage} />
                 </Box>
@@ -176,7 +176,7 @@ const FormCreate = ({ user, dispatch }: FormCreatePropsType) => {
                     color='success'
                     size='large'
                 >
-                    Next
+                    NEXT
                 </Button>
             </Box>
         </Paper>

@@ -13,6 +13,7 @@ import { selector } from "../server/selector"
 const Create = () => {
 
     const user = useSelector((state: IReducer) => selector(state).user)
+    const event = useSelector((state: IReducer) => selector(state).event)
 
     const dispatch = useDispatch()
 
@@ -23,7 +24,7 @@ const Create = () => {
             <HeaderCreate />
             {
                 isCreate ? <FormCreate user={user.user} dispatch={dispatch} setIsCreate={setIsCreate} />
-                : <AddTeams />
+                : <AddTeams dispatch={dispatch} user={user.user} event={event.event} />
             }
         </Box>
     )

@@ -1,15 +1,11 @@
 import { Box } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close';
 
-const CloseForm = ({ setIsRegister }: { setIsRegister: (isRegister: boolean) => void }) => {
-
-    const handleRegister = () => {
-        setIsRegister(false)
-    }
+const CloseForm = ({ handleClose }: { handleClose: () => void }) => {
 
     return (
         <Box width='100%' textAlign='right'>
-            <CloseIcon color="error" onClick={handleRegister} sx={{
+            <CloseIcon color="error" onClick={handleClose} sx={{
                 cursor: 'pointer'
             }} />
         </Box>

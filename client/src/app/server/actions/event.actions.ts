@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as eventApi from "../api/event.api";
 import * as eventReducer from "../reducer/event.reducer";
 
-import { CreateEventActionPropsType, EventActionPropsType } from "../../types/action.types";
+import { CreateEventActionPropsType, CreateTeamActionPropsType, EventActionPropsType } from "../../types/action.types";
 
 export const eventsAction = createAsyncThunk('events/events', async (_, { dispatch }) => {
 
@@ -54,6 +54,23 @@ export const createEventAction = createAsyncThunk('events/createevent', async (e
         const { data } = await eventApi.createEventApi(eventData.formData, eventData.token)
 
         dispatch(eventReducer.createEvent(data))
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const createTeamAction = createAsyncThunk('events/createteam', async (teamData: CreateTeamActionPropsType, { dispatch }) => {    
+
+    try {
+
+        
+        const { data } = await eventApi.createTeamApi(teamData.id, teamData.formData, teamData.token)
+
+        dispatch(eventReducer.createEvent(data))
+
+        teamData.handleAddTeam()
 
     } catch (error) {
         console.log(error);

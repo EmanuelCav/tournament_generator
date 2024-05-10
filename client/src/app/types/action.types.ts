@@ -22,3 +22,10 @@ export type CreateEventActionPropsType = {
     formData: FormData;
     token: string;
 }
+
+export type CreateTeamActionPropsType = {
+    formData: FormData;
+    id: string;
+    token: string;
+    handleAddTeam: () => void;
+}

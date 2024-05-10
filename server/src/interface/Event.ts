@@ -45,6 +45,7 @@ export interface ICategory extends Document {
 export interface ITeam extends Document {
     _id: Types.ObjectId;
     name: String;
+    logo: Types.ObjectId;
     event: Types.ObjectId;
     victory: Number;
     defeat: Number;

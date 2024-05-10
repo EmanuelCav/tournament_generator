@@ -10,6 +10,11 @@ const teamSchema = new Schema({
         trim: true
     },
 
+    logo: {
+        type: Types.ObjectId,
+        ref: 'Image'
+    },
+
     event: {
         type: Types.ObjectId,
         ref: 'Event'

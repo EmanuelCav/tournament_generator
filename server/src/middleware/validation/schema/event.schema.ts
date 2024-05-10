@@ -19,12 +19,20 @@ export const createCategorySchema = z.object({
 export const createEventSchema = z.object({
     event: z.string().trim().min(1, {
         message: "There are empty fields"
-    }).refine((value) => /^[a-zA-Z0-9_.\s]+$/.test(value), {
+    }).refine((value) => /^[a-zA-Z0-9_.\sÀ-ÿ\u00f1\u00d1]+$/.test(value), {
         message: "Special characters are not allowed. You can use numbers, letters, spaces, _ and ."
     }),
     description: z.string().trim().min(1, {
         message: "There are empty fields"
-    }).refine((value) => /^[a-zA-Z0-9_.\s]+$/.test(value), {
+    }).refine((value) => /^[a-zA-Z0-9_.\sÀ-ÿ\u00f1\u00d1]+$/.test(value), {
         message: "Special characters are not allowed. You can use numbers, letters, spaces, _ and ."
     })
+})
+
+export const createTeamSchema = z.object({
+    name: z.string().trim().min(1, {
+        message: "There are empty fields"
+    }).refine((value) => /^[a-zA-Z0-9\sÀ-ÿ\u00f1\u00d1]+$/.test(value), {
+        message: "Special characters are not allowed."
+    }),
 })

@@ -7,18 +7,21 @@ import Status from '../models/status'
 import Image from '../models/image'
 import Competitor from '../models/competitor'
 import Role from '../models/role'
-import Team from '../models/team'
 
 import { image_default_id, default_role } from "../config/config";
 
 import { EVENTS } from "../helper/mocks";
 import { cloud } from "../helper/cloud";
+import { generateId } from "../helper/encrypt";
 
 export const events = async (req: Request, res: Response): Promise<Response> => {
 
     try {
 
         const showEvents = await Event.find()
+
+        console.log(showEvents);
+        
 
         return res.status(200).json(EVENTS)
 
@@ -70,66 +73,64 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
 
     try {
 
-        console.log(event);
-        console.log(description);
-        console.log(category);
-        console.log(status);
-        console.log(req.file);        
+        const categoryEvent = await Category.findOne({ category })
 
-        // const categoryEvent = await Category.findOne({ category })
+        if (!categoryEvent) {
+            return res.status(400).json({ message: "Category does not exists" })
+        }
 
-        // if (!categoryEvent) {
-        //     return res.status(400).json({ message: "Category does not exists" })
-        // }
+        const statusEvent = await Status.findOne({ status })
 
-        // const statusEvent = await Status.findOne({ status })
-
-        // if (!statusEvent) {
-        //     return res.status(400).json({ message: "Status does not exists" })
-        // }
+        if (!statusEvent) {
+            return res.status(400).json({ message: "Status does not exists" })
+        }
 
         let image
 
         if (req.file) {
 
-            console.log("isFile");
-            
+            const result = await cloud.uploader.upload(req.file.path)
 
-            // const result = await cloud.uploader.upload(req.file.path)
+            await unlink(req.file.path)
 
-            // await unlink(req.file.path)
+            const newImage = new Image({
+                image: result.url,
+                imageId: result.public_id
+            })
 
-            // const newImage = new Image({
-            //     image: result.url,
-            //     imageId: result.public_id
-            // })
-
-            // image = await newImage.save()
+            image = await newImage.save()
 
         } else {
 
-            console.log("notFile");
-
-            // image = await Image.findById(`${image_default_id}`)
+            image = await Image.findById(`${image_default_id}`)
 
         }
 
-        // if(!image) {
-        //     return res.status(400).json({ message: "Image does not exists" })
-        // }
+        if (!image) {
+            return res.status(400).json({ message: "Image does not exists" })
+        }
 
-        // const newEvent = new Event({
-        //     event,
-        //     description,
-        //     category: categoryEvent._id,
-        //     status: statusEvent._id,
-        //     admin: req.user,
-        //     image: image._id
-        // })
+        const events = await Event.find()
 
-        // const eventSaved = await newEvent.save()
+        const newEvent = new Event({
+            event,
+            description,
+            category: categoryEvent._id,
+            status: statusEvent._id,
+            admin: req.user,
+            image: image._id,
+            id: generateId(events)
+        })
 
-        return res.status(400).json("")
+        const eventSaved = await newEvent.save()
+
+        const eventTeams = await Event.findById(eventSaved._id).populate("teams")
+
+        if(!eventTeams) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        return res.status(200).json(eventTeams)
 
     } catch (error) {
         throw error
@@ -179,42 +180,6 @@ export const updateEvent = async (req: Request, res: Response): Promise<Response
 
 }
 
-export const AddTeam = async (req: Request, res: Response): Promise<Response> => {
-
-    const { name } = req.body
-    const { id } = req.params
-
-    try {
-
-        const event = await Event.findById(id)
-
-        if (!event) {
-            return res.status(400).json({ message: "Event does not exists" })
-        }
-
-        const newTeam = new Team({
-            name,
-            event: id 
-        })
-
-        const teamSaved = await newTeam.save()
-
-        const eventCompetitor = await Event.findByIdAndUpdate(event._id, {
-            $push: {
-                teams: teamSaved._id
-            }
-        }, {
-            new: true
-        })
-
-        return res.status(200).json(eventCompetitor)
-
-    } catch (error) {
-        throw error
-    }
-
-}
-
 export const joinEvent = async (req: Request, res: Response): Promise<Response> => {
 
     const { id } = req.params
@@ -229,7 +194,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
 
         const role = await Role.findOne({ role: `${default_role}` })
 
-        if(!role) {
+        if (!role) {
             return res.status(400).json({ message: "Role does not exists" })
         }
 

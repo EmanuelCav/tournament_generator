@@ -23,7 +23,24 @@ export const eventApi = async (id: string, token: string) => {
 export const createEventApi = async (formData: FormData, token: string) => {
     return await api.post(`/events`, formData, {
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const createTeamApi = async (id: string, formData: FormData, token: string) => {
+    return await api.patch(`/teams/events/${id}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const removeTeamApi = async (tid: string, eid: string, token: string) => {
+    return await api.patch(`/teams/${tid}/events/${eid}`, null, {
+        headers: {
             'Authorization': `Bearer ${token}`
         }
     })

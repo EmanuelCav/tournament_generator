@@ -33,3 +33,7 @@ export interface ICreateEvent {
     category: string;
     status: string;
 }
+
+export interface ICreateTeam {
+    name: string;
+}

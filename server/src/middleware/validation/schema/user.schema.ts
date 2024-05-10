@@ -16,7 +16,7 @@ export const createUserSchema = z.object({
     }),
     nickname: z.string().trim().min(3, {
         message: "Nickname field must has more than 2 characters"
-    }).refine((value) => /^[a-zA-Z0-9_.\s]+$/.test(value), {
+    }).refine((value) => /^[a-zA-Z0-9_.\sÀ-ÿ\u00f1\u00d1]+$/.test(value), {
         message: "Special characters are not allowed. You can use numbers, letters, spaces, _ and ."
     }),
     email: z.string().trim().email({
