@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { Box, Paper, TextField, Button, Typography, InputLabel } from "@mui/material"
 
-import CloseForm from "../../auth/components/CloseForm"
+import CloseForm from "../../general/CloseForm"
 
 import { ICreateTeam } from "../../../interface/Event"
 import { FormAddTeamPropsType } from "../../../types/create.types"

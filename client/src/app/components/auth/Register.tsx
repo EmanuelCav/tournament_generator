@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material'
 
 import FormRegister from './components/FormRegister'
-import CloseForm from './components/CloseForm'
+import CloseForm from '../general/CloseForm'
 
 import { FormAuthPropsType } from '../../types/auth.types'
 
