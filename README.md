@@ -1,4 +1,4 @@
-<h1 align="center">Mapa de Argentina - Quiz</h1>
+<h1 align="center">CupCraft</h1>
 <div align="center">
   <img src="https://res.cloudinary.com/projects-emanuek/image/upload/v1716217015/portfolio/logo_tjwhut.png" width="40%" />
 </div>
