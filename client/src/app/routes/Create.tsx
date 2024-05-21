@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Box } from "@mui/material"
 import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom";
 
 import HeaderCreate from "../components/create/HeaderCreate"
 import FormCreate from "../components/create/FormCreate"
@@ -16,6 +17,7 @@ const Create = () => {
     const event = useSelector((state: IReducer) => selector(state).event)
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [isCreate, setIsCreate] = useState<boolean>(true)
 
@@ -24,7 +26,7 @@ const Create = () => {
             <HeaderCreate />
             {
                 isCreate ? <FormCreate user={user.user} dispatch={dispatch} setIsCreate={setIsCreate} />
-                : <AddTeams dispatch={dispatch} user={user.user} event={event.event} />
+                : <AddTeams dispatch={dispatch} user={user.user} event={event.event} navigate={navigate} />
             }
         </Box>
     )

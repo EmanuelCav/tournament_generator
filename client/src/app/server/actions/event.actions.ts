@@ -55,6 +55,8 @@ export const createEventAction = createAsyncThunk('events/createevent', async (e
 
         dispatch(eventReducer.createEvent(data))
 
+        eventData.setIsCreate(false)
+
     } catch (error) {
         console.log(error);
     }

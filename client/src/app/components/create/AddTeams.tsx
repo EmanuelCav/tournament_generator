@@ -2,15 +2,21 @@ import { useState } from 'react'
 import { Box, Button, Paper, Typography } from '@mui/material'
 
 import FormAddTeam from './components/FormAddTeam'
+import TeamFromCreate from './components/TeamFromCreate'
 
 import { AddTeamsPropsType } from '../../types/create.types'
+import { ITeam } from '../../interface/Event'
 
-const AddTeams = ({ dispatch, user, event }: AddTeamsPropsType) => {
+const AddTeams = ({ dispatch, user, event, navigate }: AddTeamsPropsType) => {
 
   const [isAddTeam, setIsAddTeam] = useState<boolean>(false)
 
   const handleAddTeam = () => {
     setIsAddTeam(!isAddTeam)
+  }
+
+  const finishCreate = () => {
+    navigate(`/events/${event._id}`)
   }
 
   return (
@@ -19,6 +25,11 @@ const AddTeams = ({ dispatch, user, event }: AddTeamsPropsType) => {
         isAddTeam && <FormAddTeam handleAddTeam={handleAddTeam} dispatch={dispatch} user={user} event={event} />
       }
       <Typography color='#33CC33' variant="h5">Introduce teams</Typography>
+      {
+        event.teams?.map((team: ITeam) => {
+          return <TeamFromCreate team={team} key={team._id} />
+        })
+      }
       <Box component="form" noValidate p={2}>
         <Button variant='text' color='success' onClick={handleAddTeam}>
           Add a team
@@ -30,6 +41,7 @@ const AddTeams = ({ dispatch, user, event }: AddTeamsPropsType) => {
           sx={{ mt: 2, mb: 2, fontSize: '1.225em' }}
           color='success'
           size='large'
+          onClick={finishCreate}
         >
           NEXT
         </Button>

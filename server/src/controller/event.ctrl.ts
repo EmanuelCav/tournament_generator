@@ -37,7 +37,7 @@ export const userEvents = async (req: Request, res: Response): Promise<Response>
 
         const events = await Event.find({ admin: req.user })
 
-        return res.status(200).json(EVENTS)
+        return res.status(200).json(events)
 
     } catch (error) {
         throw error

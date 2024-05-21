@@ -9,6 +9,7 @@ export interface IEvent {
     category?: ICategory;
     status?: IStatus;
     description?: string;
+    teams?: ITeam[];
     createdAt?: string;
     updatedAt?: string;
 }
@@ -18,6 +19,21 @@ export interface ICategory {
     category: string;
     createdAt: string;
     updatedAt: string;
+}
+
+export interface ITeam {
+    _id: string;
+    name: String;
+    logo: string;
+    event: string;
+    victory: Number;
+    defeat: Number;
+    draw: Number;
+    points: Number;
+    favor: Number;
+    against: Number;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface IStatus {
@@ -36,4 +52,9 @@ export interface ICreateEvent {
 
 export interface ICreateTeam {
     name: string;
+}
+
+export interface IReducerGet {
+    isTeams: boolean;
+    isMatchdays: boolean;
 }

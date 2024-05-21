@@ -24,7 +24,7 @@ export const createEventSchema = z.object({
     }),
     description: z.string().trim().min(1, {
         message: "There are empty fields"
-    }).refine((value) => /^[a-zA-Z0-9_.\sÀ-ÿ\u00f1\u00d1]+$/.test(value), {
+    }).refine((value) => /^[a-zA-Z0-9_.,\sÀ-ÿ\u00f1\u00d1]+$/.test(value), {
         message: "Special characters are not allowed. You can use numbers, letters, spaces, _ and ."
     })
 })

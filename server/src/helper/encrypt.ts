@@ -35,8 +35,6 @@ export const generateId = (events: IEvent[]): string => {
     do {
         for (let i = 0; i < 8; i++) {
             shuffle(characters)
-            console.log(characters);
-            
             id += characters[0]
         }
     } while (events.find((e) => e.id === id))

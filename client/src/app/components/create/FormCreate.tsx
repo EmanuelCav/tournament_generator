@@ -8,7 +8,7 @@ import { categoriesApi } from '../../server/api/category.api'
 import { statusApi } from '../../server/api/status.api'
 import { createEventAction } from '../../server/actions/event.actions'
 
-const FormCreate = ({ user, dispatch }: FormCreatePropsType) => {
+const FormCreate = ({ user, dispatch, setIsCreate }: FormCreatePropsType) => {
 
     const initialState: ICreateEvent = {
         event: "",
@@ -80,7 +80,8 @@ const FormCreate = ({ user, dispatch }: FormCreatePropsType) => {
 
         dispatch(createEventAction({
             formData,
-            token: user.token!
+            token: user.token!,
+            setIsCreate
         }))
 
     }
