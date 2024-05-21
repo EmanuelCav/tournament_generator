@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Types } from "mongoose";
 import { unlink } from 'fs-extra'
 
 import Event from '../models/event'
@@ -20,10 +21,7 @@ export const events = async (req: Request, res: Response): Promise<Response> => 
 
         const showEvents = await Event.find()
 
-        console.log(showEvents);
-        
-
-        return res.status(200).json(EVENTS)
+        return res.status(200).json(showEvents)
 
     } catch (error) {
         throw error
@@ -51,9 +49,7 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
 
     try {
 
-        // const event = await Event.findById(id)
-        const event = EVENTS[0]
-
+        const event = await Event.findById(id)
 
         if (!event) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -143,12 +139,18 @@ export const removeEvent = async (req: Request, res: Response): Promise<Response
     const { id } = req.params
 
     try {
-
-        const event = await Event.findById(id)
+        
+        const event = await Event.findById(id).populate("image")
 
         if (!event) {
             return res.status(400).json({ message: "Event does not exists" })
         }
+        
+        if(req.user !== String(event.admin)) {
+            return res.status(400).json({ message: "You cannot remove this event" })
+        }
+
+        await cloud.uploader.destroy(event.image.imageId)
 
         await Event.findByIdAndDelete(id)
 

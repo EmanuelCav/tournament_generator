@@ -21,10 +21,13 @@ const eventsSlice = createSlice({
         createEvent: (state, action: PayloadAction<IEvent>) => {
             state.event = action.payload,
             state.events = [...state.events, action.payload]
+        },
+        removeEvent: (state, action: PayloadAction<string>) => {
+            state.events = state.events.filter((event) => event._id !== action.payload)
         }
     }
 })
 
-export const { events, event, createEvent } = eventsSlice.actions
+export const { events, event, createEvent, removeEvent } = eventsSlice.actions
 
 export default eventsSlice.reducer

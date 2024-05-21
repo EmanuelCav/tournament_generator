@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from  "react-redux";
 import { Box, Container } from '@mui/material'
 
 import EventsNavigation from '../components/event/EventsNavigation'
 import ShowEvent from '../components/event/ShowEvent'
 import ShowTeams from '../components/event/ShowTeams';
+import Sure from '../components/event/Sure';
 
-import { eventAction } from '../server/actions/event.actions';
+import { eventAction, removeEventAction } from '../server/actions/event.actions';
 
 import { IReducer } from '../interface/General';
 
@@ -19,8 +20,23 @@ const Event = () => {
     const event = useSelector((state: IReducer) => selector(state).event)
     const get = useSelector((state: IReducer) => selector(state).get)
 
+    const [isText, setIsText] = useState<boolean>(false)
+
     const params = useParams()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const handleSure = () => {
+        setIsText(!isText)
+    }
+
+    const executeEvent = () => {
+        dispatch(removeEventAction({
+            id: event.event._id!,
+            navigate,
+            token: user.user.token!
+        }) as any)
+    }
 
     useEffect(() => {
         dispatch(eventAction({ token: user.user.token!, id: params.id! }) as any)
@@ -28,9 +44,12 @@ const Event = () => {
 
     return (
         <Container fixed maxWidth="lg">
+            {
+                isText && <Sure handleSure={handleSure} func={executeEvent} />
+            }
             <Box display='flex' justifyContent='flex-start' alignItems='flex-start'>
-                <EventsNavigation />
-                {
+                <EventsNavigation event={event.event} dispatch={dispatch} handleSure={handleSure} />
+                { 
                     get.isTeams && <ShowTeams event={event.event} />
                 }
                 {

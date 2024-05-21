@@ -68,6 +68,16 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.userEventsAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(eventAction.removeEventAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.removeEventAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.removeEventAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

@@ -3,7 +3,9 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import EventNavigation from './components/EventNavigation'
 
-const EventsNavigation = () => {
+import { EventsNavigationPropsType } from '../../types/event.types';
+
+const EventsNavigation = ({ handleSure }: EventsNavigationPropsType) => {
 
   return (
     <Box width='20%' py={2}>
@@ -13,7 +15,7 @@ const EventsNavigation = () => {
           <EventNavigation Icon={CalendarMonthIcon} text='Scorers' func={() => {}} />
           <EventNavigation Icon={CalendarMonthIcon} text='Referees' func={() => {}} />
           <EventNavigation Icon={CalendarMonthIcon} text='Teams' func={() => {}} />
-          <EventNavigation Icon={CalendarMonthIcon} text='Remove' func={() => {}} />
+          <EventNavigation Icon={CalendarMonthIcon} text='Remove' func={handleSure} />
       </List>
     </Box>
   )

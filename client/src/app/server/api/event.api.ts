@@ -29,6 +29,14 @@ export const createEventApi = async (formData: FormData, token: string) => {
     })
 }
 
+export const removeEventApi = async (id: string, token: string) => {
+    return await api.delete(`/events/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
 export const createTeamApi = async (id: string, formData: FormData, token: string) => {
     return await api.patch(`/teams/events/${id}`, formData, {
         headers: {

@@ -2,10 +2,10 @@ import { Types, Document } from 'mongoose'
 
 export interface IUser extends Document {
     _id: Types.ObjectId;
-    fullname: String;
-    nickname: String;
-    email: String;
-    phone: String;
+    fullname: string;
+    nickname: string;
+    email: string;
+    phone: string;
     role: Types.ObjectId;
     status: boolean;
     password: string;
@@ -15,7 +15,7 @@ export interface IUser extends Document {
 
 export interface IRole extends Document {
     _id: Types.ObjectId;
-    role: String;
+    role: string;
     created_at: NativeDate;
     updated_at: NativeDate;
 }

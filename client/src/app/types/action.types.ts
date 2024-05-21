@@ -30,3 +30,9 @@ export type CreateTeamActionPropsType = {
     token: string;
     handleAddTeam: () => void;
 }
+
+export type RemoveEventActionPropsType = {
+    id: string;
+    token: string;
+    navigate: NavigateFunction;
+}
