@@ -31,7 +31,7 @@ export interface IImage {
 
 export interface ITeam {
     _id: string;
-    name: String;
+    name: string;
     logo: IImage;
     event: string;
     victory: Number;

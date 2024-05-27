@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as eventApi from "../api/event.api";
 import * as eventReducer from "../reducer/event.reducer";
 
-import { CreateEventActionPropsType, CreateTeamActionPropsType, EventActionPropsType, RemoveEventActionPropsType } from "../../types/action.types";
+import { CreateEventActionPropsType, CreateTeamActionPropsType, EventActionPropsType, RemoveEventActionPropsType, UpdateTeamActionPropsType } from "../../types/action.types";
 
 export const eventsAction = createAsyncThunk('events/events', async (_, { dispatch }) => {
 
@@ -96,3 +96,20 @@ export const removeEventAction = createAsyncThunk('events/removeteam', async (te
     }
 
 })
+
+export const updateTeamAction = createAsyncThunk('events/updateteam', async (teamData: UpdateTeamActionPropsType, { dispatch }) => {    
+
+    try {
+        
+        const { data } = await eventApi.updateTeamApi(teamData.tid, teamData.eid, teamData.teamData, teamData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        teamData.setIsEditTeam(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+

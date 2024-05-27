@@ -1,7 +1,5 @@
 import { api } from "./api";
 
-import { ICreateTeam } from "../../interface/Event";
-
 export const eventsApi = async () => {
     return await api.get('/events')
 }
@@ -56,7 +54,7 @@ export const removeTeamApi = async (tid: string, eid: string, token: string) => 
     })
 }
 
-export const updateTeamApi = async (tid: string, eid: string, teamData: ICreateTeam, token: string) => {
+export const updateTeamApi = async (tid: string, eid: string, teamData: FormData, token: string) => {
     return await api.put(`/teams/${tid}/events/${eid}`, teamData, {
         headers: {
             'Authorization': `Bearer ${token}`

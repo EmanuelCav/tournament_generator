@@ -12,6 +12,6 @@ const router = Router()
 router.patch('/teams/events/:id', auth, upload.single("file"), teamValid, teamCtrl.addTeam)
 router.patch('/teams/:tid/events/:eid', auth, teamCtrl.removeTeam)
 
-router.put('/teams/:tid/events/:eid', auth, teamCtrl.updateTeam)
+router.put('/teams/:tid/events/:eid', auth, upload.single("file"), teamValid, teamCtrl.updateTeam)
 
 export default router

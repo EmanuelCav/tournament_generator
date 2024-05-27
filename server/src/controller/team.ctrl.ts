@@ -70,7 +70,13 @@ export const addTeam = async (req: Request, res: Response): Promise<Response> =>
         }, {
             new: true
         })
-            .populate("teams")
+            .populate({
+                path: "teams",
+                populate: {
+                    path: "logo",
+                    select: "image"
+                }
+            })
 
         return res.status(200).json(eventCompetitor)
 
@@ -150,6 +156,29 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
 
         if (event.admin.toString() !== req.user) {
             return res.status(400).json({ message: "You cannot remove this team" })
+        }
+
+        if(req.file) {
+
+            const image = await Image.findById(team.logo)
+
+            if(!image) {
+                return res.status(400).json({ message: "Image does not exists" })
+            }
+
+            await cloud.uploader.destroy(image.imageId)
+
+            const result = await cloud.uploader.upload(req.file.path)
+
+            await Image.findByIdAndUpdate(team.logo, {
+                image: result.url,
+                imageId: result.public_id
+            }, {
+                new: true
+            })
+
+            await unlink(req.file.path)
+
         }
 
         await Team.findByIdAndUpdate(tid, {

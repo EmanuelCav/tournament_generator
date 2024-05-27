@@ -4,11 +4,11 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { ShowTeamPropsType } from "../../../../../types/event.types";
 
-const ActionsTeam = ({ handleSure, team }: ShowTeamPropsType) => {
+const ActionsTeam = ({ handleSure, team, handleEditTeam }: ShowTeamPropsType) => {
     return (
         <Box>
-            <EditIcon color="primary" sx={{ mx: 2, cursor: 'pointer' }} />
-            <Delete color="error" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => handleSure(team._id)} />
+            <EditIcon color="primary" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => handleEditTeam(team)} />
+            <Delete color="error" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => handleSure(team)} />
         </Box>
     )
 }
