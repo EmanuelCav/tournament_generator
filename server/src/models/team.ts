@@ -48,6 +48,16 @@ const teamSchema = new Schema({
     against: {
         type: Number,
         default: 0
+    },
+
+    competitors: [{
+        type: Types.ObjectId,
+        ref: 'Competitor'
+    }],
+
+    status: {
+        type: Boolean,
+        default: false
     }
 
 }, {

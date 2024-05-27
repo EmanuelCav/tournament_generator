@@ -1,6 +1,6 @@
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 
-import { EventNavigationPropsType } from '../../../types/event.types'
+import { EventNavigationPropsType } from '../../../../types/event.types'
 
 const EventNavigation = ({ Icon, func, text }: EventNavigationPropsType) => {
     return (

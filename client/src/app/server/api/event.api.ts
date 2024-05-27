@@ -1,5 +1,7 @@
 import { api } from "./api";
 
+import { ICreateTeam } from "../../interface/Event";
+
 export const eventsApi = async () => {
     return await api.get('/events')
 }
@@ -48,6 +50,14 @@ export const createTeamApi = async (id: string, formData: FormData, token: strin
 
 export const removeTeamApi = async (tid: string, eid: string, token: string) => {
     return await api.patch(`/teams/${tid}/events/${eid}`, null, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const updateTeamApi = async (tid: string, eid: string, teamData: ICreateTeam, token: string) => {
+    return await api.put(`/teams/${tid}/events/${eid}`, teamData, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

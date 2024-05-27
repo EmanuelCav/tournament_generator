@@ -45,7 +45,7 @@ export interface ICategory extends Document {
 export interface ITeam extends Document {
     _id: Types.ObjectId;
     name: string;
-    logo: Types.ObjectId;
+    logo: IImage;
     event: Types.ObjectId;
     victory: number;
     defeat: number;
@@ -53,6 +53,8 @@ export interface ITeam extends Document {
     points: number;
     favor: number;
     against: number;
+    status: boolean;
+    competitors: Types.ObjectId[];
     created_at: NativeDate;
     updated_at: NativeDate;
 }

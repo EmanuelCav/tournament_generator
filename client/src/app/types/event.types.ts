@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 
-import { IEvent } from "../interface/Event";
+import { IEvent, ITeam } from "../interface/Event";
 
 export type EventNavigationPropsType = {
     Icon: any;
@@ -17,4 +17,14 @@ export type EventsNavigationPropsType = {
 export type SurePropsType = {
     handleSure: () => void;
     func: () => void;
+}
+
+export type ShowTeamsPropsType = {
+    event: IEvent;
+    handleSure: (id: string) => void;
+}
+
+export type ShowTeamPropsType = {
+    team: ITeam;
+    handleSure: (id: string) => void;
 }

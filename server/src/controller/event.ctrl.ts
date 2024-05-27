@@ -49,7 +49,13 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
 
     try {
 
-        const event = await Event.findById(id)
+        const event = await Event.findById(id).populate({
+            path: "teams",
+            populate: {
+                path: "logo",
+                select: "image"
+            }
+        })
 
         if (!event) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -122,7 +128,7 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
 
         const eventTeams = await Event.findById(eventSaved._id).populate("teams")
 
-        if(!eventTeams) {
+        if (!eventTeams) {
             return res.status(400).json({ message: "Event does not exists" })
         }
 
@@ -139,14 +145,14 @@ export const removeEvent = async (req: Request, res: Response): Promise<Response
     const { id } = req.params
 
     try {
-        
+
         const event = await Event.findById(id).populate("image")
 
         if (!event) {
             return res.status(400).json({ message: "Event does not exists" })
         }
-        
-        if(req.user !== String(event.admin)) {
+
+        if (req.user !== String(event.admin)) {
             return res.status(400).json({ message: "You cannot remove this event" })
         }
 

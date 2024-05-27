@@ -15,7 +15,7 @@ const eventsSlice = createSlice({
         events: (state, action: PayloadAction<IEvent[]>) => {
             state.events = action.payload
         },
-        event: (state, action: PayloadAction<IEvent>) => {
+        getEvent: (state, action: PayloadAction<IEvent>) => {
             state.event = action.payload
         },
         createEvent: (state, action: PayloadAction<IEvent>) => {
@@ -28,6 +28,6 @@ const eventsSlice = createSlice({
     }
 })
 
-export const { events, event, createEvent, removeEvent } = eventsSlice.actions
+export const { events, getEvent, createEvent, removeEvent } = eventsSlice.actions
 
 export default eventsSlice.reducer

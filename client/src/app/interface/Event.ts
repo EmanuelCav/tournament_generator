@@ -21,10 +21,18 @@ export interface ICategory {
     updatedAt: string;
 }
 
+export interface IImage {
+    _id: string;
+    image: string;
+    imageId: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export interface ITeam {
     _id: string;
     name: String;
-    logo: string;
+    logo: IImage;
     event: string;
     victory: Number;
     defeat: Number;

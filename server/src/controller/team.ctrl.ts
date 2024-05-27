@@ -86,6 +86,56 @@ export const removeTeam = async (req: Request, res: Response): Promise<Response>
 
     try {
 
+        const team = await Team.findById(tid).populate("logo")
+
+        if (!team) {
+            return res.status(400).json({ message: "Team does not exists" })
+        }
+
+        const event = await Event.findById(eid)
+
+        if (!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        if (event.admin.toString() !== req.user) {
+            return res.status(400).json({ message: "You cannot remove this team" })
+        }
+
+        const showEvent = await Event.findByIdAndUpdate(eid, {
+            $pull: {
+                teams: tid
+            }
+        }, {
+            new: true
+        })
+            .populate({
+                path: "teams",
+                populate: {
+                    path: "logo",
+                    select: "image"
+                }
+            })
+
+        await cloud.uploader.destroy(team.logo.imageId)
+
+        await Team.findByIdAndDelete(tid)
+
+        return res.status(200).json(showEvent)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const updateTeam = async (req: Request, res: Response): Promise<Response> => {
+
+    const { tid, eid } = req.params
+    const { name } = req.body
+
+    try {
+
         const team = await Team.findById(tid)
 
         if (!team) {
@@ -102,21 +152,25 @@ export const removeTeam = async (req: Request, res: Response): Promise<Response>
             return res.status(400).json({ message: "You cannot remove this team" })
         }
 
-        const events = await Event.findByIdAndUpdate(eid, {
-            $pull: {
-                teams: tid
-            }
+        await Team.findByIdAndUpdate(tid, {
+            name
         }, {
             new: true
         })
-            .populate("teams")
 
-        await Team.findByIdAndDelete(tid)
-
-        return res.status(200).json({
-            events,
-            message: "Team removed successfully"
+        const eventShow = await Event.findById(eid).populate({
+            path: "teams",
+            populate: {
+                path: "logo",
+                select: "image"
+            }
         })
+
+        if (!eventShow) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        return res.status(200).json(eventShow)
 
     } catch (error) {
         throw error

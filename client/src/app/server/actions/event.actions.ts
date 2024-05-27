@@ -39,7 +39,7 @@ export const eventAction = createAsyncThunk('events/event', async (eventData: Ev
 
         const { data } = await eventApi.eventApi(eventData.id, eventData.token)
 
-        dispatch(eventReducer.event(data))
+        dispatch(eventReducer.getEvent(data))
 
     } catch (error) {
         console.log(error);
@@ -66,7 +66,6 @@ export const createEventAction = createAsyncThunk('events/createevent', async (e
 export const createTeamAction = createAsyncThunk('events/createteam', async (teamData: CreateTeamActionPropsType, { dispatch }) => {    
 
     try {
-
         
         const { data } = await eventApi.createTeamApi(teamData.id, teamData.formData, teamData.token)
 
