@@ -10,7 +10,7 @@ import Sure from '../components/event/Sure';
 import FormAddTeam from '../components/create/components/FormAddTeam';
 import EditTeam from '../components/event/EditTeam';
 
-import { eventAction, removeEventAction } from '../server/actions/event.actions';
+import { eventAction, removeEventAction, removeTeamAction } from '../server/actions/event.actions';
 import { getEvent } from '../server/reducer/event.reducer';
 
 import { IReducer } from '../interface/General';
@@ -64,16 +64,12 @@ const Event = () => {
 
     const removeTeam = async () => {
 
-        try {
-
-            const { data } = await removeTeamApi(infoTeam?._id!, event.event._id!, user.user.token!)
-            dispatch(getEvent(data))
-
-            setIsRemoveTeam(false)
-
-        } catch (error) {
-            console.log(error);
-        }
+        dispatch(removeTeamAction({
+            eid: event.event._id!,
+            tid: infoTeam?._id!,
+            token: user.user.token!,
+            setIsRemoveTeam
+        }) as any)
 
     }
 

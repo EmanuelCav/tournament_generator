@@ -38,6 +38,13 @@ export type RemoveEventActionPropsType = {
     navigate: NavigateFunction;
 }
 
+export type RemoveTeamActionPropsType = {
+    tid: string;
+    eid: string;
+    token: string;
+    setIsRemoveTeam?: (isRemoveTeam: boolean) => void;
+}
+
 export type UpdateTeamActionPropsType = {
     tid: string;
     eid: string;

@@ -4,6 +4,8 @@ import { Box, Button, Paper, Typography } from '@mui/material'
 import FormAddTeam from './components/FormAddTeam'
 import TeamFromCreate from './components/TeamFromCreate'
 
+import { removeTeamAction } from '../../server/actions/event.actions'
+
 import { AddTeamsPropsType } from '../../types/create.types'
 import { ITeam } from '../../interface/Event'
 
@@ -13,6 +15,16 @@ const AddTeams = ({ dispatch, user, event, navigate }: AddTeamsPropsType) => {
 
   const handleAddTeam = () => {
     setIsAddTeam(!isAddTeam)
+  }
+
+  const removeTeam = async (id: string) => {
+
+      dispatch(removeTeamAction({
+        eid: event._id!,
+        tid: id,
+        token: user.token!
+      }))
+
   }
 
   const finishCreate = () => {
@@ -27,7 +39,7 @@ const AddTeams = ({ dispatch, user, event, navigate }: AddTeamsPropsType) => {
       <Typography color='#33CC33' variant="h5">Introduce teams</Typography>
       {
         event.teams?.map((team: ITeam) => {
-          return <TeamFromCreate team={team} key={team._id} />
+          return <TeamFromCreate team={team} removeTeam={removeTeam} key={team._id} />
         })
       }
       <Box component="form" noValidate p={2}>
