@@ -36,7 +36,7 @@ const Panel = () => {
                 isJoinEvent && <ContainFormJoin handleJoinEvent={handleJoinEvent} />
             }
             <CreatePanel navigate={navigate} handleJoinEvent={handleJoinEvent} />
-            <EventsPanel navigate={navigate} events={event.events} text="VISUALIZE" />
+            <EventsPanel navigate={navigate} events={event.events} text="VISUALIZE" dispatch={dispatch} user={user.user} />
         </Box>
     )
 }

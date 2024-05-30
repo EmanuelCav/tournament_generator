@@ -1,7 +1,6 @@
 import { NavigateFunction } from "react-router-dom";
 
 import { ILogin, IRegister } from "../interface/User";
-import { ICreateTeam } from "../interface/Event";
 
 export type LoginActionPropsType = {
     navigate: NavigateFunction;
@@ -51,4 +50,10 @@ export type UpdateTeamActionPropsType = {
     token: string;
     teamData: FormData;
     setIsEditTeam: (isEditTeam: boolean) => void;
+}
+
+export type JoinEventActionPropsType = {
+    id: string;
+    token: string;
+    navigate: NavigateFunction;
 }

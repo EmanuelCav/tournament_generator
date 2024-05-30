@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as eventApi from "../api/event.api";
 import * as eventReducer from "../reducer/event.reducer";
 
-import { CreateEventActionPropsType, CreateTeamActionPropsType, EventActionPropsType, RemoveEventActionPropsType, RemoveTeamActionPropsType, UpdateTeamActionPropsType } from "../../types/action.types";
+import { CreateEventActionPropsType, CreateTeamActionPropsType, EventActionPropsType, JoinEventActionPropsType, RemoveEventActionPropsType, RemoveTeamActionPropsType, UpdateTeamActionPropsType } from "../../types/action.types";
 
 export const eventsAction = createAsyncThunk('events/events', async (_, { dispatch }) => {
 
@@ -79,7 +79,7 @@ export const createTeamAction = createAsyncThunk('events/createteam', async (tea
 
 })
 
-export const removeEventAction = createAsyncThunk('events/removeteam', async (teamData: RemoveEventActionPropsType, { dispatch }) => {    
+export const removeEventAction = createAsyncThunk('events/removeevent', async (teamData: RemoveEventActionPropsType, { dispatch }) => {    
 
     try {
         
@@ -97,7 +97,7 @@ export const removeEventAction = createAsyncThunk('events/removeteam', async (te
 
 })
 
-export const removeTeamAction = createAsyncThunk('events/removeteam', async (teamData: RemoveTeamActionPropsType, { dispatch }) => {    
+export const removeTeamAction = createAsyncThunk('events/removetean', async (teamData: RemoveTeamActionPropsType, { dispatch }) => {    
 
     try {
         
@@ -122,6 +122,22 @@ export const updateTeamAction = createAsyncThunk('events/updateteam', async (tea
         dispatch(eventReducer.getEvent(data))
 
         teamData.setIsEditTeam(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const joinEventAction = createAsyncThunk('events/joinevent', async (teamData: JoinEventActionPropsType, { dispatch }) => {    
+
+    try {
+        
+        const { data } = await eventApi.joinEventApi(teamData.id, teamData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        teamData.navigate(`/events/${teamData.id}`)
 
     } catch (error) {
         console.log(error);

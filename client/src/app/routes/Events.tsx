@@ -14,6 +14,7 @@ import { selector } from '../server/selector';
 const Events = () => {
 
     const event = useSelector((state: IReducer) => selector(state).event)
+    const user = useSelector((state: IReducer) => selector(state).user)
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -24,8 +25,8 @@ const Events = () => {
     
     return (
         <Box>
-            <JoinEvent />
-            <PublicEvents events={event.events} navigate={navigate} text='JOIN' />
+            <JoinEvent dispatch={dispatch} navigate={navigate} user={user.user} />
+            <PublicEvents events={event.events} navigate={navigate} dispatch={dispatch} user={user.user} text='JOIN' />
         </Box>
     )
 }

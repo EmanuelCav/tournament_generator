@@ -19,7 +19,11 @@ export const events = async (req: Request, res: Response): Promise<Response> => 
 
     try {
 
-        const showEvents = await Event.find()
+        const showEvents = await Event.find({
+            admin: {
+                $nin: [req.user]
+            }
+        })
 
         return res.status(200).json(showEvents)
 
@@ -220,6 +224,12 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             }
         }, {
             new: true
+        }).populate({
+            path: "teams",
+            populate: {
+                path: "logo",
+                select: "image"
+            }
         })
 
         return res.status(200).json(eventCompetitor)

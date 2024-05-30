@@ -2,10 +2,16 @@ import { Button, Card, CardContent, Grid, Typography } from '@mui/material'
 
 import { PublicEventPropsType } from '../../../types/events.types'
 
-const PublicEvent = ({ event, navigate, text }: PublicEventPropsType) => {
+import { joinEventAction } from '../../../server/actions/event.actions'
 
-    const redirectEvent = () => {
-        navigate(`/events/${event._id}`)
+const PublicEvent = ({ event, navigate, text, dispatch, user }: PublicEventPropsType) => {
+
+    const joinEvent = () => {
+        dispatch(joinEventAction({
+            id: event.id!,
+            token: user.token!,
+            navigate
+        }))
     }
 
     return (
@@ -27,7 +33,7 @@ const PublicEvent = ({ event, navigate, text }: PublicEventPropsType) => {
                         {event.description}
                     </Typography>
                 </CardContent>
-                <Button fullWidth variant='contained' size='medium' color='success' onClick={redirectEvent}>{text}</Button>
+                <Button fullWidth variant='contained' size='medium' color='success' onClick={joinEvent}>{text}</Button>
             </Card>
         </Grid>
     )
