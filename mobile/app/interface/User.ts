@@ -10,6 +10,7 @@ export interface IUserInfo {
 
 export interface IUser {
     _id: string;
+    username: string;
     createdAt: string;
     updatedAt: string;
 }

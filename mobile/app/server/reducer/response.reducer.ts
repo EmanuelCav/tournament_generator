@@ -39,6 +39,16 @@ const responseSlice = createSlice({
             state.loading = false
         })
 
+        builder.addCase(userAction.generateUserAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(userAction.generateUserAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(userAction.generateUserAction.rejected, (state) => {
+            state.loading = false
+        })
+
         builder.addCase(eventAction.eventsAction.pending, (state) => {
             state.loading = true
         })

@@ -30,7 +30,9 @@ export default function App() {
         <PersistGate loading={null} persistor={persistor}>
           <StatusBar backgroundColor={'#33cc33'} />
           <Container>
-            <Tab.Navigator>
+            <Tab.Navigator screenOptions={{
+              headerShown: false
+            }}>
               <Tab.Screen name="Home" component={Home} />
             </Tab.Navigator>
           </Container>

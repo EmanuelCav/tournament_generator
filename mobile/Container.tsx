@@ -1,21 +1,17 @@
 import React, { ReactNode } from 'react'
-import { Dimensions, View, StyleSheet } from 'react-native'
+import { Dimensions } from 'react-native'
+import { Box, NativeBaseProvider, Container as Cont } from 'native-base'
 
 const Container = ({ children }: { children: ReactNode }) => {
   return (
-    <View style={styles.container}>
-        {children}
-    </View>
+    <NativeBaseProvider>
+      <Cont>
+        <Box width={Dimensions.get("window").width} p={2} bgColor={'emerald.300'} height={Dimensions.get("window").height}>
+            {children}
+        </Box>
+      </Cont>
+    </NativeBaseProvider>
   )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height,
-        padding: Dimensions.get("window").height / 74,
-        backgroundColor: '#8de1e7'
-    }
-})
 
 export default Container

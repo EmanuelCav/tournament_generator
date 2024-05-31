@@ -27,6 +27,34 @@ export const generateUserToken = (id: Types.ObjectId): string => {
 
 }
 
+export const generatePassword = (): string => {
+
+    let characters = 'abcdefghijklmnopqrstuvwxyz1234567890'.split("")
+    let password = ''
+
+    for (let i = 0; i < 8; i++) {
+        shuffle(characters)
+        password += characters[0]
+    }
+
+    return password
+
+}
+
+export const generateNumberUser = (): string => {
+
+    let numbers = '1234567890'.split("")
+    let numberUser = ''
+
+    for (let i = 0; i < 6; i++) {
+        shuffle(numbers)
+        numberUser += numbers[0]
+    }
+
+    return numberUser
+
+}
+
 export const generateId = (events: IEvent[]): string => {
 
     let characters = 'abcdefghijklmnopqrstuvwxyz1234567890'.split("")

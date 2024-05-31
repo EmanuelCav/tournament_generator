@@ -4,17 +4,17 @@ import { NavigateFunction } from "react-router-dom";
 import * as userApi from "../api/user.api";
 import * as userReducer from "../reducer/user.reducer";
 
-import { LoginActionPropsType, RegisterActionPropsType } from "../../types/action.types";
+import { RegisterActionPropsType } from "../../types/action.types";
 
-export const loginAction = createAsyncThunk('users/login', async (loginData: LoginActionPropsType, { dispatch }) => {
+import { ILogin } from "../../interface/User";
+
+export const loginAction = createAsyncThunk('users/login', async (userData: ILogin, { dispatch }) => {
 
     try {
 
-        const { data } = await userApi.loginApi(loginData.userData)
+        const { data } = await userApi.loginApi(userData)
 
         dispatch(userReducer.login(data))
-
-        loginData.navigate('/')
 
     } catch (error) {
         console.log(error);
@@ -33,6 +33,34 @@ export const registerAction = createAsyncThunk('users/register', async (register
         registerData.setIsRegister(false)
 
         registerData.navigate('/')
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const generateUserAction = createAsyncThunk('users/generate', async (_, { dispatch }) => {
+
+    try {
+
+        const { data } = await userApi.generateUserApi()
+
+        dispatch(userReducer.login(data))
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const autoLoginAction = createAsyncThunk('users/autologin', async (username: string, { dispatch }) => {
+
+    try {
+
+        const { data } = await userApi.autoLoginApi(username)
+
+        dispatch(userReducer.login(data))
 
     } catch (error) {
         console.log(error);

@@ -17,3 +17,11 @@ export const registerApi = async (userData: IRegister) => {
         }
     })
 }
+
+export const generateUserApi = async () => {
+    return await api.post('/users/generate', null)
+}
+
+export const autoLoginApi = async (username: string) => {
+    return await api.post(`/users/autologin/${username}`, null)
+}

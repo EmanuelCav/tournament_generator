@@ -5,7 +5,7 @@ import Role from '../models/role'
 
 import { default_role } from "../config/config";
 
-import { compareHash, generateUserToken, hashText } from "../helper/encrypt";
+import { compareHash, generateId, generateNumberUser, generatePassword, generateUserToken, hashText } from "../helper/encrypt";
 
 export const users = async (req: Request, res: Response): Promise<Response> => {
 
@@ -133,6 +133,73 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
 
         return res.status(200).json({ message: "User created successfully" })
 
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const generateUser = async (req: Request, res: Response): Promise<Response> => {
+
+    try {
+
+        const userRole = await Role.findOne({ role: `${default_role}` })
+
+        if(!userRole) {
+            return res.status(400).json({ message: "Role does not exists" })
+        }
+
+        const password = generatePassword()
+
+        const passwordHashed = await hashText(password)
+
+        const newUser = new User({
+            fullname: 'User' + ' ' + generateNumberUser(),
+            nickname: 'User' + generateNumberUser(),
+            password: passwordHashed,
+            role: userRole._id
+        })
+
+        const userSaved = await newUser.save()
+
+        const user = await User.findById(userSaved._id).select("-password -email -phone")
+
+        if(!user) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const token = generateUserToken(user._id)
+
+        return res.status(200).json({
+            user,
+            token
+        })
+        
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const autoLogin = async (req: Request, res: Response): Promise<Response> => {
+
+    const { username } = req.params
+
+    try {
+
+        const user = await User.findOne({ username }).select("-password -phone -email")
+
+        if(!user) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const token = generateUserToken(user._id)
+
+        return res.status(200).json({
+            user,
+            token
+        })
+        
     } catch (error) {
         throw error
     }
