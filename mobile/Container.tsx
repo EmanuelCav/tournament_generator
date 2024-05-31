@@ -6,7 +6,7 @@ const Container = ({ children }: { children: ReactNode }) => {
   return (
     <NativeBaseProvider>
       <Cont>
-        <Box width={Dimensions.get("window").width} p={2} bgColor={'emerald.300'} height={Dimensions.get("window").height}>
+        <Box width={Dimensions.get("window").width} p={2} bgColor={'emerald.100'} height={Dimensions.get("window").height}>
             {children}
         </Box>
       </Cont>

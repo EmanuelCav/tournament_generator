@@ -14,7 +14,7 @@ router.get('/users', userCtrl.users)
 router.post('/users/login', loginUserValid, userCtrl.login)
 router.post('/users/register', createUserValid, userCtrl.register)
 router.post('/users/generate', userCtrl.generateUser)
-router.post('/users/autologin/:username', userCtrl.autoLogin)
+router.post('/users/autologin/:nickname', userCtrl.autoLogin)
 router.post('/users/create', [auth, admin], createUserValid, userCtrl.createUser)
 router.delete('/users/:id', [auth, admin], userCtrl.removeUser)
 

@@ -183,11 +183,11 @@ export const generateUser = async (req: Request, res: Response): Promise<Respons
 
 export const autoLogin = async (req: Request, res: Response): Promise<Response> => {
 
-    const { username } = req.params
+    const { nickname } = req.params
 
     try {
 
-        const user = await User.findOne({ username }).select("-password -phone -email")
+        const user = await User.findOne({ nickname }).select("-password -phone -email")
 
         if(!user) {
             return res.status(400).json({ message: "User does not exists" })

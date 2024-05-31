@@ -3,22 +3,34 @@ import { AspectRatio, Text, Box, Center, FlatList, HStack, Heading, Stack } from
 import { Image } from "react-native"
 import { useSelector, useDispatch } from "react-redux"
 
+import Layout from "../components/general/Layout"
+import Head from "../components/general/Head"
+
+import ActionsHome from "../components/home/ActionsHome"
+
 import { IReducer } from "../interface/General"
+import { IEvent } from "../interface/Event"
 import { StackNativation } from "../types/props.types"
 
 import { selector } from "../server/selector"
 import { autoLoginAction, generateUserAction } from "../server/actions/user.actions"
+import { userEventsAction } from "../server/actions/event.actions"
 
 const Home = ({ navigation }:  { navigation: StackNativation }) => {
 
     const user = useSelector((state: IReducer) => selector(state).user)
+    const event = useSelector((state: IReducer) => selector(state).event)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
+        dispatch(userEventsAction(user.user.token!) as any)
+    }, [user.isLoggedIn])
+    
+    useEffect(() => {
         if(user.isLoggedIn) {
-
-            dispatch(autoLoginAction(user.user.user?.username!) as any)
+            
+            dispatch(autoLoginAction(user.user.user?.nickname!) as any)
 
             return
         }
@@ -28,13 +40,14 @@ const Home = ({ navigation }:  { navigation: StackNativation }) => {
     }, [user.isLoggedIn])
 
     return (
-        <Box>
-            <Heading fontSize="xl" p="4" pb="3">
-                Inbox
-            </Heading>
-            <FlatList data={[] as any[]} renderItem={({
+        <Layout>
+            <Head text="PANEL" />
+            {
+                event.events.length === 0 && <ActionsHome navigation={navigation} />
+            }
+            <FlatList data={event.events} renderItem={({
                 item
-            }) => <Box borderBottomWidth="1" _dark={{
+            }: { item: IEvent }) => <Box borderBottomWidth="1" _dark={{
                 borderColor: "muted.50"
             }} borderColor="muted.800" pl={["0", "4"]} pr={["0", "5"]} py="2">
                     <Box alignItems="center">
@@ -92,8 +105,9 @@ const Home = ({ navigation }:  { navigation: StackNativation }) => {
                             </Stack>
                         </Box>
                     </Box>
-                </Box>} keyExtractor={item => item.id} />
-        </Box>
+                </Box>
+            } keyExtractor={item => item._id!} />
+        </Layout>
     )
 }
 
