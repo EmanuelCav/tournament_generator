@@ -9,15 +9,13 @@ import ShowTeams from '../components/event/ShowTeams';
 import Sure from '../components/event/Sure';
 import FormAddTeam from '../components/create/components/FormAddTeam';
 import EditTeam from '../components/event/EditTeam';
+import ShowPeople from '../components/event/ShowPeople';
 
 import { eventAction, removeEventAction, removeTeamAction } from '../server/actions/event.actions';
-import { getEvent } from '../server/reducer/event.reducer';
+import { selector } from '../server/selector';
 
 import { IReducer } from '../interface/General';
 import { ITeam } from '../interface/Event';
-
-import { selector } from '../server/selector';
-import { removeTeamApi } from '../server/api/event.api';
 
 const Event = () => {
 
@@ -98,6 +96,9 @@ const Event = () => {
                 }
                 {
                     get.isMatchdays && <ShowEvent event={event.event} />
+                }
+                {
+                    get.isPeople && <ShowPeople competitors={event.event?.competitors!} />
                 }
             </Box>
         </Container>

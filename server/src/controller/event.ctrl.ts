@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Types } from "mongoose";
 import { unlink } from 'fs-extra'
 
 import Event from '../models/event'
@@ -9,7 +8,7 @@ import Image from '../models/image'
 import Competitor from '../models/competitor'
 import Role from '../models/role'
 
-import { image_default_id, default_role } from "../config/config";
+import { image_default_id, default_role, privileged_role } from "../config/config";
 
 import { EVENTS } from "../helper/mocks";
 import { cloud } from "../helper/cloud";
@@ -61,10 +60,12 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
             }
         }).populate({
             path: "competitors",
-            populate: {
+            populate: [{
                 path: "user",
                 select: "nickname"
-            }
+            }, {
+                path: "role",
+            }]
         })
 
         if (!event) {
@@ -136,7 +137,21 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
 
         const eventSaved = await newEvent.save()
 
-        const eventTeams = await Event.findById(eventSaved._id).populate({
+        const newCompetitor = new Competitor({
+            user: req.user,
+            role: `${privileged_role}`,
+            event: eventSaved._id
+        })
+
+        const competitorSaved = await newCompetitor.save()
+
+        const eventTeams = await Event.findByIdAndUpdate(eventSaved._id, {
+            $push: {
+                competitors: competitorSaved._id
+            }
+        }, {
+            new: true
+        }).populate({
             path: "teams",
             populate: {
                 path: "logo",
@@ -144,10 +159,12 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
             }
         }).populate({
             path: "competitors",
-            populate: {
+            populate: [{
                 path: "user",
                 select: "nickname"
-            }
+            }, {
+                path: "role",
+            }]
         })
 
         if (!eventTeams) {
@@ -228,7 +245,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             return res.status(400).json({ message: "Role does not exists" })
         }
 
-        if(event.competitors.find(c => String(c) === req.user)) {
+        if (event.competitors.find(c => String(c) === req.user)) {
             return res.status(400).json({ message: "You have alraedy joined to this tournament" })
         }
 
@@ -254,10 +271,12 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             }
         }).populate({
             path: "competitors",
-            populate: {
+            populate: [{
                 path: "user",
                 select: "nickname"
-            }
+            }, {
+                path: "role",
+            }]
         })
 
         return res.status(200).json(eventCompetitor)

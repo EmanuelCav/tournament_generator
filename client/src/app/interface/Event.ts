@@ -12,8 +12,10 @@ export interface IEvent {
     id?: string;
     status?: IStatus;
     description?: string;
+    admin?: string;
     teams?: ITeam[];
-    competitors: ICompetitor[];
+    competitors?: ICompetitor[];
+    matchs?: IMatch[];
     createdAt?: string;
     updatedAt?: string;
 }
@@ -25,11 +27,29 @@ export interface ICategory {
     updatedAt: string;
 }
 
+export interface IMatch {
+    _id: string;
+    local: ITeam;
+    targetLocal: Number;
+    visitant: ITeam;
+    targetVisitant: Number;
+    schedule: Date;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export interface ICompetitor {
     _id: string;
-    role: string;
+    role: IRole;
     event: IEvent;
     user: IUser;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface IRole {
+    _id: string;
+    role: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -78,4 +98,5 @@ export interface ICreateTeam {
 export interface IReducerGet {
     isTeams: boolean;
     isMatchdays: boolean;
+    isPeople: boolean;
 }

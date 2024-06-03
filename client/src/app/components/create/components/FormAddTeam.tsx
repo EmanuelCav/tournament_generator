@@ -60,7 +60,7 @@ const FormAddTeam = ({ handleAddTeam, dispatch, user, event }: FormAddTeamPropsT
                     <Box className='image-event-form' display='flex' justifyContent='space-evenly' alignItems='center' flexDirection='column' my={2}>
                         <Typography variant='h6' my={1}>Team's shield</Typography>
                         <InputLabel htmlFor="fileInput" sx={{ cursor: 'pointer' }}>
-                            <Box component="img" src={image ? URL.createObjectURL(image as any) : "https://res.cloudinary.com/ddfm1znoo/image/upload/v1715201487/tdgb12o8p5lony5sqg99.png"} width={40} height={40} />
+                            <Box component="img" src={image ? URL.createObjectURL(image as any) : "https://res.cloudinary.com/ddfm1znoo/image/upload/v1717421190/_715ec024-a870-44b1-9553-5499482553f9_ahgxhu.jpg"} width={40} height={40} />
                         </InputLabel>
                         <input id="fileInput" name='image' type="file" onChange={handleChangeImage} />
                     </Box>
