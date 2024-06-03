@@ -108,6 +108,36 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.updateTeamAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(eventAction.createRefereeAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.createRefereeAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.createRefereeAction.rejected, (state) => {
+            state.loading = false
+        })
+
+        builder.addCase(eventAction.removeRefereeAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.removeRefereeAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.removeRefereeAction.rejected, (state) => {
+            state.loading = false
+        })
+
+        builder.addCase(eventAction.updateRefereeAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.updateRefereeAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.updateRefereeAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

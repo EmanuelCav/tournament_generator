@@ -41,7 +41,7 @@ const EventsNavigation = ({ handleSure, dispatch, get }: EventsNavigationPropsTy
           <EventNavigation Icon={SportsIcon} isHere={get.isReferees} text='Referees' func={handleReferees} />
           <EventNavigation Icon={GroupsIcon} isHere={get.isPeople} text='People' func={handlePeople} />
           <EventNavigation Icon={ShieldIcon} isHere={get.isTeams} text='Teams' func={handleTeams} />
-          <EventNavigation Icon={Delete} isHere={true} text='Remove' func={handleSure} />
+          <EventNavigation Icon={Delete} isHere={false} text='Remove' func={handleSure} />
       </List>
     </Box>
   )

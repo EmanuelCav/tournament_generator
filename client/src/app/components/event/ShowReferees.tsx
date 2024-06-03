@@ -5,7 +5,7 @@ import Referee from "./components/showReferees/Referee"
 import { IReferee } from "../../interface/Event"
 import { ShowRefereesPropsType } from "../../types/event.types"
 
-const ShowReferees = ({ referees, handleAddReferee }: ShowRefereesPropsType) => {
+const ShowReferees = ({ referees, handleAddReferee, handleSure, handleEditReferee }: ShowRefereesPropsType) => {
   return (
     <Box width={'100%'} py={2} px={4}>
       {
@@ -13,7 +13,7 @@ const ShowReferees = ({ referees, handleAddReferee }: ShowRefereesPropsType) => 
       }
       {
         referees.map((referee: IReferee) => {
-          return <Referee referee={referee} key={referee._id} />
+          return <Referee referee={referee} handleSure={handleSure} handleEditReferee={handleEditReferee} key={referee._id} />
         })
       }
       <Button variant='text' sx={{ mt: 4 }} color='success' onClick={handleAddReferee}>

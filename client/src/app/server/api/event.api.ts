@@ -80,3 +80,20 @@ export const createRefereeApi = async (id: string, refereeData: ICreateTeam, tok
         }
     })
 }
+
+export const removeRefereeApi = async (rid: string, cid: string, token: string) => {
+    return await api.delete(`/referee/${rid}/competitor/${cid}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const updateRefereeApi = async (rid: string, cid: string, refereeData: ICreateTeam, token: string) => {
+    return await api.put(`/referee/${rid}/competitor/${cid}`, refereeData, {
+        headers: {
+            'Content-type': "application/json",
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

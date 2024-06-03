@@ -19,6 +19,7 @@ export type EventsNavigationPropsType = {
 export type SurePropsType = {
     handleSure: () => void;
     func: () => void;
+    text: string;
 }
 
 export type ShowTeamsPropsType = {
@@ -45,6 +46,8 @@ export type EditTeamPropsType = {
 export type ShowRefereesPropsType = {
     handleAddReferee: () => void;
     referees: IReferee[]
+    handleSure: (referee: IReferee) => void;
+    handleEditReferee: (referee: IReferee) => void;
 }
 
 export type FormAddRefereePropsType = {
@@ -52,4 +55,13 @@ export type FormAddRefereePropsType = {
     dispatch: Dispatch<any>;
     user: IUserInfo;
     event: IEvent;
+    isEdit: boolean;
+    refereeInfo: IReferee;
+    setIsEditReferee: (isEditReferee: boolean) => void;
+}
+
+export type RefereePropsType = {
+    referee: IReferee;
+    handleSure: (referee: IReferee) => void;
+    handleEditReferee: (referee: IReferee) => void;
 }

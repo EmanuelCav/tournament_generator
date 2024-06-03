@@ -5,12 +5,12 @@ import CloseForm from "../general/CloseForm"
 
 import { FormAddRefereePropsType } from "../../types/event.types"
 import { ICreateTeam } from "../../interface/Event"
-import { createRefereeAction } from "../../server/actions/event.actions"
+import { createRefereeAction, updateRefereeAction } from "../../server/actions/event.actions"
 
-const FormAddReferee = ({ handleAddReferee, dispatch, user, event }: FormAddRefereePropsType) => {
+const FormAddReferee = ({ handleAddReferee, dispatch, user, event, isEdit, refereeInfo, setIsEditReferee }: FormAddRefereePropsType) => {
 
   const initialState: ICreateTeam = {
-    name: ""
+    name: isEdit ? refereeInfo.name : ''
   }
 
   const [refereeData, setRefereeData] = useState<ICreateTeam>(initialState)
@@ -26,6 +26,17 @@ const FormAddReferee = ({ handleAddReferee, dispatch, user, event }: FormAddRefe
 
     e.preventDefault()
 
+    if(isEdit) {
+      dispatch(updateRefereeAction({
+        token: user.token!,
+        refereeData,
+        cid: event.competitors?.find(c => c.user._id === user.user?._id)?._id!,
+        rid: refereeInfo._id,
+        setIsEditReferee
+      }))
+      return
+    }
+
     dispatch(createRefereeAction({
       token: user.token!,
       id: event.competitors?.find(c => c.user._id === user.user?._id)?._id!,
@@ -40,7 +51,7 @@ const FormAddReferee = ({ handleAddReferee, dispatch, user, event }: FormAddRefe
       background: 'rgba(0, 0, 0, 0.5)'
     }}>
       <Paper elevation={3} sx={{ p: 2 }}>
-        <CloseForm handleClose={handleAddReferee} />
+        <CloseForm handleClose={isEdit ? () => setIsEditReferee(false) : handleAddReferee} />
         <Box component="form" noValidate sx={{ p: 4 }} onSubmit={handleSumbit}>
           <TextField
             margin="normal"
@@ -67,7 +78,7 @@ const FormAddReferee = ({ handleAddReferee, dispatch, user, event }: FormAddRefe
             color='success'
             size='large'
           >
-            ADD
+            {isEdit ? 'EDIT' : 'ADD'}
           </Button>
         </Box>
       </Paper>

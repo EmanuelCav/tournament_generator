@@ -80,6 +80,7 @@ const EditTeam = ({ dispatch, team, eid, setIsEditTeam, token }: EditTeamPropsTy
                             },
                         }}
                         onChange={handleChange}
+                        autoComplete="off"
                     />
                     <Button
                         type="submit"
@@ -89,7 +90,7 @@ const EditTeam = ({ dispatch, team, eid, setIsEditTeam, token }: EditTeamPropsTy
                         color='success'
                         size='large'
                     >
-                        ADD
+                        EDIT
                     </Button>
                 </Box>
             </Paper>

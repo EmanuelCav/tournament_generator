@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as eventApi from "../api/event.api";
 import * as eventReducer from "../reducer/event.reducer";
 
-import { CreateEventActionPropsType, CreateRefereeActionPropsType, CreateTeamActionPropsType, EventActionPropsType, JoinEventActionPropsType, RemoveEventActionPropsType, RemoveTeamActionPropsType, UpdateTeamActionPropsType } from "../../types/action.types";
+import { CreateEventActionPropsType, CreateRefereeActionPropsType, CreateTeamActionPropsType, EventActionPropsType, JoinEventActionPropsType, RemoveEventActionPropsType, RemoveRefereeActionPropsType, RemoveTeamActionPropsType, UpdateRefereeActionPropsType, UpdateTeamActionPropsType } from "../../types/action.types";
 
 export const eventsAction = createAsyncThunk('events/events', async (_, { dispatch }) => {
 
@@ -160,4 +160,37 @@ export const createRefereeAction = createAsyncThunk('events/createreferee', asyn
     }
 
 })
+
+export const removeRefereeAction = createAsyncThunk('events/removereferee', async (refereeData: RemoveRefereeActionPropsType, { dispatch }) => {    
+
+    try {
+        
+        const { data } = await eventApi.removeRefereeApi(refereeData.rid, refereeData.cid, refereeData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        refereeData.setIsRemoveReferee(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const updateRefereeAction = createAsyncThunk('events/updatereferee', async (refereeData: UpdateRefereeActionPropsType, { dispatch }) => {    
+
+    try {
+        
+        const { data } = await eventApi.updateRefereeApi(refereeData.rid, refereeData.cid, refereeData.refereeData, refereeData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        refereeData.setIsEditReferee(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
 

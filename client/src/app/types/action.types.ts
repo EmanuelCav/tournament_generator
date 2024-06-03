@@ -65,3 +65,18 @@ export type CreateRefereeActionPropsType = {
     refereeData: ICreateTeam;
     handleAddReferee: () => void;
 }
+
+export type RemoveRefereeActionPropsType = {
+    rid: string;
+    cid: string;
+    token: string;
+    setIsRemoveReferee: (isRemoveReferee: boolean) => void;
+}
+
+export type UpdateRefereeActionPropsType = {
+    rid: string;
+    cid: string;
+    token: string;
+    refereeData: ICreateTeam;
+    setIsEditReferee: (isEditReferee: boolean) => void
+}

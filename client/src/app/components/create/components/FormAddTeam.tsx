@@ -79,6 +79,7 @@ const FormAddTeam = ({ handleAddTeam, dispatch, user, event }: FormAddTeamPropsT
                             },
                         }}
                         onChange={handleChange}
+                        autoComplete="off"
                     />
                     <Button
                         type="submit"

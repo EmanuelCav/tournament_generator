@@ -4,14 +4,14 @@ import CloseForm from "../general/CloseForm"
 
 import { SurePropsType } from "../../types/event.types"
 
-const Sure = ({ handleSure, func }: SurePropsType) => {
+const Sure = ({ handleSure, func, text }: SurePropsType) => {
     return (
         <Box display='flex' zIndex={16} justifyContent='center' width='100%' height='100vh' alignItems='center' position='absolute' top={0} left={0} sx={{
             background: 'rgba(0, 0, 0, 0.5)'
         }}>
             <Paper elevation={3} sx={{ p: 2 }}>
                 <CloseForm handleClose={handleSure} />
-                <Typography variant="h6">Are you sure to delele the event?</Typography>
+                <Typography variant="h6">Are you sure to delele the {text}?</Typography>
                 <Button
                     type="submit"
                     fullWidth
