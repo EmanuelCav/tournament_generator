@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 
-import { IEvent, IReducerGet, ITeam } from "../interface/Event";
+import { IEvent, IReducerGet, IReferee, ITeam } from "../interface/Event";
+import { IUserInfo } from "../interface/User";
 
 export type EventNavigationPropsType = {
     Icon: any;
@@ -39,4 +40,16 @@ export type EditTeamPropsType = {
     eid: string;
     setIsEditTeam: (isEditTeam: boolean) => void;
     token: string;
+}
+
+export type ShowRefereesPropsType = {
+    handleAddReferee: () => void;
+    referees: IReferee[]
+}
+
+export type FormAddRefereePropsType = {
+    handleAddReferee: () => void;
+    dispatch: Dispatch<any>;
+    user: IUserInfo;
+    event: IEvent;
 }

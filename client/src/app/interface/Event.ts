@@ -16,8 +16,16 @@ export interface IEvent {
     teams?: ITeam[];
     competitors?: ICompetitor[];
     matchs?: IMatch[];
+    referees?: IReferee[];
     createdAt?: string;
     updatedAt?: string;
+}
+
+export interface IReferee {
+    _id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface ICategory {
@@ -92,4 +100,5 @@ export interface IReducerGet {
     isTeams: boolean;
     isMatchdays: boolean;
     isPeople: boolean;
+    isReferees: boolean;
 }

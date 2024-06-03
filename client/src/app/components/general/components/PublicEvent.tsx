@@ -8,7 +8,7 @@ const PublicEvent = ({ event, navigate, text, dispatch, user }: PublicEventProps
 
     const joinEvent = () => {
         if(event.competitors!.find(e => e.user._id === user.user?._id! || user.user?._id! === event.admin!)) {
-            navigate('/')
+            navigate(`/events/${event._id}`)
             return
         }
 

@@ -84,6 +84,9 @@ export const addTeam = async (req: Request, res: Response): Promise<Response> =>
                 }, {
                     path: "role",
                 }]
+            }).populate({
+                path: "referees",
+                select: "name"
             })
 
         return res.status(200).json(eventCompetitor)
@@ -137,6 +140,9 @@ export const removeTeam = async (req: Request, res: Response): Promise<Response>
                 }, {
                     path: "role",
                 }]
+            }).populate({
+                path: "referees",
+                select: "name"
             })
 
         await cloud.uploader.destroy(team.logo.imageId)
@@ -217,6 +223,9 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
             }, {
                 path: "role",
             }]
+        }).populate({
+            path: "referees",
+            select: "name"
         })
 
         if (!eventShow) {

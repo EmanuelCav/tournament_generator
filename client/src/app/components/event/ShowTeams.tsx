@@ -16,7 +16,7 @@ const ShowTeams = ({ event, handleSure, handleAddTeam, handleEditTeam }: ShowTea
                     return <ShowTeam team={team} handleSure={handleSure} handleEditTeam={handleEditTeam} key={team._id} />
                 })
             }
-            <Button variant='text' color='success' onClick={handleAddTeam}>
+            <Button variant='text' sx={{ mt: 4 }} color='success' onClick={handleAddTeam}>
                 Add a team
             </Button>
         </Box>

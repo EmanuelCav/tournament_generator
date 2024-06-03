@@ -22,6 +22,13 @@ export const events = async (req: Request, res: Response): Promise<Response> => 
             admin: {
                 $nin: [req.user]
             }
+        }).populate({
+            path: "competitors",
+            select: "user",
+            populate: {
+                path: "user",
+                select: "nickname"
+            }
         })
 
         return res.status(200).json(showEvents)
@@ -37,6 +44,14 @@ export const userEvents = async (req: Request, res: Response): Promise<Response>
     try {
 
         const events = await Event.find({ admin: req.user })
+        .populate({
+            path: "competitors",
+            select: "user",
+            populate: {
+                path: "user",
+                select: "nickname"
+            }
+        })
 
         return res.status(200).json(events)
 
@@ -66,6 +81,9 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
             }, {
                 path: "role",
             }]
+        }).populate({
+            path: "referees",
+            select: "name"
         })
 
         if (!event) {
@@ -137,9 +155,15 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
 
         const eventSaved = await newEvent.save()
 
+        const role = await Role.findOne({ role: `${privileged_role}` })
+
+        if(!role) {
+            return res.status(400).json({ message: "Role does not exists" })
+        }
+
         const newCompetitor = new Competitor({
             user: req.user,
-            role: `${privileged_role}`,
+            role: role._id,
             event: eventSaved._id
         })
 
@@ -165,6 +189,9 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
             }, {
                 path: "role",
             }]
+        }).populate({
+            path: "referees",
+            select: "name"
         })
 
         if (!eventTeams) {
@@ -277,6 +304,9 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             }, {
                 path: "role",
             }]
+        }).populate({
+            path: "referees",
+            select: "name"
         })
 
         return res.status(200).json(eventCompetitor)

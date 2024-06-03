@@ -10,12 +10,14 @@ import Sure from '../components/event/Sure';
 import FormAddTeam from '../components/create/components/FormAddTeam';
 import EditTeam from '../components/event/EditTeam';
 import ShowPeople from '../components/event/ShowPeople';
+import FormAddReferee from '../components/event/FormAddReferee';
 
 import { eventAction, removeEventAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
 
 import { IReducer } from '../interface/General';
 import { ITeam } from '../interface/Event';
+import ShowReferees from '../components/event/ShowReferees';
 
 const Event = () => {
 
@@ -27,6 +29,7 @@ const Event = () => {
     const [isRemoveTeam, setIsRemoveTeam] = useState<boolean>(false)
     const [isAddTeam, setIsAddTeam] = useState<boolean>(false)
     const [isEditTeam, setIsEditTeam] = useState<boolean>(false)
+    const [isAddReferee, setIsAddReferee] = useState<boolean>(false)
 
     const [infoTeam, setInfoTeam] = useState<ITeam | null>(null)
 
@@ -50,6 +53,10 @@ const Event = () => {
     const handleEditTeam = (team: ITeam) => {
         setInfoTeam(team)
         setIsEditTeam(!isEditTeam)
+    }
+
+    const handleAddReferee = () => {
+        setIsAddReferee(!isAddReferee)
     }
 
     const executeEvent = () => {
@@ -89,6 +96,9 @@ const Event = () => {
             {
                 isEditTeam && <EditTeam dispatch={dispatch} team={infoTeam!} eid={event.event._id!} setIsEditTeam={setIsEditTeam} token={user.user.token!} />
             }
+            {
+                isAddReferee && <FormAddReferee handleAddReferee={handleAddReferee} dispatch={dispatch} user={user.user} event={event.event}/>
+            }
             <Box display='flex' justifyContent='flex-start' alignItems='flex-start'>
                 <EventsNavigation dispatch={dispatch} handleSure={handleSure} get={get} />
                 {
@@ -99,6 +109,9 @@ const Event = () => {
                 }
                 {
                     get.isPeople && <ShowPeople competitors={event.event?.competitors!} />
+                }
+                {
+                    get.isReferees && <ShowReferees referees={event.event?.referees!} handleAddReferee={handleAddReferee} />
                 }
             </Box>
         </Container>

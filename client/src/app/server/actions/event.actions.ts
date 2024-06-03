@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as eventApi from "../api/event.api";
 import * as eventReducer from "../reducer/event.reducer";
 
-import { CreateEventActionPropsType, CreateTeamActionPropsType, EventActionPropsType, JoinEventActionPropsType, RemoveEventActionPropsType, RemoveTeamActionPropsType, UpdateTeamActionPropsType } from "../../types/action.types";
+import { CreateEventActionPropsType, CreateRefereeActionPropsType, CreateTeamActionPropsType, EventActionPropsType, JoinEventActionPropsType, RemoveEventActionPropsType, RemoveTeamActionPropsType, UpdateTeamActionPropsType } from "../../types/action.types";
 
 export const eventsAction = createAsyncThunk('events/events', async (_, { dispatch }) => {
 
@@ -138,6 +138,22 @@ export const joinEventAction = createAsyncThunk('events/joinevent', async (teamD
         dispatch(eventReducer.getEvent(data))
 
         teamData.navigate(`/events/${data._id}`)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const createRefereeAction = createAsyncThunk('events/createreferee', async (refereeData: CreateRefereeActionPropsType, { dispatch }) => {    
+
+    try {
+        
+        const { data } = await eventApi.createRefereeApi(refereeData.id, refereeData.refereeData, refereeData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        refereeData.handleAddReferee()
 
     } catch (error) {
         console.log(error);

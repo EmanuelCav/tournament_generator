@@ -1,3 +1,4 @@
+import { ICreateTeam } from "../../interface/Event";
 import { api } from "./api";
 
 export const eventsApi = async () => {
@@ -71,3 +72,11 @@ export const joinEventApi = async (id: string, token: string) => {
     })
 }
 
+export const createRefereeApi = async (id: string, refereeData: ICreateTeam, token: string) => {
+    return await api.post(`/referee/competitor/${id}`, refereeData, {
+        headers: {
+            'Content-type': "application/json",
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

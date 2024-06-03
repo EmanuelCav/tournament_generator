@@ -66,6 +66,9 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
             }, {
                 path: "role",
             }]
+        }).populate({
+            path: "referees",
+            select: "name"
         })
 
         return res.status(200).json(showEvent)
@@ -126,6 +129,9 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
             }, {
                 path: "role",
             }]
+        }).populate({
+            path: "referees",
+            select: "name"
         })
 
         await Player.findByIdAndDelete(pid)

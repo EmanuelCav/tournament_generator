@@ -1,6 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 
 import { ILogin, IRegister } from "../interface/User";
+import { ICreateTeam } from "../interface/Event";
 
 export type LoginActionPropsType = {
     navigate: NavigateFunction;
@@ -56,4 +57,11 @@ export type JoinEventActionPropsType = {
     id: string;
     token: string;
     navigate: NavigateFunction;
+}
+
+export type CreateRefereeActionPropsType = {
+    id: string;
+    token: string;
+    refereeData: ICreateTeam;
+    handleAddReferee: () => void;
 }
