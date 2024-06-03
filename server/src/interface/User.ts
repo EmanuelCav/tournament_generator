@@ -25,7 +25,6 @@ export interface ICompetitor extends Document {
     user: Types.ObjectId;
     event: Types.ObjectId;
     role: Types.ObjectId;
-    status: boolean;
     created_at: NativeDate;
     updated_at: NativeDate;
 }

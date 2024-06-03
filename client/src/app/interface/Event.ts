@@ -1,3 +1,5 @@
+import { IUser } from "./User";
+
 export interface IReducerEvent {
     events: IEvent[];
     event: IEvent;
@@ -7,9 +9,11 @@ export interface IEvent {
     _id?: string;
     event?: string;
     category?: ICategory;
+    id?: string;
     status?: IStatus;
     description?: string;
     teams?: ITeam[];
+    competitors: ICompetitor[];
     createdAt?: string;
     updatedAt?: string;
 }
@@ -17,6 +21,15 @@ export interface IEvent {
 export interface ICategory {
     _id: string;
     category: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ICompetitor {
+    _id: string;
+    role: string;
+    event: IEvent;
+    user: IUser;
     createdAt: string;
     updatedAt: string;
 }

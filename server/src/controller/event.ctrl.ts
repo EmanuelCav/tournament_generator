@@ -59,6 +59,12 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
                 path: "logo",
                 select: "image"
             }
+        }).populate({
+            path: "competitors",
+            populate: {
+                path: "user",
+                select: "nickname"
+            }
         })
 
         if (!event) {
@@ -130,7 +136,19 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
 
         const eventSaved = await newEvent.save()
 
-        const eventTeams = await Event.findById(eventSaved._id).populate("teams")
+        const eventTeams = await Event.findById(eventSaved._id).populate({
+            path: "teams",
+            populate: {
+                path: "logo",
+                select: "image"
+            }
+        }).populate({
+            path: "competitors",
+            populate: {
+                path: "user",
+                select: "nickname"
+            }
+        })
 
         if (!eventTeams) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -210,6 +228,10 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             return res.status(400).json({ message: "Role does not exists" })
         }
 
+        if(event.competitors.find(c => String(c) === req.user)) {
+            return res.status(400).json({ message: "You have alraedy joined to this tournament" })
+        }
+
         const newCompetitor = new Competitor({
             user: req.user,
             event: event._id,
@@ -229,6 +251,12 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             populate: {
                 path: "logo",
                 select: "image"
+            }
+        }).populate({
+            path: "competitors",
+            populate: {
+                path: "user",
+                select: "nickname"
             }
         })
 

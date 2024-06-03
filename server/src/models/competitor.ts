@@ -17,11 +17,6 @@ const competitorSchema = new Schema({
     role: {
         type: Types.ObjectId,
         ref: 'Role'
-    },
-
-    status: {
-        type: Boolean,
-        default: false
     }
 
 }, {

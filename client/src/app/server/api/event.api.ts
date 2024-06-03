@@ -64,7 +64,7 @@ export const updateTeamApi = async (tid: string, eid: string, teamData: FormData
 }
 
 export const joinEventApi = async (id: string, token: string) => {
-    return await api.patch(`/events/competitors/:${id}`, null, {
+    return await api.patch(`/events/competitors/${id}`, null, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

@@ -137,7 +137,7 @@ export const joinEventAction = createAsyncThunk('events/joinevent', async (teamD
 
         dispatch(eventReducer.getEvent(data))
 
-        teamData.navigate(`/events/${teamData.id}`)
+        teamData.navigate(`/events/${data._id}`)
 
     } catch (error) {
         console.log(error);

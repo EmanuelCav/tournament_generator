@@ -1,10 +1,14 @@
-import { Box, Text } from 'native-base'
+
+import Head from '../components/general/Head'
+import Layout from '../components/general/Layout'
+import FormCreate from '../components/create/FormCreate'
 
 const Create = () => {
     return (
-        <Box>
-            <Text>Create</Text>
-        </Box>
+        <Layout>
+            <Head text='CREATE' />
+            <FormCreate />
+        </Layout>
     )
 }
 

@@ -7,6 +7,10 @@ import { joinEventAction } from '../../../server/actions/event.actions'
 const PublicEvent = ({ event, navigate, text, dispatch, user }: PublicEventPropsType) => {
 
     const joinEvent = () => {
+        if(event.competitors.find(e => e.user._id === user.user?._id!)) {
+            navigate('/')
+        }
+
         dispatch(joinEventAction({
             id: event.id!,
             token: user.token!,

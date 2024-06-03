@@ -42,11 +42,9 @@ export default function App() {
               <Tab.Screen name="Home" component={Home} options={{
                 title: 'Panel',
                 tabBarActiveTintColor: '#33cc33',
-                tabBarIcon: ({ size, focused }) => {
+                tabBarIcon: ({ size }) => {
                   return (
-                    <Center>
-                      <Icon name='home' color={'#33cc33'} size={size} />
-                    </Center>
+                    <Icon name='home' color={'#33cc33'} size={size} />
                   );
                 },
 
@@ -54,11 +52,9 @@ export default function App() {
               <Tab.Screen name="Join" component={Join} options={{
                 title: 'Join',
                 tabBarActiveTintColor: '#33cc33',
-                tabBarIcon: ({ size, focused }) => {
+                tabBarIcon: ({ size }) => {
                   return (
-                    <Center>
-                      <Icon name='enter' color={'#33cc33'} size={size} />
-                    </Center>
+                    <Icon name='enter' color={'#33cc33'} size={size} />
                   );
                 },
 
@@ -66,11 +62,9 @@ export default function App() {
               <Tab.Screen name="Create" component={Create} options={{
                 title: 'Create',
                 tabBarActiveTintColor: '#33cc33',
-                tabBarIcon: ({ size, focused }) => {
+                tabBarIcon: ({ size }) => {
                   return (
-                    <Center>
-                      <Icon name='add-circle' color={'#33cc33'} size={size} />
-                    </Center>
+                    <Icon name='add-circle' color={'#33cc33'} size={size} />
                   );
                 },
 

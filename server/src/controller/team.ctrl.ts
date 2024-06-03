@@ -76,6 +76,12 @@ export const addTeam = async (req: Request, res: Response): Promise<Response> =>
                     path: "logo",
                     select: "image"
                 }
+            }).populate({
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(eventCompetitor)
@@ -121,6 +127,12 @@ export const removeTeam = async (req: Request, res: Response): Promise<Response>
                     path: "logo",
                     select: "image"
                 }
+            }).populate({
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         await cloud.uploader.destroy(team.logo.imageId)
@@ -158,11 +170,11 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
             return res.status(400).json({ message: "You cannot remove this team" })
         }
 
-        if(req.file) {
+        if (req.file) {
 
             const image = await Image.findById(team.logo)
 
-            if(!image) {
+            if (!image) {
                 return res.status(400).json({ message: "Image does not exists" })
             }
 
@@ -192,6 +204,12 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
             populate: {
                 path: "logo",
                 select: "image"
+            }
+        }).populate({
+            path: "competitors",
+            populate: {
+                path: "user",
+                select: "nickname"
             }
         })
 
