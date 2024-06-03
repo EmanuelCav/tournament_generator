@@ -55,6 +55,11 @@ const teamSchema = new Schema({
         ref: 'Competitor'
     }],
 
+    players: [{
+        type: Types.ObjectId,
+        ref: 'Player'
+    }],
+
     status: {
         type: Boolean,
         default: false

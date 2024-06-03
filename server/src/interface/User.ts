@@ -24,7 +24,27 @@ export interface ICompetitor extends Document {
     _id: Types.ObjectId;
     user: Types.ObjectId;
     event: Types.ObjectId;
-    role: Types.ObjectId;
+    role: IRole;
+    created_at: NativeDate;
+    updated_at: NativeDate;
+}
+
+export interface IReferee extends Document {
+    _id: Types.ObjectId;
+    name: string;
+    event: Types.ObjectId;
+    created_at: NativeDate;
+    updated_at: NativeDate;
+}
+
+export interface IPlayer extends Document {
+    _id: Types.ObjectId;
+    name: string;
+    points: number;
+    cards: number;
+    serialCards: number;
+    position: string;
+    team: Types.ObjectId;
     created_at: NativeDate;
     updated_at: NativeDate;
 }

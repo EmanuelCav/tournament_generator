@@ -10,7 +10,15 @@ export interface IUserInfo {
 
 export interface IUser {
     _id: string;
-    nickname?: string;
+    nickname: string;
+    role: IRole;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface IRole {
+    _id: string;
+    role: string;
     createdAt: string;
     updatedAt: string;
 }

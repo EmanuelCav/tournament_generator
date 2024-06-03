@@ -18,6 +18,7 @@ export interface IEvent extends Document {
     status: Types.ObjectId;
     admin: Types.ObjectId;
     competitors: Types.ObjectId[];
+    referees: Types.ObjectId[];
     teams: Types.ObjectId[];
     matchs: Types.ObjectId[];
     created_at: NativeDate;
@@ -30,6 +31,7 @@ export interface IMatch extends Document {
     targetLocal: number;
     visitant: Types.ObjectId;
     targetVisitant: number;
+    referee: Types.ObjectId;
     schedule: Date;
     created_at: NativeDate;
     updated_at: NativeDate;
@@ -54,6 +56,7 @@ export interface ITeam extends Document {
     favor: number;
     against: number;
     status: boolean;
+    players: Types.ObjectId[];
     competitors: Types.ObjectId[];
     created_at: NativeDate;
     updated_at: NativeDate;

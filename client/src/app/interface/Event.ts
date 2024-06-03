@@ -1,4 +1,4 @@
-import { IUser } from "./User";
+import { IRole, IUser } from "./User";
 
 export interface IReducerEvent {
     events: IEvent[];
@@ -43,13 +43,6 @@ export interface ICompetitor {
     role: IRole;
     event: IEvent;
     user: IUser;
-    createdAt: string;
-    updatedAt: string;
-}
-
-export interface IRole {
-    _id: string;
-    role: string;
     createdAt: string;
     updatedAt: string;
 }

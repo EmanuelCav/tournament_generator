@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import * as stastusCtrl from '../controller/status.ctrl'
+import * as statusCtrl from '../controller/status.ctrl'
 
 import statusValid from '../middleware/validation/validation/status.valid'
 
@@ -9,8 +9,8 @@ import admin from '../middleware/auth/admin'
 
 const router = Router()
 
-router.get('/status', auth, stastusCtrl.status)
-router.post('/status', [auth, admin], statusValid, stastusCtrl.createStatus)
-router.delete('/status/:id', [auth, admin], stastusCtrl.removeStatus)
+router.get('/status', auth, statusCtrl.status)
+router.post('/status', [auth, admin], statusValid, statusCtrl.createStatus)
+router.delete('/status/:id', [auth, admin], statusCtrl.removeStatus)
 
 export default router

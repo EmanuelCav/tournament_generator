@@ -5,7 +5,7 @@ import Role from '../models/role'
 
 import { default_role } from "../config/config";
 
-import { compareHash, generateId, generateNumberUser, generatePassword, generateUserToken, hashText } from "../helper/encrypt";
+import { compareHash, generateNumberUser, generatePassword, generateUserToken, hashText } from "../helper/encrypt";
 
 export const users = async (req: Request, res: Response): Promise<Response> => {
 
@@ -39,7 +39,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
             return res.status(400).json({ message: "Fields do not match" })
         }
 
-        const userLoggedIn = await User.findOne({ email }).select("-password -email")
+        const userLoggedIn = await User.findOne({ email }).select("-password -email -phone").populate("role")
 
         if(!userLoggedIn) {
             return res.status(400).json({ message: "User does not exists" })
@@ -82,7 +82,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
 
         const userSaved = await newUser.save()
 
-        const user = await User.findById(userSaved._id).select("-password -email -phone")
+        const user = await User.findById(userSaved._id).select("-password -email -phone").populate("role")
 
         if(!user) {
             return res.status(400).json({ message: "User does not exists" })
@@ -162,7 +162,7 @@ export const generateUser = async (req: Request, res: Response): Promise<Respons
 
         const userSaved = await newUser.save()
 
-        const user = await User.findById(userSaved._id).select("-password -email -phone")
+        const user = await User.findById(userSaved._id).select("-password -email -phone").populate("role")
 
         if(!user) {
             return res.status(400).json({ message: "User does not exists" })
@@ -187,7 +187,7 @@ export const autoLogin = async (req: Request, res: Response): Promise<Response> 
 
     try {
 
-        const user = await User.findOne({ nickname }).select("-password -phone -email")
+        const user = await User.findOne({ nickname }).select("-password -phone -email").populate("role")
 
         if(!user) {
             return res.status(400).json({ message: "User does not exists" })

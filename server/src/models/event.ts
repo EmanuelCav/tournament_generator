@@ -46,6 +46,11 @@ const eventSchema = new Schema({
         ref: 'Competitor'
     }],
 
+    referees: [{
+        type: Types.ObjectId,
+        ref: 'Referee'
+    }],
+
     teams: [{
         type: Types.ObjectId,
         ref: 'Team'

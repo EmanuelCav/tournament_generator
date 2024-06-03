@@ -24,6 +24,11 @@ const matchSchema = new Schema({
         default: 0
     },
 
+    referee: {
+        type: Types.ObjectId,
+        ref: 'Referee'
+    },
+
     schedule: Date
 
 }, {
