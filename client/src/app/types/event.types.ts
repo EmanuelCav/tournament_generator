@@ -35,6 +35,7 @@ export type ShowTeamPropsType = {
     handleSure: (team: ITeam) => void;
     handleEditTeam: (team: ITeam) => void;
     handleAddPlayer: (team: ITeam) => void;
+    isShowPlayers?: boolean;
 }
 
 export type EditTeamPropsType = {

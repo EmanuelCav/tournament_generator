@@ -44,10 +44,12 @@ export const createReferee = async (req: Request, res: Response): Promise<Respon
             new: true
         }).populate({
             path: "teams",
-            populate: {
+            populate: [{
                 path: "logo",
                 select: "image"
-            }
+            }, {
+                path: "players"
+            }]
         }).populate({
             path: "competitors",
             populate: [{
@@ -105,10 +107,12 @@ export const removeReferee = async (req: Request, res: Response): Promise<Respon
             new: true
         }).populate({
             path: "teams",
-            populate: {
+            populate: [{
                 path: "logo",
                 select: "image"
-            }
+            }, {
+                path: "players"
+            }]
         }).populate({
             path: "competitors",
             populate: [{
@@ -169,10 +173,12 @@ export const updateReferee = async (req: Request, res: Response): Promise<Respon
 
         const showEvent = await Event.findById(event._id).populate({
             path: "teams",
-            populate: {
+            populate: [{
                 path: "logo",
                 select: "image"
-            }
+            }, {
+                path: "players"
+            }]
         }).populate({
             path: "competitors",
             populate: [{

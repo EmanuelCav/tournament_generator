@@ -69,10 +69,12 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
 
         const event = await Event.findById(id).populate({
             path: "teams",
-            populate: {
+            populate: [{
                 path: "logo",
                 select: "image"
-            }
+            }, {
+                path: "players"
+            }]
         }).populate({
             path: "competitors",
             populate: [{
@@ -177,10 +179,12 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
             new: true
         }).populate({
             path: "teams",
-            populate: {
+            populate: [{
                 path: "logo",
                 select: "image"
-            }
+            }, {
+                path: "players"
+            }]
         }).populate({
             path: "competitors",
             populate: [{
@@ -292,10 +296,12 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             new: true
         }).populate({
             path: "teams",
-            populate: {
+            populate: [{
                 path: "logo",
                 select: "image"
-            }
+            }, {
+                path: "players"
+            }]
         }).populate({
             path: "competitors",
             populate: [{

@@ -86,6 +86,7 @@ export interface ITeam {
     points: Number;
     favor: Number;
     against: Number;
+    players: IPlayer[];
     created_at: string;
     updated_at: string;
 }

@@ -72,10 +72,12 @@ export const addTeam = async (req: Request, res: Response): Promise<Response> =>
         })
             .populate({
                 path: "teams",
-                populate: {
+                populate: [{
                     path: "logo",
                     select: "image"
-                }
+                }, {
+                    path: "players"
+                }]
             }).populate({
                 path: "competitors",
                 populate: [{
@@ -128,10 +130,12 @@ export const removeTeam = async (req: Request, res: Response): Promise<Response>
         })
             .populate({
                 path: "teams",
-                populate: {
+                populate: [{
                     path: "logo",
                     select: "image"
-                }
+                }, {
+                    path: "players"
+                }]
             }).populate({
                 path: "competitors",
                 populate: [{
@@ -211,10 +215,12 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
 
         const eventShow = await Event.findById(eid).populate({
             path: "teams",
-            populate: {
+            populate: [{
                 path: "logo",
                 select: "image"
-            }
+            }, {
+                path: "players"
+            }]
         }).populate({
             path: "competitors",
             populate: [{

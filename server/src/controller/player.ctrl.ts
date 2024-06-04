@@ -54,10 +54,12 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
 
         const showEvent = await Event.findById(user.event).populate({
             path: "teams",
-            populate: {
+            populate: [{
                 path: "logo",
                 select: "image"
-            }
+            }, {
+                path: "players"
+            }]
         }).populate({
             path: "competitors",
             populate: [{
@@ -117,10 +119,12 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
 
         const showEvent = await Event.findById(user.event).populate({
             path: "teams",
-            populate: {
+            populate: [{
                 path: "logo",
                 select: "image"
-            }
+            }, {
+                path: "players"
+            }]
         }).populate({
             path: "competitors",
             populate: [{
