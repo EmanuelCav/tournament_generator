@@ -28,6 +28,18 @@ export interface IReferee {
     updatedAt: string;
 }
 
+export interface IPlayer {
+    _id: string;
+    name: string;
+    position: string;
+    points: number;
+    cards: number;
+    serialCards: number;
+    team: ITeam;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export interface ICategory {
     _id: string;
     category: string;
@@ -101,4 +113,10 @@ export interface IReducerGet {
     isMatchdays: boolean;
     isPeople: boolean;
     isReferees: boolean;
+    isPlayers: boolean;
+}
+
+export interface ICreatePlayer {
+    name: string;
+    position: string;
 }

@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as eventApi from "../api/event.api";
 import * as eventReducer from "../reducer/event.reducer";
 
-import { CreateEventActionPropsType, CreateRefereeActionPropsType, CreateTeamActionPropsType, EventActionPropsType, JoinEventActionPropsType, RemoveEventActionPropsType, RemoveRefereeActionPropsType, RemoveTeamActionPropsType, UpdateRefereeActionPropsType, UpdateTeamActionPropsType } from "../../types/action.types";
+import * as typesActionsEvent from "../../types/action.types";
 
 export const eventsAction = createAsyncThunk('events/events', async (_, { dispatch }) => {
 
@@ -33,7 +33,7 @@ export const userEventsAction = createAsyncThunk('events/userEvents', async (tok
 
 })
 
-export const eventAction = createAsyncThunk('events/event', async (eventData: EventActionPropsType, { dispatch }) => {
+export const eventAction = createAsyncThunk('events/event', async (eventData: typesActionsEvent.EventActionPropsType, { dispatch }) => {
 
     try {
 
@@ -47,7 +47,7 @@ export const eventAction = createAsyncThunk('events/event', async (eventData: Ev
 
 })
 
-export const createEventAction = createAsyncThunk('events/createevent', async (eventData: CreateEventActionPropsType, { dispatch }) => {    
+export const createEventAction = createAsyncThunk('events/createevent', async (eventData: typesActionsEvent.CreateEventActionPropsType, { dispatch }) => {    
 
     try {
 
@@ -63,7 +63,7 @@ export const createEventAction = createAsyncThunk('events/createevent', async (e
 
 })
 
-export const createTeamAction = createAsyncThunk('events/createteam', async (teamData: CreateTeamActionPropsType, { dispatch }) => {    
+export const createTeamAction = createAsyncThunk('events/createteam', async (teamData: typesActionsEvent.CreateTeamActionPropsType, { dispatch }) => {    
 
     try {
         
@@ -79,7 +79,7 @@ export const createTeamAction = createAsyncThunk('events/createteam', async (tea
 
 })
 
-export const removeEventAction = createAsyncThunk('events/removeevent', async (teamData: RemoveEventActionPropsType, { dispatch }) => {    
+export const removeEventAction = createAsyncThunk('events/removeevent', async (teamData: typesActionsEvent.RemoveEventActionPropsType, { dispatch }) => {    
 
     try {
         
@@ -97,7 +97,7 @@ export const removeEventAction = createAsyncThunk('events/removeevent', async (t
 
 })
 
-export const removeTeamAction = createAsyncThunk('events/removetean', async (teamData: RemoveTeamActionPropsType, { dispatch }) => {    
+export const removeTeamAction = createAsyncThunk('events/removetean', async (teamData: typesActionsEvent.RemoveTeamActionPropsType, { dispatch }) => {    
 
     try {
         
@@ -113,7 +113,7 @@ export const removeTeamAction = createAsyncThunk('events/removetean', async (tea
 
 })
 
-export const updateTeamAction = createAsyncThunk('events/updateteam', async (teamData: UpdateTeamActionPropsType, { dispatch }) => {    
+export const updateTeamAction = createAsyncThunk('events/updateteam', async (teamData: typesActionsEvent.UpdateTeamActionPropsType, { dispatch }) => {    
 
     try {
         
@@ -129,7 +129,7 @@ export const updateTeamAction = createAsyncThunk('events/updateteam', async (tea
 
 })
 
-export const joinEventAction = createAsyncThunk('events/joinevent', async (teamData: JoinEventActionPropsType, { dispatch }) => {    
+export const joinEventAction = createAsyncThunk('events/joinevent', async (teamData: typesActionsEvent.JoinEventActionPropsType, { dispatch }) => {    
 
     try {
         
@@ -145,7 +145,7 @@ export const joinEventAction = createAsyncThunk('events/joinevent', async (teamD
 
 })
 
-export const createRefereeAction = createAsyncThunk('events/createreferee', async (refereeData: CreateRefereeActionPropsType, { dispatch }) => {    
+export const createRefereeAction = createAsyncThunk('events/createreferee', async (refereeData: typesActionsEvent.CreateRefereeActionPropsType, { dispatch }) => {    
 
     try {
         
@@ -161,7 +161,7 @@ export const createRefereeAction = createAsyncThunk('events/createreferee', asyn
 
 })
 
-export const removeRefereeAction = createAsyncThunk('events/removereferee', async (refereeData: RemoveRefereeActionPropsType, { dispatch }) => {    
+export const removeRefereeAction = createAsyncThunk('events/removereferee', async (refereeData: typesActionsEvent.RemoveRefereeActionPropsType, { dispatch }) => {    
 
     try {
         
@@ -177,7 +177,7 @@ export const removeRefereeAction = createAsyncThunk('events/removereferee', asyn
 
 })
 
-export const updateRefereeAction = createAsyncThunk('events/updatereferee', async (refereeData: UpdateRefereeActionPropsType, { dispatch }) => {    
+export const updateRefereeAction = createAsyncThunk('events/updatereferee', async (refereeData: typesActionsEvent.UpdateRefereeActionPropsType, { dispatch }) => {    
 
     try {
         
@@ -193,4 +193,19 @@ export const updateRefereeAction = createAsyncThunk('events/updatereferee', asyn
 
 })
 
+export const createPlayerAction = createAsyncThunk('events/createplayer', async (playerData: typesActionsEvent.CreatePlayerActionPropsType, { dispatch }) => {    
+
+    try {
+        
+        const { data } = await eventApi.createPlayerApi(playerData.tid, playerData.cid, playerData.playerData, playerData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        playerData.handleAddPlayer(playerData.team)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
 

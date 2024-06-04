@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 
 import { ILogin, IRegister } from "../interface/User";
-import { ICreateTeam } from "../interface/Event";
+import { ICreatePlayer, ICreateTeam, ITeam } from "../interface/Event";
 
 export type LoginActionPropsType = {
     navigate: NavigateFunction;
@@ -78,5 +78,14 @@ export type UpdateRefereeActionPropsType = {
     cid: string;
     token: string;
     refereeData: ICreateTeam;
-    setIsEditReferee: (isEditReferee: boolean) => void
+    setIsEditReferee: (isEditReferee: boolean) => void;
+}
+
+export type CreatePlayerActionPropsType = {
+    tid: string;
+    cid: string;
+    token: string;
+    playerData: ICreatePlayer;
+    handleAddPlayer: (team: ITeam) => void;
+    team: ITeam;
 }

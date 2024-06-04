@@ -4,8 +4,8 @@ import { EventNavigationPropsType } from '../../../../types/event.types'
 
 const EventNavigation = ({ Icon, func, text, isHere }: EventNavigationPropsType) => {
     return (
-        <ListItem disablePadding sx={{ bgcolor: isHere ? '#bbbbbb' : '#ffffff'}}>
-            <ListItemButton onClick={func}>
+        <ListItem disablePadding sx={{ width: '100%', bgcolor: isHere ? '#bbbbbb' : '#ffffff'}}>
+            <ListItemButton onClick={func} sx={{ width: '100%' }}>
                 <ListItemIcon>
                     <Icon color='success' />
                 </ListItemIcon>

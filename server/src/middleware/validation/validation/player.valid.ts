@@ -3,7 +3,7 @@ import { ZodError } from 'zod'
 
 import { createPlayerSchema } from '../schema/event.schema'
 
-const playerValid = async (req: Request, res: Response, next: NextFunction) => {
+const createPlayerValid = async (req: Request, res: Response, next: NextFunction) => {
     
     try {
 
@@ -22,4 +22,4 @@ const playerValid = async (req: Request, res: Response, next: NextFunction) => {
 
 }
 
-export default playerValid
+export default createPlayerValid

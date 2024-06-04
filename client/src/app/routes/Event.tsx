@@ -12,6 +12,7 @@ import EditTeam from '../components/event/EditTeam';
 import ShowPeople from '../components/event/ShowPeople';
 import FormAddReferee from '../components/event/FormAddReferee';
 import ShowReferees from '../components/event/ShowReferees';
+import FormAddPlayer from '../components/event/FormAddPlayer';
 
 import { eventAction, removeEventAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
@@ -32,6 +33,8 @@ const Event = () => {
     const [isAddReferee, setIsAddReferee] = useState<boolean>(false)
     const [isRemoveReferee, setIsRemoveReferee] = useState<boolean>(false)
     const [isEditReferee, setIsEditReferee] = useState<boolean>(false)
+    const [isAddPlayer, setIsAddPlayer] = useState<boolean>(false)
+    const [isEditPlayer, setIsEditPlayer] = useState<boolean>(false)
 
     const [infoTeam, setInfoTeam] = useState<ITeam | null>(null)
     const [infoReferee, setInfoReferee] = useState<IReferee | null>(null)
@@ -80,6 +83,11 @@ const Event = () => {
         setIsAddReferee(!isAddReferee)
     }
 
+    const handleAddPlayer = (team: ITeam) => {
+        setInfoTeam(team)
+        setIsAddPlayer(!isAddPlayer)
+    }
+
     const executeEvent = () => {
         dispatch(removeEventAction({
             id: event.event._id!,
@@ -126,13 +134,16 @@ const Event = () => {
                 isRemoveReferee && <Sure handleSure={handleSureRR} func={removeReferee} text='referee' />
             }
             {
+                isAddPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} dispatch={dispatch} user={user.user} event={event.event} setIsEditPlayer={setIsEditPlayer} isEdit={false} team={infoTeam!} />
+            }
+            {
                 isAddTeam && <FormAddTeam handleAddTeam={handleAddTeam} dispatch={dispatch} user={user.user} event={event.event} />
             }
             {
-                isEditTeam && <EditTeam dispatch={dispatch} team={infoTeam!} eid={event.event._id!} setIsEditTeam={setIsEditTeam} token={user.user.token!} />
+                isAddReferee && <FormAddReferee handleAddReferee={handleAddReferee} setIsEditReferee={setIsEditReferee} dispatch={dispatch} user={user.user} event={event.event} isEdit={false} refereeInfo={infoReferee!} />
             }
             {
-                isAddReferee && <FormAddReferee handleAddReferee={handleAddReferee} setIsEditReferee={setIsEditReferee} dispatch={dispatch} user={user.user} event={event.event} isEdit={false} refereeInfo={infoReferee!} />
+                isEditTeam && <EditTeam dispatch={dispatch} team={infoTeam!} eid={event.event._id!} setIsEditTeam={setIsEditTeam} token={user.user.token!} />
             }
             {
                 isEditReferee && <FormAddReferee handleAddReferee={handleAddReferee} setIsEditReferee={setIsEditReferee} dispatch={dispatch} user={user.user} event={event.event} isEdit={true} refereeInfo={infoReferee!} />
@@ -140,7 +151,7 @@ const Event = () => {
             <Box display='flex' justifyContent='flex-start' alignItems='flex-start'>
                 <EventsNavigation dispatch={dispatch} handleSure={handleSure} get={get} />
                 {
-                    get.isTeams && <ShowTeams handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event} />
+                    get.isTeams && <ShowTeams handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event} handleAddPlayer={handleAddPlayer} />
                 }
                 {
                     get.isMatchdays && <ShowEvent event={event.event} />

@@ -7,7 +7,7 @@ import { ShowRefereesPropsType } from "../../types/event.types"
 
 const ShowReferees = ({ referees, handleAddReferee, handleSure, handleEditReferee }: ShowRefereesPropsType) => {
   return (
-    <Box width={'100%'} py={2} px={4}>
+    <Box flex={1} py={2} px={4}>
       {
         referees.length === 0 && <Typography mt={2} textAlign='center' color='#33cc33' variant='h5'>There are not referees yet. Start to add.</Typography>
       }

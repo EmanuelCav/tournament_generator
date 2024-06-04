@@ -27,12 +27,14 @@ export type ShowTeamsPropsType = {
     handleSure: (team: ITeam) => void;
     handleAddTeam: () => void;
     handleEditTeam: (team: ITeam) => void;
+    handleAddPlayer: (team: ITeam) => void;
 }
 
 export type ShowTeamPropsType = {
     team: ITeam;
     handleSure: (team: ITeam) => void;
     handleEditTeam: (team: ITeam) => void;
+    handleAddPlayer: (team: ITeam) => void;
 }
 
 export type EditTeamPropsType = {
@@ -64,4 +66,14 @@ export type RefereePropsType = {
     referee: IReferee;
     handleSure: (referee: IReferee) => void;
     handleEditReferee: (referee: IReferee) => void;
+}
+
+export type FormAddPlayerPropsType = {
+    handleAddPlayer: (team: ITeam) => void;
+    dispatch: Dispatch<any>;
+    user: IUserInfo;
+    event: IEvent;
+    isEdit: boolean;
+    setIsEditPlayer: (isEditPlayer: boolean) => void;
+    team: ITeam;
 }

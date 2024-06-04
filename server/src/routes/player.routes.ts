@@ -2,7 +2,7 @@ import { Router } from 'express'
 
 import * as playerCtrl from '../controller/player.ctrl'
 
-import createPlayerValid from '../middleware/validation/validation/createUser.valid'
+import createPlayerValid from '../middleware/validation/validation/player.valid'
 
 import auth from '../middleware/auth/auth'
 
