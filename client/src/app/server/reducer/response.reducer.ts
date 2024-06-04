@@ -138,6 +138,36 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.updateRefereeAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(eventAction.createPlayerAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.createPlayerAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.createPlayerAction.rejected, (state) => {
+            state.loading = false
+        })
+
+        builder.addCase(eventAction.removePlayerAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.removePlayerAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.removePlayerAction.rejected, (state) => {
+            state.loading = false
+        })
+
+        builder.addCase(eventAction.updatePlayerAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.updatePlayerAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.updatePlayerAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

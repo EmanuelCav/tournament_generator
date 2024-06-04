@@ -5,13 +5,13 @@ import CloseForm from "../general/CloseForm"
 
 import { FormAddPlayerPropsType } from "../../types/event.types"
 import { ICreatePlayer } from "../../interface/Event"
-import { createPlayerAction } from "../../server/actions/event.actions"
+import { createPlayerAction, updatePlayerAction } from "../../server/actions/event.actions"
 
-const FormAddPlayer = ({ isEdit, handleAddPlayer, setIsEditPlayer, dispatch, event, user, team }: FormAddPlayerPropsType) => {
+const FormAddPlayer = ({ isEdit, handleAddPlayer, setIsEditPlayer, dispatch, event, user, team, player }: FormAddPlayerPropsType) => {
 
   const initialState: ICreatePlayer = {
-    name: "",
-    position: ""
+    name: isEdit ? player.name : "",
+    position: isEdit ? player.position : ""
   }
 
   const [playerData, setPlayerData] = useState<ICreatePlayer>(initialState)
@@ -26,6 +26,17 @@ const FormAddPlayer = ({ isEdit, handleAddPlayer, setIsEditPlayer, dispatch, eve
   const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
 
     e.preventDefault()
+
+    if (isEdit) {
+      dispatch(updatePlayerAction({
+        cid: event.competitors?.find(c => c.user._id === user.user?._id)?._id!,
+        token: user.token!,
+        playerData,
+        pid: player._id,
+        setIsEditPlayer
+      }))
+      return
+    }
 
     dispatch(createPlayerAction({
       handleAddPlayer,

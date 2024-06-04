@@ -89,3 +89,18 @@ export type CreatePlayerActionPropsType = {
     handleAddPlayer: (team: ITeam) => void;
     team: ITeam;
 }
+
+export type RemovePlayerActionPropsType = {
+    pid: string;
+    cid: string;
+    token: string;
+    setIsRemovePlayer: (isRemovePlayer: boolean) => void;
+}
+
+export type UpdatePlayerActionPropsType = {
+    pid: string;
+    cid: string;
+    token: string;
+    playerData: ICreatePlayer;
+    setIsEditPlayer: (isEditPlayer: boolean) => void;
+}

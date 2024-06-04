@@ -106,3 +106,20 @@ export const createPlayerApi = async (tid: string, cid: string, playerData: ICre
         }
     })
 }
+
+export const removePlayerApi = async (pid: string, cid: string, token: string) => {
+    return await api.delete(`/player/${pid}/competitor/${cid}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const updatePlayerApi = async (pid: string, cid: string, playerData: ICreatePlayer, token: string) => {
+    return await api.put(`/player/${pid}/competitor/${cid}`, playerData, {
+        headers: {
+            'Content-type': "application/json",
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

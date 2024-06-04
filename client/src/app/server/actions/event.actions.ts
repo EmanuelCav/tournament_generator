@@ -209,3 +209,34 @@ export const createPlayerAction = createAsyncThunk('events/createplayer', async 
 
 })
 
+export const removePlayerAction = createAsyncThunk('events/removeplayer', async (playerData: typesActionsEvent.RemovePlayerActionPropsType, { dispatch }) => {  
+    
+    try {
+        
+        const { data } = await eventApi.removePlayerApi(playerData.pid, playerData.cid, playerData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        playerData.setIsRemovePlayer(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const updatePlayerAction = createAsyncThunk('events/updateplayer', async (playerData: typesActionsEvent.UpdatePlayerActionPropsType, { dispatch }) => {  
+    
+    try {
+        
+        const { data } = await eventApi.updatePlayerApi(playerData.pid, playerData.cid, playerData.playerData, playerData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        playerData.setIsEditPlayer(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})

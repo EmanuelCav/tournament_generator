@@ -83,11 +83,11 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
 
 export const removePlayer = async (req: Request, res: Response): Promise<Response> => {
 
-    const { pid, cid } = req.body
+    const { pid, cid } = req.params
 
     try {
 
-        const player = await Team.findById(pid)
+        const player = await Player.findById(pid)
 
         if (!player) {
             return res.status(400).json({ message: "Player does not exists" })
@@ -109,7 +109,13 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
             return res.status(400).json({ message: "Event does not exists" })
         }
 
-        await Player.findByIdAndUpdate(pid, {
+        const team = await Team.findById(player.team)
+
+        if(!team) {
+            return res.status(400).json({ message: "Team does not exists" })
+        }
+
+        await Team.findByIdAndUpdate(player.team, {
             $pull: {
                 players: pid
             }
@@ -139,6 +145,65 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
         })
 
         await Player.findByIdAndDelete(pid)
+
+        return res.status(200).json(showEvent)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const updatePlayer = async (req: Request, res: Response): Promise<Response> => {
+
+    const { pid, cid } = req.params
+    const { name, position } = req.body
+
+    try {
+
+        const user = await Competitor.findById(cid).populate("role")
+
+        if (!user) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        if (user.role.role !== `${privileged_role}`) {
+            return res.status(401).json({ message: "You cannot create a player" })
+        }
+
+        const event = await Event.findById(user.event)
+
+        if (!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        await Player.findByIdAndUpdate(pid, {
+            name,
+            position
+        }, {
+            new: true
+        })
+
+        const showEvent = await Event.findById(user.event).populate({
+            path: "teams",
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
+                path: "players"
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        })
 
         return res.status(200).json(showEvent)
 

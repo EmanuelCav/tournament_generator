@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 
-import { IEvent, IReducerGet, IReferee, ITeam } from "../interface/Event";
+import { IEvent, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
 import { IUserInfo } from "../interface/User";
 
 export type EventNavigationPropsType = {
@@ -28,6 +28,8 @@ export type ShowTeamsPropsType = {
     handleAddTeam: () => void;
     handleEditTeam: (team: ITeam) => void;
     handleAddPlayer: (team: ITeam) => void;
+    handleSurePlayer: (player: IPlayer) => void;
+    handleEditPlayer: (player: IPlayer) => void;
 }
 
 export type ShowTeamPropsType = {
@@ -36,6 +38,8 @@ export type ShowTeamPropsType = {
     handleEditTeam: (team: ITeam) => void;
     handleAddPlayer: (team: ITeam) => void;
     isShowPlayers?: boolean;
+    handleSurePlayer?: (player: IPlayer) => void;
+    handleEditPlayer?: (player: IPlayer) => void;
 }
 
 export type EditTeamPropsType = {
@@ -77,4 +81,11 @@ export type FormAddPlayerPropsType = {
     isEdit: boolean;
     setIsEditPlayer: (isEditPlayer: boolean) => void;
     team: ITeam;
+    player: IPlayer;
+}
+
+export type PlayerPropsType = {
+    player: IPlayer;
+    handleSurePlayer: (player: IPlayer) => void;
+    handleEditPlayer: (player: IPlayer) => void;
 }
