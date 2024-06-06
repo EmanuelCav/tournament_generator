@@ -73,7 +73,7 @@ export const joinEventApi = async (id: string, token: string) => {
 }
 
 export const createRefereeApi = async (id: string, refereeData: ICreateTeam, token: string) => {
-    return await api.post(`/referee/competitor/${id}`, refereeData, {
+    return await api.post(`/referees/competitors/${id}`, refereeData, {
         headers: {
             'Content-type': "application/json",
             'Authorization': `Bearer ${token}`
@@ -82,7 +82,7 @@ export const createRefereeApi = async (id: string, refereeData: ICreateTeam, tok
 }
 
 export const removeRefereeApi = async (rid: string, cid: string, token: string) => {
-    return await api.delete(`/referee/${rid}/competitor/${cid}`, {
+    return await api.delete(`/referees/${rid}/competitors/${cid}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -90,7 +90,7 @@ export const removeRefereeApi = async (rid: string, cid: string, token: string) 
 }
 
 export const updateRefereeApi = async (rid: string, cid: string, refereeData: ICreateTeam, token: string) => {
-    return await api.put(`/referee/${rid}/competitor/${cid}`, refereeData, {
+    return await api.put(`/referees/${rid}/competitors/${cid}`, refereeData, {
         headers: {
             'Content-type': "application/json",
             'Authorization': `Bearer ${token}`
@@ -99,7 +99,7 @@ export const updateRefereeApi = async (rid: string, cid: string, refereeData: IC
 }
 
 export const createPlayerApi = async (tid: string, cid: string, playerData: ICreatePlayer, token: string) => {
-    return await api.post(`/player/team/${tid}/competitor/${cid}`, playerData, {
+    return await api.post(`/players/teams/${tid}/competitors/${cid}`, playerData, {
         headers: {
             'Content-type': "application/json",
             'Authorization': `Bearer ${token}`
@@ -108,7 +108,7 @@ export const createPlayerApi = async (tid: string, cid: string, playerData: ICre
 }
 
 export const removePlayerApi = async (pid: string, cid: string, token: string) => {
-    return await api.delete(`/player/${pid}/competitor/${cid}`, {
+    return await api.delete(`/players/${pid}/competitors/${cid}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -116,9 +116,17 @@ export const removePlayerApi = async (pid: string, cid: string, token: string) =
 }
 
 export const updatePlayerApi = async (pid: string, cid: string, playerData: ICreatePlayer, token: string) => {
-    return await api.put(`/player/${pid}/competitor/${cid}`, playerData, {
+    return await api.put(`/players/${pid}/competitors/${cid}`, playerData, {
         headers: {
             'Content-type': "application/json",
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const generateMatchApi = async (id: string, token: string) => {
+    return await api.patch(`/matchs/events/${id}`, null, {
+        headers: {
             'Authorization': `Bearer ${token}`
         }
     })

@@ -56,10 +56,20 @@ const eventSchema = new Schema({
         ref: 'Team'
     }],
 
-    matchs: [{
-        type: Types.ObjectId,
-        ref: 'Match'
-    }],
+    matchs: [[{
+        local: {
+            name: String,
+            image: String
+        },
+        targetLocal: Number,
+        visitant: {
+            name: String,
+            image: String
+        },
+        targetVisitant: Number,
+        referee: Types.ObjectId,
+        schedule: Date
+    }]],
 
     comments: [{
         type: Types.ObjectId,

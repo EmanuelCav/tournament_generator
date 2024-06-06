@@ -89,3 +89,14 @@ export type PlayerPropsType = {
     handleSurePlayer: (player: IPlayer) => void;
     handleEditPlayer: (player: IPlayer) => void;
 }
+
+export type ShowEventPropsType = {
+    dispatch: Dispatch<any>;
+    event: IEvent;
+    user: IUserInfo;
+}
+
+export type GeneratePropsType = {
+    generateNow: () => void;
+    disabled: boolean;
+}

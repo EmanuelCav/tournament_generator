@@ -104,3 +104,8 @@ export type UpdatePlayerActionPropsType = {
     playerData: ICreatePlayer;
     setIsEditPlayer: (isEditPlayer: boolean) => void;
 }
+
+export type GenerateMatchsActionPropsType = {
+    id: string;
+    token: string;
+}

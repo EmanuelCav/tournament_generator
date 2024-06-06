@@ -187,7 +187,7 @@ const Event = () => {
                     get.isTeams && <ShowTeams handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event} handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} />
                 }
                 {
-                    get.isMatchdays && <ShowEvent event={event.event} />
+                    get.isMatchdays && <ShowEvent event={event.event} user={user.user} dispatch={dispatch} />
                 }
                 {
                     get.isPeople && <ShowPeople competitors={event.event?.competitors!} />

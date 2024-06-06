@@ -15,7 +15,7 @@ export interface IEvent {
     admin?: string;
     teams?: ITeam[];
     competitors?: ICompetitor[];
-    matchs?: IMatch[];
+    matchs?: IMatch[][];
     referees?: IReferee[];
     createdAt?: string;
     updatedAt?: string;
@@ -48,14 +48,16 @@ export interface ICategory {
 }
 
 export interface IMatch {
-    _id: string;
-    local: ITeam;
-    targetLocal: Number;
-    visitant: ITeam;
-    targetVisitant: Number;
+    local: ITeamMatch;
+    targetLocal: number;
+    visitant: ITeamMatch;
+    targetVisitant: number;
     schedule: Date;
-    createdAt: string;
-    updatedAt: string;
+}
+
+interface ITeamMatch {
+    logo: string;
+    name: string;
 }
 
 export interface ICompetitor {
@@ -87,6 +89,7 @@ export interface ITeam {
     favor: Number;
     against: Number;
     players: IPlayer[];
+    matchs: IMatch[][];
     created_at: string;
     updated_at: string;
 }

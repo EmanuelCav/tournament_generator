@@ -20,21 +20,23 @@ export interface IEvent extends Document {
     competitors: Types.ObjectId[];
     referees: Types.ObjectId[];
     teams: Types.ObjectId[];
-    matchs: Types.ObjectId[];
+    preview: IMatch[][];
     created_at: NativeDate;
     updated_at: NativeDate;
 }
 
-export interface IMatch extends Document {
-    _id: Types.ObjectId;
-    local: Types.ObjectId;
+export interface IMatch {
+    local: ITeamMatch;
     targetLocal: number;
-    visitant: Types.ObjectId;
+    visitant: ITeamMatch;
     targetVisitant: number;
-    referee: Types.ObjectId;
-    schedule: Date;
-    created_at: NativeDate;
-    updated_at: NativeDate;
+    referee?: Types.ObjectId;
+    schedule?: Date;
+}
+
+interface ITeamMatch {
+    logo: string;
+    name: string;
 }
 
 export interface ICategory extends Document {

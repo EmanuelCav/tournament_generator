@@ -240,3 +240,17 @@ export const updatePlayerAction = createAsyncThunk('events/updateplayer', async 
     }
 
 })
+
+export const generateMatchsAction = createAsyncThunk('events/generateMatchs', async (eventData: typesActionsEvent.GenerateMatchsActionPropsType, { dispatch }) => {  
+    
+    try {
+        
+        const { data } = await eventApi.generateMatchApi(eventData.id, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
