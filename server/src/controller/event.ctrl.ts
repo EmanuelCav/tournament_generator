@@ -20,7 +20,7 @@ export const events = async (req: Request, res: Response): Promise<Response> => 
 
         const showEvents = await Event.find({
             admin: {
-                $nin: [req.user]
+                $nin: [req.permission]
             }
         }).populate({
             path: "competitors",

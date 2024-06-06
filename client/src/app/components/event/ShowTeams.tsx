@@ -6,15 +6,18 @@ import ShowTeam from "./components/showTeams/ShowTeam"
 import { ITeam } from "../../interface/Event"
 import { ShowTeamsPropsType } from "../../types/event.types"
 
-const ShowTeams = ({ event, handleSure, handleAddTeam, handleEditTeam, handleAddPlayer, handleSurePlayer, handleEditPlayer }: ShowTeamsPropsType) => {
+const ShowTeams = ({ event, user, handleSure, handleAddTeam, handleEditTeam, handleAddPlayer, handleSurePlayer, handleEditPlayer }: ShowTeamsPropsType) => {
 
     const [isShowPlayers, setIsShowPlayers] = useState<boolean>(false)
 
     return (
         <Box flex={1} alignItems={'center'} justifyContent={'center'} py={2} px={4}>
-            <Button variant='outlined' sx={{ mt: 4, mx: 2 }} color='success' onClick={handleAddTeam}>
-                Add a team
-            </Button>
+            {
+                event.competitors?.find((c) => c.user._id === user._id)?.role.role === 'ADMIN' &&
+                <Button variant='outlined' sx={{ mt: 4, mx: 2 }} color='success' onClick={handleAddTeam}>
+                    Add a team
+                </Button>
+            }
             {
                 event.teams?.length === 0 && <Typography mt={2} textAlign='center' color='#33cc33' variant='h5'>There are not teams yet. Start to add.</Typography>
             }

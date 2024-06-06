@@ -6,7 +6,7 @@ import HeadMatchs from "./components/HeadMatchs"
 
 const Matchdays = ({ matchs }: { matchs: IMatch[][] }) => {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ mt: 2 }}>
       <Table>
         <HeadMatchs />
         {matchs.map((fixture: IMatch[], index: number) => (

@@ -69,6 +69,7 @@ const FormAddReferee = ({ handleAddReferee, dispatch, user, event, isEdit, refer
             }}
             onChange={handleChange}
             autoComplete='off'
+            inputProps={{ maxLength: 40 }}
           />
           <Button
             type="submit"

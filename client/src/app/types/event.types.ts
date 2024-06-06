@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 
 import { IEvent, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
-import { IUserInfo } from "../interface/User";
+import { IUser, IUserInfo } from "../interface/User";
 
 export type EventNavigationPropsType = {
     Icon: any;
@@ -30,6 +30,7 @@ export type ShowTeamsPropsType = {
     handleAddPlayer: (team: ITeam) => void;
     handleSurePlayer: (player: IPlayer) => void;
     handleEditPlayer: (player: IPlayer) => void;
+    user: IUser;
 }
 
 export type ShowTeamPropsType = {
@@ -52,9 +53,10 @@ export type EditTeamPropsType = {
 
 export type ShowRefereesPropsType = {
     handleAddReferee: () => void;
-    referees: IReferee[]
+    event: IEvent;
     handleSure: (referee: IReferee) => void;
     handleEditReferee: (referee: IReferee) => void;
+    user: IUser;
 }
 
 export type FormAddRefereePropsType = {

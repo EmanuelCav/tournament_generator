@@ -1,11 +1,9 @@
-import { Box, Paper } from '@mui/material'
+import { Paper, Typography } from '@mui/material'
 
 const HeaderCreate = () => {
     return (
-        <Paper elevation={3}>
-            <Box component="form" noValidate p={2}>
-
-            </Box>
+        <Paper elevation={3} sx={{ p: 2 }}>
+            <Typography variant='h5' color={'#33cc33'}>CREATE A SPORTING EVENT</Typography>
         </Paper>
     )
 }

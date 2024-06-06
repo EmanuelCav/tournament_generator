@@ -5,11 +5,11 @@ import * as eventReducer from "../reducer/event.reducer";
 
 import * as typesActionsEvent from "../../types/action.types";
 
-export const eventsAction = createAsyncThunk('events/events', async (_, { dispatch }) => {
+export const eventsAction = createAsyncThunk('events/events', async (token: string | undefined, { dispatch }) => {
 
     try {
 
-        const { data } = await eventApi.eventsApi()
+        const { data } = await eventApi.eventsApi(token)
 
         dispatch(eventReducer.events(data))
 
@@ -55,7 +55,7 @@ export const createEventAction = createAsyncThunk('events/createevent', async (e
 
         dispatch(eventReducer.createEvent(data))
 
-        eventData.setIsCreate(false)
+        eventData.navigate(`/events/${data._id}`)
 
     } catch (error) {
         console.log(error);

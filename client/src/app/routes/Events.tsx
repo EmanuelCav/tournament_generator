@@ -20,7 +20,7 @@ const Events = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(eventsAction() as any)
+        dispatch(eventsAction(user.user.token!) as any)
     }, [])
     
     return (

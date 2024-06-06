@@ -72,6 +72,7 @@ const FormAddPlayer = ({ isEdit, handleAddPlayer, setIsEditPlayer, dispatch, eve
             }}
             onChange={handleChange}
             autoComplete='off'
+            inputProps={{ maxLength: 40 }}
           />
           <TextField
             margin="normal"

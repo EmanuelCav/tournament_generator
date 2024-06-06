@@ -1,8 +1,12 @@
 import { ICreatePlayer, ICreateTeam } from "../../interface/Event";
 import { api } from "./api";
 
-export const eventsApi = async () => {
-    return await api.get('/events')
+export const eventsApi = async (token: string | undefined) => {
+    return await api.get('/events', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
 }
 
 export const userEventApi = async (token: string) => {

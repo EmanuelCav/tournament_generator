@@ -3,13 +3,15 @@ import { Router } from 'express'
 import * as eventCtrl from '../controller/event.ctrl'
 
 import auth from '../middleware/auth/auth'
+import permission from '../middleware/auth/permission';
+
 import eventValid from '../middleware/validation/validation/event.valid'
 
 import { upload } from '../helper/multer'
 
 const router = Router()
 
-router.get('/events', eventCtrl.events)
+router.get('/events', permission, eventCtrl.events)
 router.get('/events/users', auth, eventCtrl.userEvents)
 router.get('/events/:id', auth, eventCtrl.event)
 router.post('/events', auth, upload.single("file"), eventValid, eventCtrl.createEvent)

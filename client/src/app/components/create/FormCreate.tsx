@@ -8,7 +8,7 @@ import { categoriesApi } from '../../server/api/category.api'
 import { statusApi } from '../../server/api/status.api'
 import { createEventAction } from '../../server/actions/event.actions'
 
-const FormCreate = ({ user, dispatch, setIsCreate }: FormCreatePropsType) => {
+const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
 
     const initialState: ICreateEvent = {
         event: "",
@@ -81,7 +81,7 @@ const FormCreate = ({ user, dispatch, setIsCreate }: FormCreatePropsType) => {
         dispatch(createEventAction({
             formData,
             token: user.token!,
-            setIsCreate
+            navigate
         }))
 
     }
@@ -111,6 +111,7 @@ const FormCreate = ({ user, dispatch, setIsCreate }: FormCreatePropsType) => {
                         },
                     }}
                     onChange={handleChange}
+                    inputProps={{ maxLength: 40 }}
                 />
                 <TextField
                     required
@@ -129,6 +130,7 @@ const FormCreate = ({ user, dispatch, setIsCreate }: FormCreatePropsType) => {
                         },
                     }}
                     onChange={handleChange}
+                    inputProps={{ maxLength: 200 }}
                 />
                 <Box className='image-event-form' display='flex' justifyContent='space-evenly' alignItems='center' flexDirection='column' my={2}>
                     <Typography variant='h6' my={1}>Tournament image</Typography>
@@ -143,8 +145,8 @@ const FormCreate = ({ user, dispatch, setIsCreate }: FormCreatePropsType) => {
                         id="category"
                         name="category"
                         select
-                        label="Select"
-                        helperText="Select a tournament event"
+                        label="Format"
+                        helperText="Select a tournament format"
                         onChange={handleChange}
                     >
                         {categories.map((option) => (
@@ -158,7 +160,7 @@ const FormCreate = ({ user, dispatch, setIsCreate }: FormCreatePropsType) => {
                         id="status"
                         name="status"
                         select
-                        label="Select"
+                        label="Status"
                         helperText="Select a tournament status"
                         onChange={handleChange}
                     >

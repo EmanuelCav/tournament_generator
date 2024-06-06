@@ -22,7 +22,7 @@ export type EventActionPropsType = {
 export type CreateEventActionPropsType = {
     formData: FormData;
     token: string;
-    setIsCreate: (isCreate: boolean) => void;
+    navigate: NavigateFunction;
 }
 
 export type CreateTeamActionPropsType = {

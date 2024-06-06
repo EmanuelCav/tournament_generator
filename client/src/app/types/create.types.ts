@@ -7,7 +7,7 @@ import { IEvent, ITeam } from "../interface/Event";
 export type FormCreatePropsType = {
     dispatch: Dispatch<any>;
     user: IUserInfo;
-    setIsCreate: (isCreate: boolean) => void;
+    navigate: NavigateFunction;
 }
 
 export type AddTeamsPropsType = {

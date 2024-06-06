@@ -22,11 +22,17 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
       {
         event.matchs?.length! > 0 ? (
           <>
-            <Button size="large" variant="contained" color="primary" sx={{ my: 2 }} onClick={generateNow}>GENERATE AGAIN</Button>
+            {
+              event.admin === user.user?._id && <Button size="large" variant="contained" color="primary" sx={{ my: 2 }} onClick={generateNow}>GENERATE AGAIN</Button>
+            }
             <Matchs matchs={event.matchs!} />
           </>
         ) : (
-          <Generate disabled={event.teams?.length! < 2} generateNow={generateNow} />
+          <>
+            {
+              event.admin === user.user?._id && <Generate disabled={event.teams?.length! < 2} generateNow={generateNow} />
+            }
+          </>
         )
       }
     </Box>

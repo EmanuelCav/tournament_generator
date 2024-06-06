@@ -35,7 +35,9 @@ const PublicEvent = ({ event, navigate, text, dispatch, user }: PublicEventProps
                         {event.event}
                     </Typography>
                     <Typography variant="h6" align="center">
-                        {event.description}
+                        {
+                            event.description?.length! > 50 ? `${event.description?.slice(0, 50)} ...` : event.description
+                        }
                     </Typography>
                 </CardContent>
                 <Button fullWidth variant='contained' size='medium' color='success' onClick={joinEvent}>{text}</Button>

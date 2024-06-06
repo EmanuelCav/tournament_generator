@@ -80,6 +80,7 @@ const FormAddTeam = ({ handleAddTeam, dispatch, user, event }: FormAddTeamPropsT
                         }}
                         onChange={handleChange}
                         autoComplete="off"
+                        inputProps={{ maxLength: 35 }}
                     />
                     <Button
                         type="submit"
