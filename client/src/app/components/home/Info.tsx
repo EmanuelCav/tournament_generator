@@ -9,11 +9,13 @@ const Info = () => {
             height: '100vh',
             backgroundImage: `url("/background.jpg")`,
             backgroundSize: 'cover',
-            width: '100%'
+            width: '100%',
         }}>
-            <Container fixed maxWidth="lg">
-                <HeaderHome />
-                <Cards />
+            <Container fixed maxWidth="lg" sx={{ height: '100%' }}>
+                <Box display='flex' height={'100%'} justifyContent='space-around' alignItems='center' flexDirection='column'>
+                    <HeaderHome />
+                    <Cards />
+                </Box>
             </Container>
         </Box>
     )

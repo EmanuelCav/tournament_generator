@@ -4,7 +4,7 @@ import { ITeam } from "../../../../../interface/Event"
 
 const TextTeam = ({ team }: { team: ITeam }) => {
     return (
-        <Box display={'flex'} justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
+        <Box display={'flex'} justifyContent={'center'} alignItems={'flex-start'} flexDirection={'column'}>
             <Box 
                 src={team.logo.image}
                 component='img'

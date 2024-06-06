@@ -10,7 +10,7 @@ const ImageAuth = () => {
                 width={386}
                 height={386}
             />
-            <Typography variant="h4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore iste reiciendis, consequatur blanditiis debitis vitae at eum voluptas. Doloremque tenetur obcaecati explicabo excepturi nihil sapiente amet labore. Exercitationem, illum asperiores!</Typography>
+            <Typography variant="h4" color='#33cc33'>The boost your event needs</Typography>
         </Box>
     )
 }

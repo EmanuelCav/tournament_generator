@@ -41,3 +41,8 @@
   cursor: pointer;
 }
 
+.swiper-button-next,
+.swiper-button-prev{
+    visibility: hidden;
+  }
+

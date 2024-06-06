@@ -1,9 +1,15 @@
-import { Box, Typography } from "@mui/material"
+import { Box } from "@mui/material"
 
 const ImageHeaderHome = () => {
     return (
         <Box display='flex' justifyContent='center' alignItems='center' width='50%'>
-            <Typography>ImageHeaderHome</Typography>
+            <Box 
+                component="img"
+                src="logo.png"
+                alt="image"
+                width={200}
+                height={200}
+            />
         </Box>
     )
 }
