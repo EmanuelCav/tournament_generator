@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 
-import { IEvent, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
+import { IEvent, IMatch, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
 import { IUser, IUserInfo } from "../interface/User";
 
 export type EventNavigationPropsType = {
@@ -110,4 +110,17 @@ export type ShowEventPropsType = {
 export type GeneratePropsType = {
     generateNow: () => void;
     disabled: boolean;
+}
+
+export type MatchsPropsType = {
+    handleAddReferee: (match: IMatch) => void;
+    matchs: IMatch[][];
+}
+
+export type AddRefereePropsType = {
+    dispatch: Dispatch<any>;
+    user: IUserInfo;
+    handleAddReferee: (match: IMatch) => void;
+    event: IEvent;
+    matchData: IMatch;
 }

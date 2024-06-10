@@ -53,8 +53,6 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
-
-
         setEventData({ ...eventData, [name]: value })
     }
 
@@ -179,7 +177,7 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
                     color='success'
                     size='large'
                 >
-                    NEXT
+                    GENERATE
                 </Button>
             </Box>
         </Paper>

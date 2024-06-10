@@ -48,11 +48,13 @@ export interface ICategory {
 }
 
 export interface IMatch {
+    _id: string;
     local: ITeamMatch;
-    targetLocal: number;
+    targetLocal?: number;
     visitant: ITeamMatch;
-    targetVisitant: number;
-    schedule: Date;
+    targetVisitant?: number;
+    referee?: string;
+    schedule?: Date;
 }
 
 interface ITeamMatch {

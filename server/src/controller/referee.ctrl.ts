@@ -6,6 +6,20 @@ import Competitor from '../models/competitor';
 
 import { privileged_role } from "../config/config";
 
+export const referees = async (req: Request, res: Response): Promise<Response> => {
+
+    try {
+
+        const showReferees = await Referee.find()
+
+        return res.status(200).json(showReferees)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
 export const createReferee = async (req: Request, res: Response): Promise<Response> => {
 
     const { cid } = req.params

@@ -21,18 +21,19 @@ export interface IEvent extends Document {
     competitors: ICompetitor[];
     referees: Types.ObjectId[];
     teams: Types.ObjectId[];
-    preview: IMatch[][];
+    matchs: IMatch[][];
     done: boolean;
     created_at: NativeDate;
     updated_at: NativeDate;
 }
 
 export interface IMatch {
+    _id?: Types.ObjectId;
     local: ITeamMatch;
-    targetLocal: number;
+    targetLocal?: number | null;
     visitant: ITeamMatch;
-    targetVisitant: number;
-    referee?: Types.ObjectId;
+    targetVisitant?: number | null;
+    referee?: string;
     schedule?: Date;
 }
 

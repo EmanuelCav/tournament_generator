@@ -198,6 +198,16 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.joinTeamAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(eventAction.addRefereeAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.addRefereeAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.addRefereeAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

@@ -268,3 +268,19 @@ export const joinTeamAction = createAsyncThunk('events/jointeam', async (eventDa
     }
 
 })
+
+export const addRefereeAction = createAsyncThunk('events/addreferee', async (eventData: typesActionsEvent.AddRefereeActionPropsType, { dispatch }) => {  
+    
+    try {
+
+        const { data } = await eventApi.refereeMatchApi(eventData.match._id, eventData.eid, eventData.referee, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        eventData.handleAddReferee(eventData.match)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})

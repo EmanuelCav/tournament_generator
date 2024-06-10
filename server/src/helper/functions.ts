@@ -31,12 +31,10 @@ export const generateMatchdays = (shuffleArr: any[]): IMatch[][] => {
                     name: j % 2 === 0 ? shuffleArr[j].name : shuffleArr[shuffleArr.length - 1 - j].name,
                     logo: j % 2 === 0 ? shuffleArr[j].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
                 },
-                targetLocal: 0,
                 visitant: {
                     name: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].name : shuffleArr[j].name,
                     logo: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].logo.image : shuffleArr[j].logo.image
-                },
-                targetVisitant: 0
+                }
             })
         }
 

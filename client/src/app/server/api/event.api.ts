@@ -144,3 +144,19 @@ export const joinTeamApi = async (id: string, token: string) => {
         }
     })
 }
+
+export const refereeMatchApi = async (mid: string, eid: string, referee: string, token: string) => {
+    return await api.put(`/matchs/${mid}/events/${eid}?name=${referee}`, null, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const refereesApi = async (token: string) => {
+    return await api.get(`/referees`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

@@ -59,15 +59,15 @@ const eventSchema = new Schema({
     matchs: [[{
         local: {
             name: String,
-            image: String
+            logo: String
         },
         targetLocal: Number,
         visitant: {
             name: String,
-            image: String
+            logo: String
         },
         targetVisitant: Number,
-        referee: Types.ObjectId,
+        referee: String,
         schedule: Date
     }]],
 

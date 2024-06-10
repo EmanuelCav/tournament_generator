@@ -7,6 +7,7 @@ const HeadMatchs = () => {
                 <TableCell sx={{ fontSize: 20, color: '#33cc33' }}>Date</TableCell>
                 <TableCell sx={{ fontSize: 20, color: '#33cc33' }}>Local</TableCell>
                 <TableCell sx={{ fontSize: 20, color: '#33cc33' }}>Visitant</TableCell>
+                <TableCell sx={{ fontSize: 20, color: '#33cc33' }}>Referee</TableCell>
             </TableRow>
         </TableHead>
     )
