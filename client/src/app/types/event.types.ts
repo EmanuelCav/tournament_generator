@@ -116,6 +116,7 @@ export type MatchsPropsType = {
     handleAddReferee: (match: IMatch) => void;
     matchs: IMatch[][];
     handleAddScore: (match: IMatch) => void;
+    handleUpdateSchedule: (match: IMatch) => void;
     isAdmin: boolean;
 }
 
@@ -131,6 +132,14 @@ export type AddScorePropsType = {
     dispatch: Dispatch<any>;
     user: IUserInfo;
     setIsAddScore: (isAddScore: boolean) => void;
+    event: IEvent;
+    matchData: IMatch;
+}
+
+export type UpdateSchedulePropsType = {
+    dispatch: Dispatch<any>;
+    user: IUserInfo;
+    handleUpdateSchedule: (match: IMatch) => void;
     event: IEvent;
     matchData: IMatch;
 }

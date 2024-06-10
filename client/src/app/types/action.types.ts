@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 
 import { ILogin, IRegister } from "../interface/User";
-import { ICreatePlayer, ICreateTeam, IMatch, ITarget, ITeam } from "../interface/Event";
+import { ICreatePlayer, ICreateTeam, IMatch, ISchedule, ITarget, ITeam } from "../interface/Event";
 
 export type LoginActionPropsType = {
     navigate: NavigateFunction;
@@ -124,4 +124,12 @@ export type AddScoreActionPropsType = {
     token: string;
     targetData: ITarget;
     setIsAddScore: (isScore: boolean) => void;
+}
+
+export type UpdateScheduleActionPropsType = {
+    eid: string;
+    match: IMatch;
+    token: string;
+    scheduleData: ISchedule;
+    handleUpdateSchedule: (match: IMatch) => void;
 }

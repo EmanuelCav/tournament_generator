@@ -300,3 +300,19 @@ export const updateScoreAction = createAsyncThunk('events/addscore', async (even
     }
 
 })
+
+export const updateScheduleAction = createAsyncThunk('events/updateschedule', async (eventData: typesActionsEvent.UpdateScheduleActionPropsType, { dispatch }) => {  
+    
+    try {
+
+        const { data } = await eventApi.updateScheduleApi(eventData.match._id, eventData.eid, eventData.scheduleData, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        eventData.handleUpdateSchedule(eventData.match)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})

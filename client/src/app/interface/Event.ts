@@ -54,7 +54,7 @@ export interface IMatch {
     visitant: ITeamMatch;
     targetVisitant?: number;
     referee?: string;
-    schedule?: Date;
+    schedule?: string;
 }
 
 interface ITeamMatch {
@@ -131,4 +131,9 @@ export interface ICreatePlayer {
 export interface ITarget {
     targetLocal: number;
     targetVisitant: number;
+}
+
+export interface ISchedule {
+    schedule: string;
+    day: string;
 }

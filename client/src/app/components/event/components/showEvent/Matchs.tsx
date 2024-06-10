@@ -5,7 +5,7 @@ import HeadMatchs from "./components/HeadMatchs"
 import { IMatch } from "../../../../interface/Event"
 import { MatchsPropsType } from "../../../../types/event.types"
 
-const Matchs = ({ matchs, handleAddReferee, handleAddScore, isAdmin }: MatchsPropsType) => {
+const Matchs = ({ matchs, handleAddReferee, handleAddScore, handleUpdateSchedule, isAdmin }: MatchsPropsType) => {
   return (
     <TableContainer component={Paper} sx={{ mt: 2 }}>
       <Table>
@@ -17,14 +17,19 @@ const Matchs = ({ matchs, handleAddReferee, handleAddScore, isAdmin }: MatchsPro
               {
                 fixture.map((match: IMatch, i: number) => {
                   return <TableRow key={i}>
-                    <TableCell component="th" scope="row">{match.schedule ? match.schedule.getDay() : "Not defined"}</TableCell>
+                    <TableCell component="th" scope="row" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                      {match.schedule ? `${match.schedule.split("T")[0]} - ${match.schedule.split("T")[1].split(".")[0]}` : "Not defined"}
+                      {
+                        isAdmin && <Button sx={{ mt: 1 }} variant="contained" color="primary" onClick={() => handleUpdateSchedule(match)}>DEFINE</Button>
+                      }
+                    </TableCell>
                     <TableCell align="right">{match.local.name}</TableCell>
                     <TableCell>{match.targetLocal}</TableCell>
                     <TableCell>
                       {
                         isAdmin ? <Button sx={{ mt: 1 }} variant="contained" color="primary" onClick={() => handleAddScore(match)}>DEFINE</Button> : "-"
                       }
-                      </TableCell>
+                    </TableCell>
                     <TableCell>{match.targetVisitant}</TableCell>
                     <TableCell>{match.visitant.name}</TableCell>
                     <TableCell sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
