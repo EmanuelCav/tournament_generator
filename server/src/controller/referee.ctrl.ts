@@ -49,6 +49,12 @@ export const createReferee = async (req: Request, res: Response): Promise<Respon
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",
@@ -112,6 +118,12 @@ export const removeReferee = async (req: Request, res: Response): Promise<Respon
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",
@@ -178,6 +190,12 @@ export const updateReferee = async (req: Request, res: Response): Promise<Respon
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",

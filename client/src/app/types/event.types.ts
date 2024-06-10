@@ -14,6 +14,8 @@ export type EventsNavigationPropsType = {
     dispatch: Dispatch<any>;
     handleSure: () => void;
     get: IReducerGet;
+    event: IEvent;
+    user: IUser;
 }
 
 export type SurePropsType = {
@@ -30,6 +32,7 @@ export type ShowTeamsPropsType = {
     handleAddPlayer: (team: ITeam) => void;
     handleSurePlayer: (player: IPlayer) => void;
     handleEditPlayer: (player: IPlayer) => void;
+    joinTeam: (id: string) => void;
     user: IUser;
 }
 
@@ -41,6 +44,10 @@ export type ShowTeamPropsType = {
     isShowPlayers?: boolean;
     handleSurePlayer?: (player: IPlayer) => void;
     handleEditPlayer?: (player: IPlayer) => void;
+    user: IUser;
+    event: IEvent;
+    joinTeam: (id: string) => void;
+    isJoined: boolean;
 }
 
 export type EditTeamPropsType = {
@@ -73,6 +80,7 @@ export type RefereePropsType = {
     referee: IReferee;
     handleSure: (referee: IReferee) => void;
     handleEditReferee: (referee: IReferee) => void;
+    isAvailableEdit?: boolean;
 }
 
 export type FormAddPlayerPropsType = {
@@ -90,6 +98,7 @@ export type PlayerPropsType = {
     player: IPlayer;
     handleSurePlayer: (player: IPlayer) => void;
     handleEditPlayer: (player: IPlayer) => void;
+    isAvailableEdit?: boolean;
 }
 
 export type ShowEventPropsType = {

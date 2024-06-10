@@ -3,6 +3,7 @@ import { unlink } from "fs-extra";
 
 import Team from '../models/team'
 import Event from '../models/event'
+import Competitor from '../models/competitor'
 import Image from '../models/image'
 
 import { image_default_id } from "../config/config";
@@ -77,6 +78,12 @@ export const addTeam = async (req: Request, res: Response): Promise<Response> =>
                     select: "image"
                 }, {
                     path: "players"
+                }, {
+                    path: "competitors",
+                    populate: {
+                        path: "user",
+                        select: "nickname"
+                    }
                 }]
             }).populate({
                 path: "competitors",
@@ -135,6 +142,12 @@ export const removeTeam = async (req: Request, res: Response): Promise<Response>
                     select: "image"
                 }, {
                     path: "players"
+                }, {
+                    path: "competitors",
+                    populate: {
+                        path: "user",
+                        select: "nickname"
+                    }
                 }]
             }).populate({
                 path: "competitors",
@@ -220,6 +233,12 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",
@@ -239,6 +258,77 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
         }
 
         return res.status(200).json(eventShow)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const joinTeam = async (req: Request, res: Response): Promise<Response> => {
+
+    const { id } = req.params
+
+    try {
+
+        const team = await Team.findById(id)
+
+        if (!team) {
+            return res.status(400).json({ message: "Team does not exists" })
+        }
+
+        const competitor = await Competitor.findOne({ user: req.user, event: team.event })
+
+        if(!competitor) {
+            return res.status(400).json({ message: "Competitor does not exists" })
+        }
+
+        if (team.competitors.find((c) => String(c) === String(competitor._id))) {
+            await Team.findByIdAndUpdate(id, {
+                $pull: {
+                    competitors: competitor._id
+                }
+            }, {
+                new: true
+            })
+        } else {
+            await Team.findByIdAndUpdate(id, {
+                $push: {
+                    competitors: competitor._id
+                }
+            }, {
+                new: true
+            })
+        }
+
+        const event = await Event.findById(team.event).populate({
+            path: "teams",
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
+                path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        })
+
+        return res.status(200).json(event)
 
     } catch (error) {
         throw error

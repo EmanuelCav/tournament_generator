@@ -59,6 +59,12 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",
@@ -130,6 +136,12 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",
@@ -191,6 +203,12 @@ export const updatePlayer = async (req: Request, res: Response): Promise<Respons
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",

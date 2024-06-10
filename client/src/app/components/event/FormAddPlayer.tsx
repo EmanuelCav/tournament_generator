@@ -50,7 +50,7 @@ const FormAddPlayer = ({ isEdit, handleAddPlayer, setIsEditPlayer, dispatch, eve
   }
 
   return (
-    <Box display='flex' zIndex={16} justifyContent='center' width='100%' height='100vh' alignItems='center' position='absolute' top={0} left={0} sx={{
+    <Box display='flex' zIndex={16} justifyContent='center' width='100%' height='100vh' alignItems='center' position='fixed' top={0} left={0} sx={{
       background: 'rgba(0, 0, 0, 0.5)'
     }}>
       <Paper elevation={3} sx={{ p: 2 }}>

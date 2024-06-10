@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Box, Typography, Button } from "@mui/material"
 
 import ShowTeam from "./components/showTeams/ShowTeam"
@@ -6,9 +6,27 @@ import ShowTeam from "./components/showTeams/ShowTeam"
 import { ITeam } from "../../interface/Event"
 import { ShowTeamsPropsType } from "../../types/event.types"
 
-const ShowTeams = ({ event, user, handleSure, handleAddTeam, handleEditTeam, handleAddPlayer, handleSurePlayer, handleEditPlayer }: ShowTeamsPropsType) => {
+const ShowTeams = ({ event, user, handleSure, handleAddTeam, handleEditTeam, handleAddPlayer, handleSurePlayer, handleEditPlayer, joinTeam }: ShowTeamsPropsType) => {
 
     const [isShowPlayers, setIsShowPlayers] = useState<boolean>(false)
+    const [isJoined, setIsJoined] = useState<boolean>(false)
+
+    useEffect(() => {
+        for (let i = 0; i < event.teams!.length; i++) {
+            event.teams![i].competitors.find((c) => {
+                c.user._id === user._id ? (
+                    setIsJoined(true)
+                ) : (
+                    setIsJoined(false)
+                )
+            })
+        }
+
+        if(isJoined) {
+            setIsJoined(false)
+        }
+        
+    }, [event.teams])
 
     return (
         <Box flex={1} alignItems={'center'} justifyContent={'center'} py={2} px={4}>
@@ -26,7 +44,7 @@ const ShowTeams = ({ event, user, handleSure, handleAddTeam, handleEditTeam, han
             }
             {
                 event.teams?.map((team: ITeam) => {
-                    return <ShowTeam team={team} handleSure={handleSure} handleEditPlayer={handleEditPlayer} handleSurePlayer={handleSurePlayer} handleEditTeam={handleEditTeam} isShowPlayers={isShowPlayers} handleAddPlayer={handleAddPlayer} key={team._id} />
+                    return <ShowTeam isJoined={isJoined} joinTeam={joinTeam} user={user} event={event} team={team} handleSure={handleSure} handleEditPlayer={handleEditPlayer} handleSurePlayer={handleSurePlayer} handleEditTeam={handleEditTeam} isShowPlayers={isShowPlayers} handleAddPlayer={handleAddPlayer} key={team._id} />
                 })
             }
         </Box>

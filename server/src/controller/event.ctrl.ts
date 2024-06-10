@@ -43,7 +43,7 @@ export const userEvents = async (req: Request, res: Response): Promise<Response>
 
     try {
 
-        const events = await Event.find({ admin: req.user })
+        const events = await Event.find()
         .populate({
             path: "competitors",
             select: "user",
@@ -53,7 +53,9 @@ export const userEvents = async (req: Request, res: Response): Promise<Response>
             }
         })
 
-        return res.status(200).json(events)
+        const showEvents = events.filter(e => e.competitors.find(c => String(c.user._id) === req.user))
+
+        return res.status(200).json(showEvents)
 
     } catch (error) {
         throw error
@@ -74,6 +76,12 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",
@@ -184,6 +192,12 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",
@@ -301,6 +315,12 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",

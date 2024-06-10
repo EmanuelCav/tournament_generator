@@ -1,4 +1,5 @@
 import { Types, Document } from 'mongoose'
+import { ICompetitor } from './User';
 
 export interface IImage extends Document {
     _id: Types.ObjectId;
@@ -17,10 +18,11 @@ export interface IEvent extends Document {
     category: Types.ObjectId;
     status: Types.ObjectId;
     admin: Types.ObjectId;
-    competitors: Types.ObjectId[];
+    competitors: ICompetitor[];
     referees: Types.ObjectId[];
     teams: Types.ObjectId[];
     preview: IMatch[][];
+    done: boolean;
     created_at: NativeDate;
     updated_at: NativeDate;
 }

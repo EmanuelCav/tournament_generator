@@ -188,6 +188,16 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.generateMatchsAction.rejected, (state) => {
             state.loading = false
         })
+        
+        builder.addCase(eventAction.joinTeamAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.joinTeamAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.joinTeamAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

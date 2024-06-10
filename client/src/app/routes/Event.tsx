@@ -14,7 +14,7 @@ import FormAddReferee from '../components/event/FormAddReferee';
 import ShowReferees from '../components/event/ShowReferees';
 import FormAddPlayer from '../components/event/FormAddPlayer';
 
-import { eventAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
+import { eventAction, joinTeamAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
 
 import { IReducer } from '../interface/General';
@@ -134,13 +134,22 @@ const Event = () => {
 
     }
 
-    const removePlayer = async () => {
+    const removePlayer = () => {
 
         dispatch(removePlayerAction({
             pid: infoPlayer?._id!,
             cid: event.event.competitors?.find(c => c.user._id === user.user.user?._id)?._id!,
             token: user.user.token!,
             setIsRemovePlayer
+        }) as any)
+
+    }
+
+    const joinTeam = (id: string) => {
+
+        dispatch(joinTeamAction({
+            id,
+            token: user.user.token!
         }) as any)
 
     }
@@ -182,9 +191,10 @@ const Event = () => {
                 isEditPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} setIsEditPlayer={setIsEditPlayer} dispatch={dispatch} user={user.user} event={event.event} isEdit={true} team={infoTeam!} player={infoPlayer!} />
             }
             <Box display='flex' justifyContent='flex-start' alignItems='flex-start'>
-                <EventsNavigation dispatch={dispatch} handleSure={handleSure} get={get} />
+                <EventsNavigation dispatch={dispatch} handleSure={handleSure} get={get} event={event.event} user={user.user.user!} />
                 {
-                    get.isTeams && <ShowTeams user={user.user.user!} handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event} handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} />
+                    get.isTeams && <ShowTeams user={user.user.user!} handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event} 
+                    handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} joinTeam={joinTeam} />
                 }
                 {
                     get.isMatchdays && <ShowEvent event={event.event} user={user.user} dispatch={dispatch} />

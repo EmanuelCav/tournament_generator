@@ -71,6 +71,11 @@ const eventSchema = new Schema({
         schedule: Date
     }]],
 
+    done: {
+        type: Boolean,
+        default: false
+    },
+
     comments: [{
         type: Types.ObjectId,
         ref: 'Comment'

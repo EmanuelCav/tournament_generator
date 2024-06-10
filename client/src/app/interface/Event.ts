@@ -90,6 +90,7 @@ export interface ITeam {
     against: Number;
     players: IPlayer[];
     matchs: IMatch[][];
+    competitors: ICompetitor[];
     created_at: string;
     updated_at: string;
 }

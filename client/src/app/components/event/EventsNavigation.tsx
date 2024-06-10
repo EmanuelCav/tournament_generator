@@ -14,7 +14,7 @@ import { matchdays, teams, people, referees, players } from '../../server/reduce
 
 import { EventsNavigationPropsType } from '../../types/event.types';
 
-const EventsNavigation = ({ handleSure, dispatch, get }: EventsNavigationPropsType) => {
+const EventsNavigation = ({ handleSure, dispatch, get, event, user }: EventsNavigationPropsType) => {
 
   const handleTeams = () => {
     dispatch(teams(true))
@@ -45,7 +45,9 @@ const EventsNavigation = ({ handleSure, dispatch, get }: EventsNavigationPropsTy
           <EventNavigation Icon={SportsIcon} isHere={get.isReferees} text='Referees' func={handleReferees} />
           <EventNavigation Icon={GroupsIcon} isHere={get.isPeople} text='People' func={handlePeople} />
           <EventNavigation Icon={ShieldIcon} isHere={get.isTeams} text='Teams' func={handleTeams} />
-          <EventNavigation Icon={Delete} isHere={false} text='Remove' func={handleSure} />
+          {
+            user._id === event.admin && <EventNavigation Icon={Delete} isHere={false} text='Remove' func={handleSure} />
+          }
       </List>
     </Box>
   )

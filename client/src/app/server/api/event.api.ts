@@ -1,4 +1,5 @@
 import { ICreatePlayer, ICreateTeam } from "../../interface/Event";
+
 import { api } from "./api";
 
 export const eventsApi = async (token: string | undefined) => {
@@ -130,6 +131,14 @@ export const updatePlayerApi = async (pid: string, cid: string, playerData: ICre
 
 export const generateMatchApi = async (id: string, token: string) => {
     return await api.patch(`/matchs/events/${id}`, null, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const joinTeamApi = async (id: string, token: string) => {
+    return await api.patch(`/teams/${id}`, null, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

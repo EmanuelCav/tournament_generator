@@ -254,3 +254,17 @@ export const generateMatchsAction = createAsyncThunk('events/generateMatchs', as
     }
 
 })
+
+export const joinTeamAction = createAsyncThunk('events/jointeam', async (eventData: typesActionsEvent.GenerateMatchsActionPropsType, { dispatch }) => {  
+    
+    try {
+        
+        const { data } = await eventApi.joinTeamApi(eventData.id, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})

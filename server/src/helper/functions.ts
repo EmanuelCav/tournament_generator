@@ -19,20 +19,22 @@ export const generateMatchdays = (shuffleArr: any[]): IMatch[][] => {
 
     let matchdays: IMatch[][] = []
 
-    for (let i = 0; i < shuffleArr.length - 1; i++) {
+    const lengthArr = shuffleArr.length % 2 === 0 ? shuffleArr.length - 1 : shuffleArr.length
+
+    for (let i = 0; i < lengthArr; i++) {
 
         let matchs: IMatch[] = []
 
-        for (let j = 0; j < shuffleArr.length / 2; j++) {
+        for (let j = 0; j < Math.floor(lengthArr / 2); j++) {
             matchs.push({
                 local: {
-                    name: shuffleArr[j].name,
-                    logo: shuffleArr[j].logo.image
+                    name: j % 2 === 0 ? shuffleArr[j].name : shuffleArr[shuffleArr.length - 1 - j].name,
+                    logo: j % 2 === 0 ? shuffleArr[j].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
                 },
                 targetLocal: 0,
                 visitant: {
-                    name: shuffleArr[shuffleArr.length - 1 - j].name,
-                    logo: shuffleArr[shuffleArr.length - 1 - j].logo.image
+                    name: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].name : shuffleArr[j].name,
+                    logo: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].logo.image : shuffleArr[j].logo.image
                 },
                 targetVisitant: 0
             })

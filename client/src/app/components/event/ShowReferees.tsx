@@ -13,7 +13,8 @@ const ShowReferees = ({ event, user, handleAddReferee, handleSure, handleEditRef
       }
       {
         event.referees!.map((referee: IReferee) => {
-          return <Referee referee={referee} handleSure={handleSure} handleEditReferee={handleEditReferee} key={referee._id} />
+          return <Referee isAvailableEdit={event.competitors?.find((c) => c.user._id === user._id)?.role.role === 'ADMIN'} 
+          referee={referee} handleSure={handleSure} handleEditReferee={handleEditReferee} key={referee._id} />
         })
       }
       {

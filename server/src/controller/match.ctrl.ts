@@ -4,8 +4,6 @@ import Event from '../models/event';
 
 import { generateMatchdays, shuffle } from "../helper/functions";
 
-import { IMatch } from "interface/Event";
-
 export const generateMatch = async (req: Request, res: Response): Promise<Response> => {
 
     const { id } = req.params
@@ -35,9 +33,9 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
         
         if(category === "MATCHDAYS") {
             matchdays = generateMatchdays(shuffleArr)
-        } else if(category === "MATCHDAYS") {
+        } else if(category === "ELIMINATION") {
             matchdays = generateMatchdays(shuffleArr)
-        } else if(category === "MATCHDAYS") {
+        } else if(category === "SWISS") {
             matchdays = generateMatchdays(shuffleArr)
         } else {
             matchdays = generateMatchdays(shuffleArr)
@@ -56,6 +54,12 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
                 select: "image"
             }, {
                 path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             }]
         }).populate({
             path: "competitors",
