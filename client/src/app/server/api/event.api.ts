@@ -1,4 +1,4 @@
-import { ICreatePlayer, ICreateTeam } from "../../interface/Event";
+import { ICreatePlayer, ICreateTeam, ITarget } from "../../interface/Event";
 
 import { api } from "./api";
 
@@ -156,6 +156,15 @@ export const refereeMatchApi = async (mid: string, eid: string, referee: string,
 export const refereesApi = async (token: string) => {
     return await api.get(`/referees`, {
         headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const updateScoreApi = async (mid: string, eid: string, targetData: ITarget, token: string) => {
+    return await api.put(`/score/matchs/${mid}/events/${eid}`, targetData, {
+        headers: {
+            'Content-type': "application/json",
             'Authorization': `Bearer ${token}`
         }
     })

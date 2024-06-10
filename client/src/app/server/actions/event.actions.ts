@@ -284,3 +284,19 @@ export const addRefereeAction = createAsyncThunk('events/addreferee', async (eve
     }
 
 })
+
+export const updateScoreAction = createAsyncThunk('events/addscore', async (eventData: typesActionsEvent.AddScoreActionPropsType, { dispatch }) => {  
+    
+    try {
+
+        const { data } = await eventApi.updateScoreApi(eventData.match._id, eventData.eid, eventData.targetData, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        eventData.setIsAddScore(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})

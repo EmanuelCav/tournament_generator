@@ -115,12 +115,22 @@ export type GeneratePropsType = {
 export type MatchsPropsType = {
     handleAddReferee: (match: IMatch) => void;
     matchs: IMatch[][];
+    handleAddScore: (match: IMatch) => void;
+    isAdmin: boolean;
 }
 
 export type AddRefereePropsType = {
     dispatch: Dispatch<any>;
     user: IUserInfo;
     handleAddReferee: (match: IMatch) => void;
+    event: IEvent;
+    matchData: IMatch;
+}
+
+export type AddScorePropsType = {
+    dispatch: Dispatch<any>;
+    user: IUserInfo;
+    setIsAddScore: (isAddScore: boolean) => void;
     event: IEvent;
     matchData: IMatch;
 }

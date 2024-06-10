@@ -127,3 +127,8 @@ export interface ICreatePlayer {
     name: string;
     position: string;
 }
+
+export interface ITarget {
+    targetLocal: number;
+    targetVisitant: number;
+}

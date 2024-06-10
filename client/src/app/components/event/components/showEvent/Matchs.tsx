@@ -5,7 +5,7 @@ import HeadMatchs from "./components/HeadMatchs"
 import { IMatch } from "../../../../interface/Event"
 import { MatchsPropsType } from "../../../../types/event.types"
 
-const Matchs = ({ matchs, handleAddReferee }: MatchsPropsType) => {
+const Matchs = ({ matchs, handleAddReferee, handleAddScore, isAdmin }: MatchsPropsType) => {
   return (
     <TableContainer component={Paper} sx={{ mt: 2 }}>
       <Table>
@@ -18,11 +18,20 @@ const Matchs = ({ matchs, handleAddReferee }: MatchsPropsType) => {
                 fixture.map((match: IMatch, i: number) => {
                   return <TableRow key={i}>
                     <TableCell component="th" scope="row">{match.schedule ? match.schedule.getDay() : "Not defined"}</TableCell>
-                    <TableCell>{match.local.name}</TableCell>
+                    <TableCell align="right">{match.local.name}</TableCell>
+                    <TableCell>{match.targetLocal}</TableCell>
+                    <TableCell>
+                      {
+                        isAdmin ? <Button sx={{ mt: 1 }} variant="contained" color="primary" onClick={() => handleAddScore(match)}>DEFINE</Button> : "-"
+                      }
+                      </TableCell>
+                    <TableCell>{match.targetVisitant}</TableCell>
                     <TableCell>{match.visitant.name}</TableCell>
                     <TableCell sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                       {match.referee ? match.referee : "Not defined"}
-                      <Button sx={{ mt: 1 }} variant="contained" color="primary" onClick={() => handleAddReferee(match)}>DEFINE</Button>
+                      {
+                        isAdmin && <Button sx={{ mt: 1 }} variant="contained" color="primary" onClick={() => handleAddReferee(match)}>DEFINE</Button>
+                      }
                     </TableCell>
                   </TableRow>
                 })
