@@ -15,12 +15,72 @@ export function shuffle(array: any[]): any[] {
     return array
 }
 
-export const generateMatchdays = (shuffleArr: any[]): IMatch[][] => {
+export const generateMatchdays = (shuffleArr: any[], round: string): IMatch[][] => {
 
     let matchdays: IMatch[][] = []
 
     const lengthArr = shuffleArr.length % 2 === 0 ? shuffleArr.length - 1 : shuffleArr.length
 
+    // for (let i = 0; i < lengthArr; i++) {
+
+    //     let matchs: IMatch[] = []
+
+    //     for (let j = 0; j < Math.floor(lengthArr / 2); j++) {
+    //         matchs.push({
+    //             local: {
+    //                 name: j % 2 === 0 ? shuffleArr[j].name : shuffleArr[shuffleArr.length - 1 - j].name,
+    //                 logo: j % 2 === 0 ? shuffleArr[j].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
+    //             },
+    //             visitant: {
+    //                 name: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].name : shuffleArr[j].name,
+    //                 logo: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].logo.image : shuffleArr[j].logo.image
+    //             }
+    //         })
+    //     }
+
+    //     matchdays.push(matchs)
+
+    //     const element = shuffleArr.pop()
+    //     shuffleArr.splice(1, 0, element)
+
+    // }
+
+    matchdaysGenerator(matchdays, lengthArr, shuffleArr)
+
+    if (round === "trip") {
+
+        matchdaysGenerator(matchdays, lengthArr, shuffleArr)
+
+        // for (let i = 0; i < lengthArr; i++) {
+
+        //     let matchs: IMatch[] = []
+
+        //     for (let j = 0; j < Math.floor(lengthArr / 2); j++) {
+        //         matchs.push({
+        //             local: {
+        //                 name: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].name : shuffleArr[j].name,
+        //                 logo: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].logo.image : shuffleArr[j].logo.image
+        //             },
+        //             visitant: {
+        //                 name: j % 2 === 0 ? shuffleArr[j].name : shuffleArr[shuffleArr.length - 1 - j].name,
+        //                 logo: j % 2 === 0 ? shuffleArr[j].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
+        //             }
+        //         })
+        //     }
+
+        //     matchdays.push(matchs)
+
+        //     const element = shuffleArr.pop()
+        //     shuffleArr.splice(1, 0, element)
+
+        // }
+
+    }
+
+    return matchdays
+}
+
+const matchdaysGenerator = (matchdays: IMatch[][], lengthArr: number, shuffleArr: any[]) => {
     for (let i = 0; i < lengthArr; i++) {
 
         let matchs: IMatch[] = []
@@ -28,12 +88,12 @@ export const generateMatchdays = (shuffleArr: any[]): IMatch[][] => {
         for (let j = 0; j < Math.floor(lengthArr / 2); j++) {
             matchs.push({
                 local: {
-                    name: j % 2 === 0 ? shuffleArr[j].name : shuffleArr[shuffleArr.length - 1 - j].name,
-                    logo: j % 2 === 0 ? shuffleArr[j].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
-                },
-                visitant: {
                     name: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].name : shuffleArr[j].name,
                     logo: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].logo.image : shuffleArr[j].logo.image
+                },
+                visitant: {
+                    name: j % 2 === 0 ? shuffleArr[j].name : shuffleArr[shuffleArr.length - 1 - j].name,
+                    logo: j % 2 === 0 ? shuffleArr[j].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
                 }
             })
         }
@@ -44,6 +104,4 @@ export const generateMatchdays = (shuffleArr: any[]): IMatch[][] => {
         shuffleArr.splice(1, 0, element)
 
     }
-
-    return matchdays
 }

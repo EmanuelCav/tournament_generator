@@ -13,6 +13,9 @@ import ShowPeople from '../components/event/ShowPeople';
 import FormAddReferee from '../components/event/FormAddReferee';
 import ShowReferees from '../components/event/ShowReferees';
 import FormAddPlayer from '../components/event/FormAddPlayer';
+import Settings from '../components/event/Settings';
+import Positions from '../components/event/Positions';
+import Players from '../components/event/Players';
 
 import { eventAction, joinTeamAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
@@ -200,10 +203,19 @@ const Event = () => {
                     get.isMatchdays && <ShowEvent event={event.event} user={user.user} dispatch={dispatch} />
                 }
                 {
+                    get.isPositions && <Positions />
+                }
+                {
                     get.isPeople && <ShowPeople competitors={event.event?.competitors!} />
                 }
                 {
                     get.isReferees && <ShowReferees event={event.event} user={user.user.user!} handleEditReferee={handleEditReferee} handleAddReferee={handleAddReferee} handleSure={handleSureRemoveReferee} />
+                }
+                {
+                    get.isSettings && <Settings />
+                }
+                {
+                    get.isPlayers && <Players />
                 }
             </Box>
         </Container>

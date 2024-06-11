@@ -129,8 +129,8 @@ export const updatePlayerApi = async (pid: string, cid: string, playerData: ICre
     })
 }
 
-export const generateMatchApi = async (id: string, token: string) => {
-    return await api.patch(`/matchs/events/${id}`, null, {
+export const generateMatchApi = async (id: string, category: string, round: string, token: string) => {
+    return await api.patch(`/matchs/events/${id}?category=${category}&round=${round}`, null, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

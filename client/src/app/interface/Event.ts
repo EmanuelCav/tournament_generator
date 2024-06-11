@@ -117,10 +117,12 @@ export interface ICreateTeam {
 
 export interface IReducerGet {
     isTeams: boolean;
+    isPositions: boolean;
     isMatchdays: boolean;
     isPeople: boolean;
     isReferees: boolean;
     isPlayers: boolean;
+    isSettings: boolean;
 }
 
 export interface ICreatePlayer {

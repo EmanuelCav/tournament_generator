@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Box, Button, Typography } from '@mui/material'
+import { ChangeEvent, useState } from "react";
+import { Box, Button, FormControlLabel, Switch, Typography } from '@mui/material'
 
 import Matchs from './components/showEvent/Matchs'
 import Generate from './components/showEvent/Generate'
@@ -17,15 +17,22 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
   const [isAddReferee, setIsAddReferee] = useState<boolean>(false)
   const [isAddScore, setIsAddScore] = useState<boolean>(false)
   const [isAddDate, setIsAddDate] = useState<boolean>(false)
+  const [isRoundTrip, setIsRoundTrip] = useState<boolean>(false)
 
   const [matchData, setMatchData] = useState<IMatch | null>(null)
 
   const generateNow = async () => {
     dispatch(generateMatchsAction({
       id: event._id!,
-      token: user.token!
+      token: user.token!,
+      category: event.category?.category!,
+      round: isRoundTrip ? 'trip' : 'one'
     }))
   }
+
+  const handleRoundTrip = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsRoundTrip(event.target.checked);
+  };
 
   const handleAddReferee = (match: IMatch) => {
     setIsAddReferee(!isAddReferee)
@@ -55,13 +62,16 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
       }
       <Typography variant="h4" textAlign='center' color='#33cc33'>{event.event}</Typography>
       {
+        event.admin === user.user?._id && <FormControlLabel control={<Switch checked={isRoundTrip} onChange={handleRoundTrip} />} label="Round trip" />
+      }
+      {
         event.matchs?.length! > 0 ? (
           <>
             {
               event.admin === user.user?._id && <Button size="large" variant="contained" color="primary" sx={{ my: 2 }} onClick={generateNow}>GENERATE AGAIN</Button>
             }
-            <Matchs isAdmin={event.competitors?.find((c) => c.user._id === user.user?._id)?.role.role === 'ADMIN'} matchs={event.matchs!} 
-            handleAddReferee={handleAddReferee} handleAddScore={handleAddScore} handleUpdateSchedule={handleUpdateSchedule} />
+            <Matchs isAdmin={event.competitors?.find((c) => c.user._id === user.user?._id)?.role.role === 'ADMIN'} matchs={event.matchs!}
+              handleAddReferee={handleAddReferee} handleAddScore={handleAddScore} handleUpdateSchedule={handleUpdateSchedule} />
           </>
         ) : (
           <>

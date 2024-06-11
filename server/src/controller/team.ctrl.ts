@@ -96,7 +96,7 @@ export const addTeam = async (req: Request, res: Response): Promise<Response> =>
             }).populate({
                 path: "referees",
                 select: "name"
-            })
+            }).populate("category")
 
         return res.status(200).json(eventCompetitor)
 
@@ -160,7 +160,7 @@ export const removeTeam = async (req: Request, res: Response): Promise<Response>
             }).populate({
                 path: "referees",
                 select: "name"
-            })
+            }).populate("category")
 
         await cloud.uploader.destroy(team.logo.imageId)
 
@@ -251,7 +251,7 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         if (!eventShow) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -326,7 +326,7 @@ export const joinTeam = async (req: Request, res: Response): Promise<Response> =
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         return res.status(200).json(event)
 

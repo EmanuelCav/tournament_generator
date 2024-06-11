@@ -5,10 +5,12 @@ import { IReducerGet } from "../../interface/Event";
 
 const initialState: IReducerGet = {
     isMatchdays: true,
+    isPositions: false,
     isTeams: false,
     isPeople: false,
     isReferees: false,
-    isPlayers: false
+    isPlayers: false,
+    isSettings: false,
 }
 
 const getSlice = createSlice({
@@ -21,6 +23,8 @@ const getSlice = createSlice({
             state.isPeople = false
             state.isReferees = false
             state.isPlayers = false
+            state.isPositions = false
+            state.isSettings = false
         },
         teams: (state, action: PayloadAction<boolean>) => {
             state.isTeams = action.payload
@@ -28,6 +32,8 @@ const getSlice = createSlice({
             state.isPeople = false
             state.isReferees = false
             state.isPlayers = false
+            state.isPositions = false
+            state.isSettings = false
         },
         people: (state, action: PayloadAction<boolean>) => {
             state.isPeople = action.payload
@@ -35,6 +41,8 @@ const getSlice = createSlice({
             state.isMatchdays = false
             state.isReferees = false
             state.isPlayers = false
+            state.isPositions = false
+            state.isSettings = false
         },
         referees: (state, action: PayloadAction<boolean>) => {
             state.isReferees = action.payload
@@ -42,6 +50,8 @@ const getSlice = createSlice({
             state.isTeams = false
             state.isMatchdays = false
             state.isPlayers = false
+            state.isPositions = false
+            state.isSettings = false
         },
         players: (state, action: PayloadAction<boolean>) => {
             state.isPlayers = action.payload
@@ -49,11 +59,31 @@ const getSlice = createSlice({
             state.isPeople = false
             state.isTeams = false
             state.isMatchdays = false
+            state.isPositions = false
+            state.isSettings = false
+        },
+        positions: (state, action: PayloadAction<boolean>) => {
+            state.isPositions = action.payload
+            state.isReferees = false
+            state.isPeople = false
+            state.isTeams = false
+            state.isMatchdays = false
+            state.isPlayers = false
+            state.isSettings = false
+        },
+        settings: (state, action: PayloadAction<boolean>) => {
+            state.isSettings = action.payload
+            state.isReferees = false
+            state.isPeople = false
+            state.isTeams = false
+            state.isMatchdays = false
+            state.isPlayers = false
+            state.isPositions = false
         }
     }
 
 })
 
-export const { matchdays, teams, people, referees, players } = getSlice.actions
+export const { matchdays, teams, people, referees, players, positions, settings } = getSlice.actions
 
 export default getSlice.reducer

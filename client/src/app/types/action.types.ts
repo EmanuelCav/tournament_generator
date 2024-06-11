@@ -107,6 +107,13 @@ export type UpdatePlayerActionPropsType = {
 
 export type GenerateMatchsActionPropsType = {
     id: string;
+    round: string;
+    category: string;
+    token: string;
+}
+
+export type JoinTeamActionPropsType = {
+    id: string;
     token: string;
 }
 

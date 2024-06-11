@@ -8,7 +8,7 @@ import { generateMatchdays, shuffle } from "../helper/functions";
 export const generateMatch = async (req: Request, res: Response): Promise<Response> => {
 
     const { id } = req.params
-    const { category } = req.query
+    const { category, round } = req.query
 
     try {
 
@@ -33,13 +33,13 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
         let matchdays;
 
         if (category === "MATCHDAYS") {
-            matchdays = generateMatchdays(shuffleArr)
+            matchdays = generateMatchdays(shuffleArr, String(round))
         } else if (category === "ELIMINATION") {
-            matchdays = generateMatchdays(shuffleArr)
+            matchdays = generateMatchdays(shuffleArr, String(round))
         } else if (category === "SWISS") {
-            matchdays = generateMatchdays(shuffleArr)
+            matchdays = generateMatchdays(shuffleArr, String(round))
         } else {
-            matchdays = generateMatchdays(shuffleArr)
+            matchdays = generateMatchdays(shuffleArr, String(round))
         }
 
         const showEvent = await Event.findByIdAndUpdate(id, {
@@ -73,7 +73,7 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         return res.status(200).json(showEvent)
 
@@ -143,7 +143,7 @@ export const addRefereeMatch = async (req: Request, res: Response): Promise<Resp
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         return res.status(200).json(showEvent)
 
@@ -208,7 +208,7 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         return res.status(200).json(showEvent)
 
@@ -272,7 +272,7 @@ export const updateDate = async (req: Request, res: Response): Promise<Response>
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         return res.status(200).json(showEvent)
 

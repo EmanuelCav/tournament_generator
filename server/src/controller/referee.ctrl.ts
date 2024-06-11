@@ -81,7 +81,7 @@ export const createReferee = async (req: Request, res: Response): Promise<Respon
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         return res.status(200).json(showEvent)
 
@@ -150,7 +150,7 @@ export const removeReferee = async (req: Request, res: Response): Promise<Respon
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         await Referee.findByIdAndDelete(rid)
 
@@ -222,7 +222,7 @@ export const updateReferee = async (req: Request, res: Response): Promise<Respon
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         return res.status(200).json(showEvent)
 

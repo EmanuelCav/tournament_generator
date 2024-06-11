@@ -245,7 +245,7 @@ export const generateMatchsAction = createAsyncThunk('events/generateMatchs', as
     
     try {
         
-        const { data } = await eventApi.generateMatchApi(eventData.id, eventData.token)
+        const { data } = await eventApi.generateMatchApi(eventData.id, eventData.category, eventData.round, eventData.token)
 
         dispatch(eventReducer.getEvent(data))
 
@@ -255,7 +255,7 @@ export const generateMatchsAction = createAsyncThunk('events/generateMatchs', as
 
 })
 
-export const joinTeamAction = createAsyncThunk('events/jointeam', async (eventData: typesActionsEvent.GenerateMatchsActionPropsType, { dispatch }) => {  
+export const joinTeamAction = createAsyncThunk('events/jointeam', async (eventData: typesActionsEvent.JoinTeamActionPropsType, { dispatch }) => {  
     
     try {
         

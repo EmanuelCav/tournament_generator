@@ -94,7 +94,7 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         if (!event) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -210,7 +210,7 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         if (!eventTeams) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -333,7 +333,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
         }).populate({
             path: "referees",
             select: "name"
-        })
+        }).populate("category")
 
         return res.status(200).json(eventCompetitor)
 
