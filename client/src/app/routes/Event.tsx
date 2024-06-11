@@ -219,7 +219,7 @@ const Event = () => {
                 isEditPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} setIsEditPlayer={setIsEditPlayer} dispatch={dispatch} user={user.user} event={event.event} isEdit={true} team={infoTeam!} player={infoPlayer!} />
             }
             <Box display='flex' justifyContent='flex-start' alignItems='flex-start'>
-                <EventsNavigation dispatch={dispatch} handleSure={handleSure} get={get} event={event.event} user={user.user.user!} />
+                <EventsNavigation dispatch={dispatch} get={get} event={event.event} user={user.user.user!} />
                 {
                     get.isTeams && <ShowTeams user={user.user.user!} handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event} 
                     handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} joinTeam={joinTeam} />
@@ -237,7 +237,7 @@ const Event = () => {
                     get.isReferees && <ShowReferees event={event.event} user={user.user.user!} handleEditReferee={handleEditReferee} handleAddReferee={handleAddReferee} handleSure={handleSureRemoveReferee} />
                 }
                 {
-                    get.isSettings && <Settings />
+                    get.isSettings && <Settings user={user.user} dispatch={dispatch} eventInfo={event.event} handleSure={handleSure} />
                 }
                 {
                     get.isPlayers && <Players />

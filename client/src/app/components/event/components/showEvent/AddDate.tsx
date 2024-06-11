@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from "react"
+import { useState, ChangeEvent, FormEvent } from "react"
 import { Box, Button, Paper, TextField, Typography } from "@mui/material"
 
 import { UpdateSchedulePropsType } from "../../../../types/event.types"
@@ -25,6 +25,11 @@ const AddDate = ({ user, dispatch, event, matchData, handleUpdateSchedule }: Upd
     const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()
+
+        if(schedule === "" || day === "") {
+            handleUpdateSchedule(matchData)
+            return
+        }
 
         dispatch(updateScheduleAction({
             eid: event._id!,

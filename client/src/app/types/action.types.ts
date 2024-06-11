@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 
 import { ILogin, IRegister } from "../interface/User";
-import { ICreatePlayer, ICreateTeam, IMatch, ISchedule, ITarget, ITeam } from "../interface/Event";
+import { ICreateEvent, ICreatePlayer, ICreateTeam, IMatch, ISchedule, ITarget, ITeam } from "../interface/Event";
 
 export type LoginActionPropsType = {
     navigate: NavigateFunction;
@@ -148,10 +148,22 @@ export type RemoveCompetitorActionPropsType = {
     setIsRemoveCompetitor: (isRemoveCompetitor: boolean) => void;
 }
 
+export type RestartMatchActionPropsType = {
+    id: string;
+    token: string;
+    handleRestartEvent: () => void;
+}
+
 export type UpdateRoleActionPropsType = {
     eid: string;
     cid: string;
     role: string;
     token: string;
     handleChangeRole: () => void;
+}
+
+export type UpdateEventActionPropsType = {
+    id: string;
+    token: string;
+    formData: FormData;
 }

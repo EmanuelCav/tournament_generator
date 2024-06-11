@@ -95,6 +95,7 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
 
         if (!event) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -211,6 +212,7 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
 
         if (!eventTeams) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -245,26 +247,6 @@ export const removeEvent = async (req: Request, res: Response): Promise<Response
         await Event.findByIdAndDelete(id)
 
         return res.status(200).json({ message: "Event removed successfully" })
-
-    } catch (error) {
-        throw error
-    }
-
-}
-
-export const updateEvent = async (req: Request, res: Response): Promise<Response> => {
-
-    const { id } = req.params
-
-    try {
-
-        const event = await Event.findById(id)
-
-        if (!event) {
-            return res.status(400).json({ message: "Event does not exists" })
-        }
-
-        return res.status(200).json({ message: "updateEvent" })
 
     } catch (error) {
         throw error
@@ -334,6 +316,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
 
         return res.status(200).json(eventCompetitor)
 
@@ -364,7 +347,7 @@ export const updateRole = async (req: Request, res: Response): Promise<Response>
 
         const roleFound = await Role.findOne({ role: String(role) })
 
-        if(!roleFound) {
+        if (!roleFound) {
             return res.status(400).json({ message: "Role does not exists" })
         }
 
@@ -404,6 +387,7 @@ export const updateRole = async (req: Request, res: Response): Promise<Response>
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
 
         return res.status(200).json(showEvent)
 
@@ -467,10 +451,106 @@ export const removeCompetitor = async (req: Request, res: Response): Promise<Res
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
 
         await Competitor.findByIdAndDelete(cid)
 
         return res.status(200).json(showEvent)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const updateEvent = async (req: Request, res: Response): Promise<Response> => {
+
+    const { id } = req.params
+    const { event, description, category, status } = req.body
+
+    try {
+
+        const eventData = await Event.findById(id).populate("image")
+
+        if(!eventData) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        const categoryEvent = await Category.findOne({ category })
+
+        if (!categoryEvent) {
+            return res.status(400).json({ message: "Category does not exists" })
+        }
+
+        const statusEvent = await Status.findOne({ status })
+
+        if (!statusEvent) {
+            return res.status(400).json({ message: "Status does not exists" })
+        }
+
+        if(String(eventData.admin) !== req.user) {
+            return res.status(401).json({ message: "You cannot update the event" })
+        }
+
+        let image
+
+        if (req.file) {
+
+            await cloud.uploader.destroy(eventData.image.imageId)
+
+            const result = await cloud.uploader.upload(req.file.path)
+
+            await unlink(req.file.path)
+
+            const newImage = new Image({
+                image: result.url,
+                imageId: result.public_id
+            })
+
+            image = await newImage.save()
+
+        }
+
+        const showEvent = await Event.findByIdAndUpdate(id, {
+            event,
+            description,
+            status: statusEvent._id,
+            category: categoryEvent._id,
+            image: image ? image._id : eventData.image._id
+        }, {
+            new: true
+        }).populate({
+            path: "teams",
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
+                path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        }).populate("category")
+            .populate("status")
+
+        return res.status(200).json({
+            event: showEvent,
+            message: "Event updated successfully"
+        })
 
     } catch (error) {
         throw error

@@ -1,4 +1,4 @@
-import { ICreatePlayer, ICreateTeam, ISchedule, ITarget } from "../../interface/Event";
+import { ICreateEvent, ICreatePlayer, ICreateTeam, ISchedule, ITarget } from "../../interface/Event";
 
 import { api } from "./api";
 
@@ -189,6 +189,22 @@ export const removeCompetitorApi = async (eid: string, cid: string, token: strin
 
 export const updateRoleApi = async (eid: string, cid: string, role: string, token: string) => {
     return await api.put(`/events/${eid}/competitors/${cid}?role=${role}`, null, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const restartMatchApi = async (id: string, token: string) => {
+    return await api.patch(`/matchs/restart/events/${id}`, null, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const updateEventApi = async (id: string, eventData: FormData, token: string) => {
+    return await api.put(`/events/${id}`, eventData, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

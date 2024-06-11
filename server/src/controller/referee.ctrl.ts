@@ -82,6 +82,7 @@ export const createReferee = async (req: Request, res: Response): Promise<Respon
             path: "referees",
             select: "name"
         }).populate("category")
+        .populate("status")
 
         return res.status(200).json(showEvent)
 
@@ -151,6 +152,7 @@ export const removeReferee = async (req: Request, res: Response): Promise<Respon
             path: "referees",
             select: "name"
         }).populate("category")
+        .populate("status")
 
         await Referee.findByIdAndDelete(rid)
 
@@ -223,6 +225,7 @@ export const updateReferee = async (req: Request, res: Response): Promise<Respon
             path: "referees",
             select: "name"
         }).populate("category")
+        .populate("status")
 
         return res.status(200).json(showEvent)
 

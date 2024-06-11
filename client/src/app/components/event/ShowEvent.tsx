@@ -62,13 +62,13 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
       }
       <Typography variant="h4" textAlign='center' color='#33cc33'>{event.event}</Typography>
       {
-        event.admin === user.user?._id && <FormControlLabel control={<Switch checked={isRoundTrip} onChange={handleRoundTrip} />} label="Round trip" />
+        event.admin === user.user?._id && <FormControlLabel control={<Switch disabled={event.done} checked={isRoundTrip} onChange={handleRoundTrip} />} label="Round trip" />
       }
       {
         event.matchs?.length! > 0 ? (
           <>
             {
-              event.admin === user.user?._id && <Button size="large" variant="contained" color="primary" sx={{ my: 2 }} onClick={generateNow}>GENERATE AGAIN</Button>
+              event.admin === user.user?._id && <Button size="large" variant="contained" color="primary" sx={{ my: 2 }} onClick={generateNow} disabled={event.done}>GENERATE AGAIN</Button>
             }
             <Matchs isAdmin={event.competitors?.find((c) => c.user._id === user.user?._id)?.role.role === 'ADMIN'} matchs={event.matchs!}
               handleAddReferee={handleAddReferee} handleAddScore={handleAddScore} handleUpdateSchedule={handleUpdateSchedule} />

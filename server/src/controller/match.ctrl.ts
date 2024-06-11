@@ -74,6 +74,72 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
+
+        return res.status(200).json(showEvent)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const restartMatch = async (req: Request, res: Response): Promise<Response> => {
+
+    const { id } = req.params
+
+    try {
+
+        const event = await Event.findById(id).populate({
+            path: "teams",
+            populate: {
+                path: "logo",
+                select: "image"
+            }
+        })
+
+        if (!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        if (String(event.admin) !== req.user) {
+            return res.status(401).json({ message: "You cannot generate matchs" })
+        }
+
+        const showEvent = await Event.findByIdAndUpdate(id, {
+            $set: {
+                matchs: []
+            },
+            done: false
+        }, {
+            new: true
+        }).populate({
+            path: "teams",
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
+                path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        }).populate("category")
+            .populate("status")
 
         return res.status(200).json(showEvent)
 
@@ -115,7 +181,8 @@ export const addRefereeMatch = async (req: Request, res: Response): Promise<Resp
         const showEvent = await Event.findByIdAndUpdate(eid, {
             $set: {
                 matchs: event.matchs
-            }
+            },
+            done: true
         }, {
             new: true
         }).populate({
@@ -144,6 +211,7 @@ export const addRefereeMatch = async (req: Request, res: Response): Promise<Resp
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
 
         return res.status(200).json(showEvent)
 
@@ -179,7 +247,8 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
 
         const showEvent = await Event.findByIdAndUpdate(eid, {
             $set: {
-                matchs: event.matchs
+                matchs: event.matchs,
+                done: true
             }
         }, {
             new: true
@@ -209,6 +278,7 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
 
         return res.status(200).json(showEvent)
 
@@ -244,7 +314,8 @@ export const updateDate = async (req: Request, res: Response): Promise<Response>
         const showEvent = await Event.findByIdAndUpdate(eid, {
             $set: {
                 matchs: event.matchs
-            }
+            },
+            done: true
         }, {
             new: true
         }).populate({
@@ -273,6 +344,7 @@ export const updateDate = async (req: Request, res: Response): Promise<Response>
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
 
         return res.status(200).json(showEvent)
 

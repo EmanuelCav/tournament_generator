@@ -15,7 +15,7 @@ import { matchdays, teams, people, referees, players, settings, positions } from
 
 import { EventsNavigationPropsType } from '../../types/event.types';
 
-const EventsNavigation = ({ handleSure, dispatch, get, event, user }: EventsNavigationPropsType) => {
+const EventsNavigation = ({ dispatch, get, event, user }: EventsNavigationPropsType) => {
 
   const handleTeams = () => {
     dispatch(teams(true))
@@ -54,9 +54,6 @@ const EventsNavigation = ({ handleSure, dispatch, get, event, user }: EventsNavi
         <EventNavigation Icon={SportsIcon} isHere={get.isReferees} text='Referees' func={handleReferees} />
         <EventNavigation Icon={GroupsIcon} isHere={get.isPeople} text='People' func={handlePeople} />
         <EventNavigation Icon={ShieldIcon} isHere={get.isTeams} text='Teams' func={handleTeams} />
-        {
-          user._id === event.admin && <EventNavigation Icon={Delete} isHere={false} text='Remove' func={handleSure} />
-        }
         {
           user._id === event.admin && <EventNavigation Icon={SettingsIcon} isHere={get.isSettings} text='Settings' func={handleSettings} />
         }

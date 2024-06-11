@@ -348,3 +348,33 @@ export const removeCompetitorAction = createAsyncThunk('events/removecompetitor'
     }
 
 })
+
+export const restartMatchsAction = createAsyncThunk('events/restartmatchs', async (eventData: typesActionsEvent.RestartMatchActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.restartMatchApi(eventData.id, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        eventData.handleRestartEvent()
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const updateEventAction = createAsyncThunk('events/updateevent', async (eventData: typesActionsEvent.UpdateEventActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.updateEventApi(eventData.id, eventData.formData, eventData.token)
+
+        dispatch(eventReducer.getEvent(data.event))
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})

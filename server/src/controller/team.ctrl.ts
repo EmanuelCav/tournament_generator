@@ -97,6 +97,7 @@ export const addTeam = async (req: Request, res: Response): Promise<Response> =>
                 path: "referees",
                 select: "name"
             }).populate("category")
+            .populate("status")
 
         return res.status(200).json(eventCompetitor)
 
@@ -161,6 +162,7 @@ export const removeTeam = async (req: Request, res: Response): Promise<Response>
                 path: "referees",
                 select: "name"
             }).populate("category")
+            .populate("status")
 
         await cloud.uploader.destroy(team.logo.imageId)
 
@@ -252,6 +254,7 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
 
         if (!eventShow) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -279,7 +282,7 @@ export const joinTeam = async (req: Request, res: Response): Promise<Response> =
 
         const competitor = await Competitor.findOne({ user: req.user, event: team.event })
 
-        if(!competitor) {
+        if (!competitor) {
             return res.status(400).json({ message: "Competitor does not exists" })
         }
 
@@ -327,6 +330,7 @@ export const joinTeam = async (req: Request, res: Response): Promise<Response> =
             path: "referees",
             select: "name"
         }).populate("category")
+            .populate("status")
 
         return res.status(200).json(event)
 

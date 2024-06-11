@@ -9,11 +9,13 @@ export interface IEvent {
     _id?: string;
     event?: string;
     category?: ICategory;
+    done?: boolean;
     id?: string;
     status?: IStatus;
     description?: string;
     admin?: string;
     teams?: ITeam[];
+    image?: IImage;
     competitors?: ICompetitor[];
     matchs?: IMatch[][];
     referees?: IReferee[];

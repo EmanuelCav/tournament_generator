@@ -12,7 +12,6 @@ export type EventNavigationPropsType = {
 
 export type EventsNavigationPropsType = {
     dispatch: Dispatch<any>;
-    handleSure: () => void;
     get: IReducerGet;
     event: IEvent;
     user: IUser;
@@ -172,4 +171,22 @@ export type ChangeRolePropsType = {
     competitor: ICompetitor;
     handleChangeRole: () => void;
     func: () => void;
+}
+
+export type SettingsPropsType = {
+    user: IUserInfo;
+    dispatch: Dispatch<any>;
+    eventInfo: IEvent;
+    handleSure: () => void;
+}
+
+export type DangerActionPropsType = {
+    text: string;
+    button: string;
+    func: () => void;
+}
+
+export type RestartEventPropsType = {
+    func: () => void;
+    handleRestartEvent: () => void;
 }
