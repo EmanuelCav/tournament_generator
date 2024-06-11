@@ -178,3 +178,19 @@ export const updateScheduleApi = async (mid: string, eid: string, scheduleData: 
         }
     })
 }
+
+export const removeCompetitorApi = async (eid: string, cid: string, token: string) => {
+    return await api.delete(`/events/${eid}/competitors/${cid}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const updateRoleApi = async (eid: string, cid: string, role: string, token: string) => {
+    return await api.put(`/events/${eid}/competitors/${cid}?role=${role}`, null, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

@@ -44,14 +44,14 @@ export const userEvents = async (req: Request, res: Response): Promise<Response>
     try {
 
         const events = await Event.find()
-        .populate({
-            path: "competitors",
-            select: "user",
-            populate: {
-                path: "user",
-                select: "nickname"
-            }
-        })
+            .populate({
+                path: "competitors",
+                select: "user",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            })
 
         const showEvents = events.filter(e => e.competitors.find(c => String(c.user._id) === req.user))
 
@@ -167,7 +167,7 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
 
         const role = await Role.findOne({ role: `${privileged_role}` })
 
-        if(!role) {
+        if (!role) {
             return res.status(400).json({ message: "Role does not exists" })
         }
 
@@ -336,6 +336,141 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
         }).populate("category")
 
         return res.status(200).json(eventCompetitor)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const updateRole = async (req: Request, res: Response): Promise<Response> => {
+
+    const { eid, cid } = req.params
+    const { role } = req.query
+
+    try {
+
+        const event = await Event.findById(eid)
+
+        if (!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        const competitor = await Competitor.findById(cid)
+
+        if (!competitor) {
+            return res.status(400).json({ message: "Competitor does not exists" })
+        }
+
+        const roleFound = await Role.findOne({ role: String(role) })
+
+        if(!roleFound) {
+            return res.status(400).json({ message: "Role does not exists" })
+        }
+
+        if (String(event.admin) !== req.user) {
+            return res.status(401).json({ message: "You cannot remove a competitor" })
+        }
+
+        await Competitor.findByIdAndUpdate(cid, {
+            role: roleFound._id
+        }, {
+            new: true
+        })
+
+        const showEvent = await Event.findById(eid).populate({
+            path: "teams",
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
+                path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        }).populate("category")
+
+        return res.status(200).json(showEvent)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const removeCompetitor = async (req: Request, res: Response): Promise<Response> => {
+
+    const { eid, cid } = req.params
+
+    try {
+
+        const event = await Event.findById(eid)
+
+        if (!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        const competitor = await Competitor.findById(cid)
+
+        if (!competitor) {
+            return res.status(400).json({ message: "Competitor does not exists" })
+        }
+
+        if (String(event.admin) !== req.user) {
+            return res.status(401).json({ message: "You cannot remove a competitor" })
+        }
+
+        const showEvent = await Event.findByIdAndUpdate(eid, {
+            $pull: {
+                competitors: cid
+            }
+        }, {
+            new: true
+        }).populate({
+            path: "teams",
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
+                path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        }).populate("category")
+
+        await Competitor.findByIdAndDelete(cid)
+
+        return res.status(200).json(showEvent)
 
     } catch (error) {
         throw error

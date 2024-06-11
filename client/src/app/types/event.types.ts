@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 
-import { IEvent, IMatch, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
+import { ICompetitor, IEvent, IMatch, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
 import { IUser, IUserInfo } from "../interface/User";
 
 export type EventNavigationPropsType = {
@@ -139,7 +139,37 @@ export type AddScorePropsType = {
 export type UpdateSchedulePropsType = {
     dispatch: Dispatch<any>;
     user: IUserInfo;
-    handleUpdateSchedule: (match: IMatch) => void;
     event: IEvent;
+    handleUpdateSchedule: (match: IMatch) => void;
     matchData: IMatch;
+}
+
+export type ShowPeoplePropsType = {
+    competitors: ICompetitor[];
+    handleSureRemoveCompetitor: (competitor: ICompetitor) => void;
+    user: IUserInfo;
+    event: IEvent;
+    dispatch: Dispatch<any>;
+}
+
+export type PeoplePropsType = {
+    competitor: ICompetitor;
+    handleSureRemoveCompetitor: (competitor: ICompetitor) => void;
+    user: IUserInfo;
+    event: IEvent;
+    dispatch: Dispatch<any>;
+}
+
+export type ActionsPeoplePropsType = {
+    competitor: ICompetitor;
+    handleSureRemoveCompetitor: (competitor: ICompetitor) => void;
+    user: IUserInfo;
+    event: IEvent;
+    handleChangeRole: () => void;
+}
+
+export type ChangeRolePropsType = {
+    competitor: ICompetitor;
+    handleChangeRole: () => void;
+    func: () => void;
 }

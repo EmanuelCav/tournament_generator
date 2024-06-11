@@ -140,3 +140,18 @@ export type UpdateScheduleActionPropsType = {
     scheduleData: ISchedule;
     handleUpdateSchedule: (match: IMatch) => void;
 }
+
+export type RemoveCompetitorActionPropsType = {
+    eid: string;
+    cid: string;
+    token: string;
+    setIsRemoveCompetitor: (isRemoveCompetitor: boolean) => void;
+}
+
+export type UpdateRoleActionPropsType = {
+    eid: string;
+    cid: string;
+    role: string;
+    token: string;
+    handleChangeRole: () => void;
+}

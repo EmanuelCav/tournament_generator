@@ -17,11 +17,11 @@ import Settings from '../components/event/Settings';
 import Positions from '../components/event/Positions';
 import Players from '../components/event/Players';
 
-import { eventAction, joinTeamAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
+import { eventAction, joinTeamAction, removeCompetitorAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
 
 import { IReducer } from '../interface/General';
-import { IPlayer, IReferee, ITeam } from '../interface/Event';
+import { ICompetitor, IPlayer, IReferee, ITeam } from '../interface/Event';
 
 const Event = () => {
 
@@ -39,10 +39,12 @@ const Event = () => {
     const [isAddPlayer, setIsAddPlayer] = useState<boolean>(false)
     const [isRemovePlayer, setIsRemovePlayer] = useState<boolean>(false)
     const [isEditPlayer, setIsEditPlayer] = useState<boolean>(false)
+    const [isRemoveCompetitor, setIsRemoveCompetitor] = useState<boolean>(false)
 
     const [infoTeam, setInfoTeam] = useState<ITeam | null>(null)
     const [infoReferee, setInfoReferee] = useState<IReferee | null>(null)
     const [infoPlayer, setInfoPlayer] = useState<IPlayer | null>(null)
+    const [infoCompetitor, setInfoCompetitor] = useState<ICompetitor | null>(null)
 
     const params = useParams()
     const dispatch = useDispatch()
@@ -64,6 +66,10 @@ const Event = () => {
         setIsRemovePlayer(!isRemovePlayer)
     }
 
+    const handleSureRC = () => {
+        setIsRemoveCompetitor(!isRemoveCompetitor)
+    }
+
     const handleAddTeam = () => {
         setIsAddTeam(!isAddTeam)
     }
@@ -81,6 +87,11 @@ const Event = () => {
     const handleSureRemovePlayer = (player: IPlayer) => {
         setInfoPlayer(player)
         setIsRemovePlayer(!isRemovePlayer)
+    }
+
+    const handleSureRemoveCompetitor = (competitor: ICompetitor) => {
+        setInfoCompetitor(competitor)
+        setIsRemoveCompetitor(!isRemoveCompetitor)
     }
 
     const handleEditTeam = (team: ITeam) => {
@@ -148,6 +159,17 @@ const Event = () => {
 
     }
 
+    const removeCompetitor = () => {
+
+        dispatch(removeCompetitorAction({
+            eid: event.event._id!,
+            cid: infoCompetitor?._id!,
+            token: user.user.token!,
+            setIsRemoveCompetitor
+        }) as any)
+
+    }
+
     const joinTeam = (id: string) => {
 
         dispatch(joinTeamAction({
@@ -174,6 +196,9 @@ const Event = () => {
             }
             {
                 isRemovePlayer && <Sure handleSure={handleSureRP} func={removePlayer} text='player' />
+            }
+            {
+                isRemoveCompetitor && <Sure handleSure={handleSureRC} func={removeCompetitor} text='competitor' />
             }
             {
                 isAddPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} dispatch={dispatch} user={user.user} event={event.event} setIsEditPlayer={setIsEditPlayer} isEdit={false} team={infoTeam!} player={infoPlayer!} />
@@ -206,7 +231,7 @@ const Event = () => {
                     get.isPositions && <Positions />
                 }
                 {
-                    get.isPeople && <ShowPeople competitors={event.event?.competitors!} />
+                    get.isPeople && <ShowPeople competitors={event.event?.competitors!} event={event.event} user={user.user} handleSureRemoveCompetitor={handleSureRemoveCompetitor} dispatch={dispatch} />
                 }
                 {
                     get.isReferees && <ShowReferees event={event.event} user={user.user.user!} handleEditReferee={handleEditReferee} handleAddReferee={handleAddReferee} handleSure={handleSureRemoveReferee} />

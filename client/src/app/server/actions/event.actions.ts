@@ -47,7 +47,7 @@ export const eventAction = createAsyncThunk('events/event', async (eventData: ty
 
 })
 
-export const createEventAction = createAsyncThunk('events/createevent', async (eventData: typesActionsEvent.CreateEventActionPropsType, { dispatch }) => {    
+export const createEventAction = createAsyncThunk('events/createevent', async (eventData: typesActionsEvent.CreateEventActionPropsType, { dispatch }) => {
 
     try {
 
@@ -63,10 +63,10 @@ export const createEventAction = createAsyncThunk('events/createevent', async (e
 
 })
 
-export const createTeamAction = createAsyncThunk('events/createteam', async (teamData: typesActionsEvent.CreateTeamActionPropsType, { dispatch }) => {    
+export const createTeamAction = createAsyncThunk('events/createteam', async (teamData: typesActionsEvent.CreateTeamActionPropsType, { dispatch }) => {
 
     try {
-        
+
         const { data } = await eventApi.createTeamApi(teamData.id, teamData.formData, teamData.token)
 
         dispatch(eventReducer.createEvent(data))
@@ -79,10 +79,10 @@ export const createTeamAction = createAsyncThunk('events/createteam', async (tea
 
 })
 
-export const removeEventAction = createAsyncThunk('events/removeevent', async (teamData: typesActionsEvent.RemoveEventActionPropsType, { dispatch }) => {    
+export const removeEventAction = createAsyncThunk('events/removeevent', async (teamData: typesActionsEvent.RemoveEventActionPropsType, { dispatch }) => {
 
     try {
-        
+
         const { data } = await eventApi.removeEventApi(teamData.id, teamData.token)
 
         dispatch(eventReducer.removeEvent(teamData.id))
@@ -97,10 +97,10 @@ export const removeEventAction = createAsyncThunk('events/removeevent', async (t
 
 })
 
-export const removeTeamAction = createAsyncThunk('events/removetean', async (teamData: typesActionsEvent.RemoveTeamActionPropsType, { dispatch }) => {    
+export const removeTeamAction = createAsyncThunk('events/removetean', async (teamData: typesActionsEvent.RemoveTeamActionPropsType, { dispatch }) => {
 
     try {
-        
+
         const { data } = await eventApi.removeTeamApi(teamData.tid, teamData.eid, teamData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -113,10 +113,10 @@ export const removeTeamAction = createAsyncThunk('events/removetean', async (tea
 
 })
 
-export const updateTeamAction = createAsyncThunk('events/updateteam', async (teamData: typesActionsEvent.UpdateTeamActionPropsType, { dispatch }) => {    
+export const updateTeamAction = createAsyncThunk('events/updateteam', async (teamData: typesActionsEvent.UpdateTeamActionPropsType, { dispatch }) => {
 
     try {
-        
+
         const { data } = await eventApi.updateTeamApi(teamData.tid, teamData.eid, teamData.teamData, teamData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -129,10 +129,10 @@ export const updateTeamAction = createAsyncThunk('events/updateteam', async (tea
 
 })
 
-export const joinEventAction = createAsyncThunk('events/joinevent', async (teamData: typesActionsEvent.JoinEventActionPropsType, { dispatch }) => {    
+export const joinEventAction = createAsyncThunk('events/joinevent', async (teamData: typesActionsEvent.JoinEventActionPropsType, { dispatch }) => {
 
     try {
-        
+
         const { data } = await eventApi.joinEventApi(teamData.id, teamData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -145,10 +145,10 @@ export const joinEventAction = createAsyncThunk('events/joinevent', async (teamD
 
 })
 
-export const createRefereeAction = createAsyncThunk('events/createreferee', async (refereeData: typesActionsEvent.CreateRefereeActionPropsType, { dispatch }) => {    
+export const createRefereeAction = createAsyncThunk('events/createreferee', async (refereeData: typesActionsEvent.CreateRefereeActionPropsType, { dispatch }) => {
 
     try {
-        
+
         const { data } = await eventApi.createRefereeApi(refereeData.id, refereeData.refereeData, refereeData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -161,10 +161,10 @@ export const createRefereeAction = createAsyncThunk('events/createreferee', asyn
 
 })
 
-export const removeRefereeAction = createAsyncThunk('events/removereferee', async (refereeData: typesActionsEvent.RemoveRefereeActionPropsType, { dispatch }) => {    
+export const removeRefereeAction = createAsyncThunk('events/removereferee', async (refereeData: typesActionsEvent.RemoveRefereeActionPropsType, { dispatch }) => {
 
     try {
-        
+
         const { data } = await eventApi.removeRefereeApi(refereeData.rid, refereeData.cid, refereeData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -177,10 +177,10 @@ export const removeRefereeAction = createAsyncThunk('events/removereferee', asyn
 
 })
 
-export const updateRefereeAction = createAsyncThunk('events/updatereferee', async (refereeData: typesActionsEvent.UpdateRefereeActionPropsType, { dispatch }) => {    
+export const updateRefereeAction = createAsyncThunk('events/updatereferee', async (refereeData: typesActionsEvent.UpdateRefereeActionPropsType, { dispatch }) => {
 
     try {
-        
+
         const { data } = await eventApi.updateRefereeApi(refereeData.rid, refereeData.cid, refereeData.refereeData, refereeData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -193,10 +193,10 @@ export const updateRefereeAction = createAsyncThunk('events/updatereferee', asyn
 
 })
 
-export const createPlayerAction = createAsyncThunk('events/createplayer', async (playerData: typesActionsEvent.CreatePlayerActionPropsType, { dispatch }) => {    
+export const createPlayerAction = createAsyncThunk('events/createplayer', async (playerData: typesActionsEvent.CreatePlayerActionPropsType, { dispatch }) => {
 
     try {
-        
+
         const { data } = await eventApi.createPlayerApi(playerData.tid, playerData.cid, playerData.playerData, playerData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -209,10 +209,10 @@ export const createPlayerAction = createAsyncThunk('events/createplayer', async 
 
 })
 
-export const removePlayerAction = createAsyncThunk('events/removeplayer', async (playerData: typesActionsEvent.RemovePlayerActionPropsType, { dispatch }) => {  
-    
+export const removePlayerAction = createAsyncThunk('events/removeplayer', async (playerData: typesActionsEvent.RemovePlayerActionPropsType, { dispatch }) => {
+
     try {
-        
+
         const { data } = await eventApi.removePlayerApi(playerData.pid, playerData.cid, playerData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -225,10 +225,10 @@ export const removePlayerAction = createAsyncThunk('events/removeplayer', async 
 
 })
 
-export const updatePlayerAction = createAsyncThunk('events/updateplayer', async (playerData: typesActionsEvent.UpdatePlayerActionPropsType, { dispatch }) => {  
-    
+export const updatePlayerAction = createAsyncThunk('events/updateplayer', async (playerData: typesActionsEvent.UpdatePlayerActionPropsType, { dispatch }) => {
+
     try {
-        
+
         const { data } = await eventApi.updatePlayerApi(playerData.pid, playerData.cid, playerData.playerData, playerData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -241,10 +241,10 @@ export const updatePlayerAction = createAsyncThunk('events/updateplayer', async 
 
 })
 
-export const generateMatchsAction = createAsyncThunk('events/generateMatchs', async (eventData: typesActionsEvent.GenerateMatchsActionPropsType, { dispatch }) => {  
-    
+export const generateMatchsAction = createAsyncThunk('events/generateMatchs', async (eventData: typesActionsEvent.GenerateMatchsActionPropsType, { dispatch }) => {
+
     try {
-        
+
         const { data } = await eventApi.generateMatchApi(eventData.id, eventData.category, eventData.round, eventData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -255,10 +255,10 @@ export const generateMatchsAction = createAsyncThunk('events/generateMatchs', as
 
 })
 
-export const joinTeamAction = createAsyncThunk('events/jointeam', async (eventData: typesActionsEvent.JoinTeamActionPropsType, { dispatch }) => {  
-    
+export const joinTeamAction = createAsyncThunk('events/jointeam', async (eventData: typesActionsEvent.JoinTeamActionPropsType, { dispatch }) => {
+
     try {
-        
+
         const { data } = await eventApi.joinTeamApi(eventData.id, eventData.token)
 
         dispatch(eventReducer.getEvent(data))
@@ -269,8 +269,8 @@ export const joinTeamAction = createAsyncThunk('events/jointeam', async (eventDa
 
 })
 
-export const addRefereeAction = createAsyncThunk('events/addreferee', async (eventData: typesActionsEvent.AddRefereeActionPropsType, { dispatch }) => {  
-    
+export const addRefereeAction = createAsyncThunk('events/addreferee', async (eventData: typesActionsEvent.AddRefereeActionPropsType, { dispatch }) => {
+
     try {
 
         const { data } = await eventApi.refereeMatchApi(eventData.match._id, eventData.eid, eventData.referee, eventData.token)
@@ -285,8 +285,8 @@ export const addRefereeAction = createAsyncThunk('events/addreferee', async (eve
 
 })
 
-export const updateScoreAction = createAsyncThunk('events/addscore', async (eventData: typesActionsEvent.AddScoreActionPropsType, { dispatch }) => {  
-    
+export const updateScoreAction = createAsyncThunk('events/addscore', async (eventData: typesActionsEvent.AddScoreActionPropsType, { dispatch }) => {
+
     try {
 
         const { data } = await eventApi.updateScoreApi(eventData.match._id, eventData.eid, eventData.targetData, eventData.token)
@@ -301,8 +301,8 @@ export const updateScoreAction = createAsyncThunk('events/addscore', async (even
 
 })
 
-export const updateScheduleAction = createAsyncThunk('events/updateschedule', async (eventData: typesActionsEvent.UpdateScheduleActionPropsType, { dispatch }) => {  
-    
+export const updateScheduleAction = createAsyncThunk('events/updateschedule', async (eventData: typesActionsEvent.UpdateScheduleActionPropsType, { dispatch }) => {
+
     try {
 
         const { data } = await eventApi.updateScheduleApi(eventData.match._id, eventData.eid, eventData.scheduleData, eventData.token)
@@ -310,6 +310,38 @@ export const updateScheduleAction = createAsyncThunk('events/updateschedule', as
         dispatch(eventReducer.getEvent(data))
 
         eventData.handleUpdateSchedule(eventData.match)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const updateRoleAction = createAsyncThunk('events/updaterole', async (eventData: typesActionsEvent.UpdateRoleActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.updateRoleApi(eventData.eid, eventData.cid, eventData.role, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        eventData.handleChangeRole()
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const removeCompetitorAction = createAsyncThunk('events/removecompetitor', async (eventData: typesActionsEvent.RemoveCompetitorActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.removeCompetitorApi(eventData.eid, eventData.cid, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        eventData.setIsRemoveCompetitor(false)
 
     } catch (error) {
         console.log(error);
