@@ -9,6 +9,8 @@ import { upload } from '../helper/multer'
 
 const router = Router()
 
+router.get('/teams/positions/:id', teamCtrl.generatePositions)
+
 router.patch('/teams/events/:id', auth, upload.single("file"), teamValid, teamCtrl.addTeam)
 router.patch('/teams/:tid/events/:eid', auth, teamCtrl.removeTeam)
 router.patch('/teams/:id', auth, teamCtrl.joinTeam)

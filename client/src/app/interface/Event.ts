@@ -5,6 +5,11 @@ export interface IReducerEvent {
     event: IEvent;
 }
 
+export interface IReducerStatistic {
+    teams: ITeam[];
+    players: IPlayer[];
+}
+
 export interface IEvent {
     _id?: string;
     event?: string;
@@ -86,12 +91,12 @@ export interface ITeam {
     name: string;
     logo: IImage;
     event: string;
-    victory: Number;
-    defeat: Number;
-    draw: Number;
-    points: Number;
-    favor: Number;
-    against: Number;
+    victory: number;
+    defeat: number;
+    draw: number;
+    points: number;
+    favor: number;
+    against: number;
     players: IPlayer[];
     matchs: IMatch[][];
     competitors: ICompetitor[];

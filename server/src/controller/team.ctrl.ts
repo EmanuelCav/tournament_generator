@@ -8,6 +8,8 @@ import Image from '../models/image'
 
 import { image_default_id } from "../config/config";
 
+import { ITeam } from "../interface/Event";
+
 import { cloud } from "../helper/cloud";
 
 export const addTeam = async (req: Request, res: Response): Promise<Response> => {
@@ -333,6 +335,63 @@ export const joinTeam = async (req: Request, res: Response): Promise<Response> =
             .populate("status")
 
         return res.status(200).json(event)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const generatePositions = async (req: Request, res: Response): Promise<Response> => {
+
+    const { id } = req.params
+
+    try {
+
+        const event = await Event.findById(id).populate("teams")
+
+        if (!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        const showTeams = await Event.aggregate([
+            {
+                $match: { _id: event._id }
+            },
+            {
+                $lookup: {
+                    from: Team.collection.name,
+                    localField: 'teams',
+                    foreignField: '_id',
+                    as: 'teams'
+                }
+            },
+            {
+                $unwind: "$teams"
+            },
+            {
+                $lookup: {
+                    from: Image.collection.name,
+                    localField: 'teams.logo',
+                    foreignField: '_id',
+                    as: 'teams.logo'
+                }
+            },
+            {
+                $unwind: "$teams.logo"
+            },
+            {
+                $sort: { "teams.points": -1 }
+            },
+            {
+                $group: {
+                    _id: "$_id",
+                    teams: { $push: "$teams" }
+                }
+            }
+        ]);
+
+        return res.status(200).json(showTeams[0].teams)
 
     } catch (error) {
         throw error

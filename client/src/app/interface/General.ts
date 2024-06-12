@@ -1,5 +1,5 @@
 import { IReducerResponse } from "./Response";
-import { IReducerEvent, IReducerGet } from "./Event";
+import { IReducerEvent, IReducerGet, IReducerStatistic } from "./Event";
 import { IReducerUser } from "./User";
 
 export interface IReducer {
@@ -7,4 +7,5 @@ export interface IReducer {
     event: IReducerEvent;
     response: IReducerResponse;
     get: IReducerGet;
+    statistic: IReducerStatistic;
 }

@@ -19,6 +19,8 @@ import Players from '../components/event/Players';
 
 import { eventAction, joinTeamAction, removeCompetitorAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
+import { getTeams } from '../server/reducer/statistic.reducer';
+import { getPositionsApi } from '../server/api/event.api';
 
 import { IReducer } from '../interface/General';
 import { ICompetitor, IPlayer, IReferee, ITeam } from '../interface/Event';
@@ -28,6 +30,7 @@ const Event = () => {
     const user = useSelector((state: IReducer) => selector(state).user)
     const event = useSelector((state: IReducer) => selector(state).event)
     const get = useSelector((state: IReducer) => selector(state).get)
+    const statistic = useSelector((state: IReducer) => selector(state).statistic)
 
     const [isText, setIsText] = useState<boolean>(false)
     const [isRemoveTeam, setIsRemoveTeam] = useState<boolean>(false)
@@ -179,6 +182,17 @@ const Event = () => {
 
     }
 
+    const getPositions = async () => {
+        const { data } = await getPositionsApi(event.event._id!, user.user.token!)
+        dispatch(getTeams(data) as any)
+    }
+
+    useEffect(() => {
+        if(event.event._id) {
+            getPositions()
+        }
+    }, [event.event._id])
+
     useEffect(() => {
         dispatch(eventAction({ token: user.user.token!, id: params.id! }) as any)
     }, [params.id])
@@ -221,14 +235,14 @@ const Event = () => {
             <Box display='flex' justifyContent='flex-start' alignItems='flex-start'>
                 <EventsNavigation dispatch={dispatch} get={get} event={event.event} user={user.user.user!} />
                 {
-                    get.isTeams && <ShowTeams user={user.user.user!} handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event} 
-                    handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} joinTeam={joinTeam} />
+                    get.isTeams && <ShowTeams user={user.user.user!} handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event}
+                        handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} joinTeam={joinTeam} />
                 }
                 {
                     get.isMatchdays && <ShowEvent event={event.event} user={user.user} dispatch={dispatch} />
                 }
                 {
-                    get.isPositions && <Positions />
+                    get.isPositions && <Positions teams={statistic.teams} />
                 }
                 {
                     get.isPeople && <ShowPeople competitors={event.event?.competitors!} event={event.event} user={user.user} handleSureRemoveCompetitor={handleSureRemoveCompetitor} dispatch={dispatch} />

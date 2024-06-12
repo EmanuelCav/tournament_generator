@@ -1,7 +1,6 @@
 import { Box, List } from '@mui/material'
 
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import Delete from '@mui/icons-material/Delete';
 import ShieldIcon from '@mui/icons-material/Shield';
 import GroupsIcon from '@mui/icons-material/Groups';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';

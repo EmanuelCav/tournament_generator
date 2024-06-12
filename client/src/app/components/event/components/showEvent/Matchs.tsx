@@ -1,4 +1,4 @@
-import { Paper, Table, TableContainer, TableBody, TableRow, TableCell, Typography, Button } from "@mui/material"
+import { Paper, Table, TableContainer, TableBody, TableRow, TableCell, Typography, Button, Box } from "@mui/material"
 
 import HeadMatchs from "./components/HeadMatchs"
 
@@ -23,7 +23,10 @@ const Matchs = ({ matchs, handleAddReferee, handleAddScore, handleUpdateSchedule
                         isAdmin && <Button sx={{ mt: 1 }} variant="contained" color="primary" onClick={() => handleUpdateSchedule(match)}>DEFINE</Button>
                       }
                     </TableCell>
-                    <TableCell align="right">{match.local.name}</TableCell>
+                    <TableCell align="right">
+                      <Box component="img" src={match.local.logo} width={40} height={40} />
+                      <Typography>{match.local.name}</Typography>
+                    </TableCell>
                     <TableCell>{match.targetLocal}</TableCell>
                     <TableCell>
                       {
@@ -31,7 +34,10 @@ const Matchs = ({ matchs, handleAddReferee, handleAddScore, handleUpdateSchedule
                       }
                     </TableCell>
                     <TableCell>{match.targetVisitant}</TableCell>
-                    <TableCell>{match.visitant.name}</TableCell>
+                    <TableCell>
+                      <Box component="img" src={match.visitant.logo} width={40} height={40} />
+                      <Typography>{match.visitant.name}</Typography>
+                    </TableCell>
                     <TableCell sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                       {match.referee ? match.referee : "Not defined"}
                       {

@@ -210,3 +210,11 @@ export const updateEventApi = async (id: string, eventData: FormData, token: str
         }
     })
 }
+
+export const getPositionsApi = async (id: string, token: string) => {
+    return await api.get(`/teams/positions/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
