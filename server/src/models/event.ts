@@ -79,7 +79,17 @@ const eventSchema = new Schema({
     comments: [{
         type: Types.ObjectId,
         ref: 'Comment'
-    }]
+    }],
+
+    isRoundTrip: {
+        type: Boolean,
+        default: false
+    },
+
+    group: {
+        qualifiers: Number,
+        amount: Number
+    }
 
 }, {
     timestamps: true,

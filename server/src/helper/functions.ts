@@ -19,12 +19,10 @@ export const generateMatchdays = (shuffleArr: any[], round: string): IMatch[][] 
 
     let matchdays: IMatch[][] = []
 
-    const lengthArr = shuffleArr.length % 2 === 0 ? shuffleArr.length - 1 : shuffleArr.length
-
-    matchdaysGenerator(matchdays, lengthArr, shuffleArr, false)
+    matchdaysGenerator(matchdays, shuffleArr, false)
 
     if (round === "trip") {
-        matchdaysGenerator(matchdays, lengthArr, shuffleArr, true)
+        matchdaysGenerator(matchdays, shuffleArr, true)
     }
 
     return matchdays
@@ -55,32 +53,54 @@ export const generateElimination = (shuffleArr: any[], round: string): IMatch[][
 
 }
 
-const matchdaysGenerator = (matchdays: IMatch[][], lengthArr: number, shuffleArr: any[], isTrip: boolean) => {
-    for (let i = 0; i < lengthArr; i++) {
+export const generateGroups = (shuffleArr: any[], amountOfGroups: number, round: string) => {
 
+    let matchdays: IMatch[][] = []
+    let index: number = 0
+
+    for (let i = 0; i < Math.floor(shuffleArr.length / amountOfGroups); i++) {
+        matchdaysGenerator(matchdays, shuffleArr.slice(index, index + Math.floor(shuffleArr.length / amountOfGroups)), false)
+
+        if (round === "trip") {
+            matchdaysGenerator(matchdays, shuffleArr.slice(index, index + Math.floor(shuffleArr.length / amountOfGroups)), true)
+        }
+
+        index += Math.floor(shuffleArr.length / amountOfGroups)
+    }    
+
+    return matchdays
+
+}
+
+const matchdaysGenerator = (matchdays: IMatch[][], shuffleArr: any[], isTrip: boolean) => {
+
+    const lengthArr = shuffleArr.length % 2 === 0 ? shuffleArr.length - 1 : shuffleArr.length
+
+    for (let i = 0; i < lengthArr; i++) {
+        
         let matchs: IMatch[] = []
 
         for (let j = 0; j < Math.floor(lengthArr / 2); j++) {
             if (isTrip) {
                 matchs.push({
                     local: {
-                        name: j % 2 !== 0 ? shuffleArr[shuffleArr.length - 1 - j].name : shuffleArr[j].name,
-                        logo: j % 2 !== 0 ? shuffleArr[shuffleArr.length - 1 - j].logo.image : shuffleArr[j].logo.image
+                        name: j % 2 !== 0 ? shuffleArr[shuffleArr.length - 1 - j].name : shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].name,
+                        logo: j % 2 !== 0 ? shuffleArr[shuffleArr.length - 1 - j].logo.image : shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].logo.image
                     },
                     visitant: {
-                        name: j % 2 !== 0 ? shuffleArr[j].name : shuffleArr[shuffleArr.length - 1 - j].name,
-                        logo: j % 2 !== 0 ? shuffleArr[j].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
+                        name: j % 2 !== 0 ? shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].name : shuffleArr[shuffleArr.length - 1 - j].name,
+                        logo: j % 2 !== 0 ? shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
                     }
                 })
             } else {
                 matchs.push({
                     local: {
-                        name: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].name : shuffleArr[j].name,
-                        logo: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].logo.image : shuffleArr[j].logo.image
+                        name: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].name : shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].name,
+                        logo: j % 2 === 0 ? shuffleArr[shuffleArr.length - 1 - j].logo.image : shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].logo.image
                     },
                     visitant: {
-                        name: j % 2 === 0 ? shuffleArr[j].name : shuffleArr[shuffleArr.length - 1 - j].name,
-                        logo: j % 2 === 0 ? shuffleArr[j].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
+                        name: j % 2 === 0 ? shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].name : shuffleArr[shuffleArr.length - 1 - j].name,
+                        logo: j % 2 === 0 ? shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
                     }
                 })
             }
@@ -89,7 +109,12 @@ const matchdaysGenerator = (matchdays: IMatch[][], lengthArr: number, shuffleArr
         matchdays.push(matchs)
 
         const element = shuffleArr.pop()
-        shuffleArr.splice(1, 0, element)
+
+        if(shuffleArr.length % 2 !== 0) {
+            shuffleArr.splice(1, 0, element)
+        } else {
+            shuffleArr.unshift(element)
+        }
 
     }
 }

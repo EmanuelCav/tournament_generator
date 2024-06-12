@@ -36,6 +36,8 @@ const AddScore = ({ user, dispatch, event, matchData, setIsAddScore }: AddScoreP
             match: matchData,
             setIsAddScore,
             targetData,
+            update: 'yes',
+            category: event.category?.category!,
             token: user.token!
         }))
 
@@ -71,7 +73,6 @@ const AddScore = ({ user, dispatch, event, matchData, setIsAddScore }: AddScoreP
                             id="targetVisitant"
                             label={matchData.visitant.name}
                             name="targetVisitant"
-                            autoFocus
                             color='success'
                             value={targetVisitant}
                             sx={{

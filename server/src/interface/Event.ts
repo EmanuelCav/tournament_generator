@@ -23,8 +23,15 @@ export interface IEvent extends Document {
     teams: Types.ObjectId[];
     matchs: IMatch[][];
     done: boolean;
+    isRoundTrip: boolean;
+    group: IGroup; 
     created_at: NativeDate;
     updated_at: NativeDate;
+}
+
+export interface IGroup {
+    qualifiers: number;
+    amount: number;
 }
 
 export interface IMatch {

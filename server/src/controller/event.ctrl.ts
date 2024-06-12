@@ -111,7 +111,7 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
 
 export const createEvent = async (req: Request, res: Response): Promise<Response> => {
 
-    const { event, description, category, status } = req.body
+    const { event, description, category, status, qualifiers, amount } = req.body
 
     try {
 
@@ -119,6 +119,16 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
 
         if (!categoryEvent) {
             return res.status(400).json({ message: "Category does not exists" })
+        }
+
+        if (categoryEvent.category === "GROUP STAGE") {
+            if (Number(qualifiers) === 0 || Number(amount) === 0) {
+                return res.status(400).json({ message: "Qualifiers or amount of groups cannot be 0" })
+            }
+
+            if (Number(qualifiers) > Number(amount)) {
+                return res.status(400).json({ message: "Qualifiers cannot be higher than amount of groups" })
+            }
         }
 
         const statusEvent = await Status.findOne({ status })
@@ -161,6 +171,10 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
             status: statusEvent._id,
             admin: req.user,
             image: image._id,
+            group: {
+                amount: categoryEvent.category === "GROUP STAGE" ? Number(amount) : 0,
+                qualifiers: categoryEvent.category === "GROUP STAGE" ? Number(qualifiers) : 0,
+            },
             id: generateId(events)
         })
 
@@ -466,13 +480,13 @@ export const removeCompetitor = async (req: Request, res: Response): Promise<Res
 export const updateEvent = async (req: Request, res: Response): Promise<Response> => {
 
     const { id } = req.params
-    const { event, description, category, status } = req.body
+    const { event, description, category, status, qualifiers, amount } = req.body    
 
     try {
 
         const eventData = await Event.findById(id).populate("image")
 
-        if(!eventData) {
+        if (!eventData) {
             return res.status(400).json({ message: "Event does not exists" })
         }
 
@@ -482,13 +496,23 @@ export const updateEvent = async (req: Request, res: Response): Promise<Response
             return res.status(400).json({ message: "Category does not exists" })
         }
 
+        if (categoryEvent.category === "GROUP STAGE") {
+            if (Number(qualifiers) === 0 || Number(amount) === 0) {
+                return res.status(400).json({ message: "Qualifiers or amount of groups cannot be 0" })
+            }
+
+            if (Number(qualifiers) > Number(amount)) {
+                return res.status(400).json({ message: "Qualifiers cannot be higher than amount of groups" })
+            }
+        }
+
         const statusEvent = await Status.findOne({ status })
 
         if (!statusEvent) {
             return res.status(400).json({ message: "Status does not exists" })
         }
 
-        if(String(eventData.admin) !== req.user) {
+        if (String(eventData.admin) !== req.user) {
             return res.status(401).json({ message: "You cannot update the event" })
         }
 
@@ -511,12 +535,26 @@ export const updateEvent = async (req: Request, res: Response): Promise<Response
 
         }
 
+        if (categoryEvent._id !== eventData.category) {
+            await Event.findByIdAndUpdate(id, {
+                $set: {
+                    matchs: []
+                }
+            }, {
+                new: true
+            })
+        }
+
         const showEvent = await Event.findByIdAndUpdate(id, {
             event,
             description,
             status: statusEvent._id,
             category: categoryEvent._id,
-            image: image ? image._id : eventData.image._id
+            image: image ? image._id : eventData.image._id,
+            group: {
+                amount: categoryEvent.category === "GROUP STAGE" ? Number(amount) : 0,
+                qualifiers: categoryEvent.category === "GROUP STAGE" ? Number(qualifiers) : 0,
+            },
         }, {
             new: true
         }).populate({

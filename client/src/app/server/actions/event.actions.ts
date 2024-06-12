@@ -290,7 +290,7 @@ export const updateScoreAction = createAsyncThunk('events/addscore', async (even
 
     try {
 
-        const { data } = await eventApi.updateScoreApi(eventData.match._id, eventData.eid, eventData.targetData, eventData.token)
+        const { data } = await eventApi.updateScoreApi(eventData.match._id, eventData.eid, eventData.targetData, eventData.update, eventData.category, eventData.token)
 
         dispatch(eventReducer.getEvent(data))
 

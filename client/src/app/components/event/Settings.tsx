@@ -17,15 +17,18 @@ const Settings = ({ user, eventInfo, dispatch, handleSure }: SettingsPropsType) 
     event: eventInfo.event!,
     description: eventInfo.description!,
     category: eventInfo.category?.category!,
-    status: eventInfo.status?.status!
+    status: eventInfo.status?.status!,
+    amount: eventInfo.group?.amount!,
+    qualifiers: eventInfo.group?.qualifiers!
   }
 
   const [eventData, setEventData] = useState<ICreateEvent>(initialState)
   const [image, setImage] = useState<string>(eventInfo.image?.image!)
 
-  const { event, description, category, status } = eventData
+  const { event, description, category, status, amount, qualifiers } = eventData
 
   const [isRestartEvent, setIsRestartEvent] = useState<boolean>(false)
+  const [isGroupStage, setIsGroupStage] = useState<boolean>(false)
 
   const [categories, setCategories] = useState<ICategory[]>([])
   const [statusData, setStatusData] = useState<IStatus[]>([])
@@ -89,6 +92,11 @@ const Settings = ({ user, eventInfo, dispatch, handleSure }: SettingsPropsType) 
     formData.append("category", category)
     formData.append("status", status)
 
+    if (category === 'GROUP STAGE') {
+      formData.append("qualifiers", String(qualifiers))
+      formData.append("amount", String(amount))
+    }
+
     if (image) {
       formData.append("file", image)
     }
@@ -100,6 +108,14 @@ const Settings = ({ user, eventInfo, dispatch, handleSure }: SettingsPropsType) 
     }))
 
   }
+
+  useEffect(() => {
+    if (category === "GROUP STAGE") {
+      setIsGroupStage(true)
+    } else {
+      setIsGroupStage(false)
+    }
+  }, [category])
 
   useEffect(() => {
     getCategories()
@@ -190,6 +206,40 @@ const Settings = ({ user, eventInfo, dispatch, handleSure }: SettingsPropsType) 
             </MenuItem>
           ))}
         </TextField>
+        {
+          isGroupStage && <Box my={2} display="flex" justifyContent='space-evenly' alignItems='center'>
+            <TextField
+              type="number"
+              margin="normal"
+              id="qualifiers"
+              label="Amount of qualifiers per group"
+              name="qualifiers"
+              color='success'
+              value={qualifiers}
+              sx={{
+                '&:hover fieldset': {
+                  borderColor: '#33CC33 !important',
+                },
+              }}
+              onChange={handleChange}
+            />
+            <TextField
+              type="number"
+              margin="normal"
+              id="amount"
+              label="Amount of groups"
+              name="amount"
+              color='success'
+              value={amount}
+              sx={{
+                '&:hover fieldset': {
+                  borderColor: '#33CC33 !important',
+                },
+              }}
+              onChange={handleChange}
+            />
+          </Box>
+        }
         <Button
           type="submit"
           fullWidth

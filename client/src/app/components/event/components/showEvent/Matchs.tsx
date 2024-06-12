@@ -5,12 +5,12 @@ import HeadMatchs from "./components/HeadMatchs"
 import { IMatch } from "../../../../interface/Event"
 import { MatchsPropsType } from "../../../../types/event.types"
 
-const Matchs = ({ matchs, handleAddReferee, handleAddScore, handleUpdateSchedule, isAdmin }: MatchsPropsType) => {
+const Matchs = ({ event, handleAddReferee, handleAddScore, handleUpdateSchedule, isAdmin }: MatchsPropsType) => {
   return (
     <TableContainer component={Paper} sx={{ mt: 2 }}>
       <Table>
         <HeadMatchs />
-        {matchs.map((fixture: IMatch[], index: number) => (
+        {event.matchs!.map((fixture: IMatch[], index: number) => (
           <>
             <Typography variant="h6" m={1} color={'#33cc33'}>Matchday {index + 1}</Typography>
             <TableBody key={index}>

@@ -24,8 +24,15 @@ export interface IEvent {
     competitors?: ICompetitor[];
     matchs?: IMatch[][];
     referees?: IReferee[];
+    isRoundTrip?: boolean;
+    group?: IGroup;
     createdAt?: string;
     updatedAt?: string;
+}
+
+export interface IGroup {
+    qualifiers: number;
+    amount: number;
 }
 
 export interface IReferee {
@@ -116,6 +123,8 @@ export interface ICreateEvent {
     description: string;
     category: string;
     status: string;
+    qualifiers?: number;
+    amount?: number;
 }
 
 export interface ICreateTeam {

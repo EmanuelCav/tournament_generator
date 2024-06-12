@@ -113,7 +113,7 @@ export type GeneratePropsType = {
 
 export type MatchsPropsType = {
     handleAddReferee: (match: IMatch) => void;
-    matchs: IMatch[][];
+    event: IEvent;
     handleAddScore: (match: IMatch) => void;
     handleUpdateSchedule: (match: IMatch) => void;
     isAdmin: boolean;

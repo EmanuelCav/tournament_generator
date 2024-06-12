@@ -17,7 +17,7 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
   const [isAddReferee, setIsAddReferee] = useState<boolean>(false)
   const [isAddScore, setIsAddScore] = useState<boolean>(false)
   const [isAddDate, setIsAddDate] = useState<boolean>(false)
-  const [isRoundTrip, setIsRoundTrip] = useState<boolean>(false)
+  const [isRoundTrip, setIsRoundTrip] = useState<boolean>(event.isRoundTrip!)
 
   const [matchData, setMatchData] = useState<IMatch | null>(null)
 
@@ -70,7 +70,7 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
             {
               event.admin === user.user?._id && <Button size="large" variant="contained" color="primary" sx={{ my: 2 }} onClick={generateNow} disabled={event.done}>GENERATE AGAIN</Button>
             }
-            <Matchs isAdmin={event.competitors?.find((c) => c.user._id === user.user?._id)?.role.role === 'ADMIN'} matchs={event.matchs!}
+            <Matchs isAdmin={event.competitors?.find((c) => c.user._id === user.user?._id)?.role.role === 'ADMIN'} event={event}
               handleAddReferee={handleAddReferee} handleAddScore={handleAddScore} handleUpdateSchedule={handleUpdateSchedule} />
           </>
         ) : (

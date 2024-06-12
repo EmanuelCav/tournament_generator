@@ -14,16 +14,20 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
         event: "",
         description: "",
         category: "",
-        status: ""
+        status: "",
+        qualifiers: 0,
+        amount: 0
     }
 
     const [eventData, setEventData] = useState<ICreateEvent>(initialState)
     const [image, setImage] = useState<string>("")
 
-    const { event, description, category, status } = eventData
+    const { event, description, category, status, qualifiers, amount } = eventData
 
     const [categories, setCategories] = useState<ICategory[]>([])
     const [statusData, setStatusData] = useState<IStatus[]>([])
+
+    const [isGroupStage, setIsGroupStage] = useState<boolean>(false)
 
     const getCategories = async () => {
 
@@ -72,6 +76,11 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
         formData.append("category", category)
         formData.append("status", status)
 
+        if (category === 'GROUP STAGE') {
+            formData.append("qualifiers", String(qualifiers))
+            formData.append("amount", String(amount))
+        }
+
         if (image) {
             formData.append("file", image)
         }
@@ -83,6 +92,14 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
         }))
 
     }
+
+    useEffect(() => {
+        if(category === "GROUP STAGE") {
+            setIsGroupStage(true)
+        } else {
+            setIsGroupStage(false)
+        }
+    }, [category])
 
     useEffect(() => {
         getCategories()
@@ -169,6 +186,40 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
                         ))}
                     </TextField>
                 </Box>
+                {
+                    isGroupStage && <Box my={2} display="flex" justifyContent='space-evenly' alignItems='center'>
+                        <TextField
+                            type="number"
+                            margin="normal"
+                            id="qualifiers"
+                            label="Amount of qualifiers per group"
+                            name="qualifiers"
+                            color='success'
+                            value={qualifiers}
+                            sx={{
+                                '&:hover fieldset': {
+                                    borderColor: '#33CC33 !important',
+                                },
+                            }}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            type="number"
+                            margin="normal"
+                            id="amount"
+                            label="Amount of groups"
+                            name="amount"
+                            color='success'
+                            value={amount}
+                            sx={{
+                                '&:hover fieldset': {
+                                    borderColor: '#33CC33 !important',
+                                },
+                            }}
+                            onChange={handleChange}
+                        />
+                    </Box>
+                }
                 <Button
                     type="submit"
                     fullWidth
