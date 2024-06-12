@@ -77,6 +77,10 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(showEvent)
 
@@ -153,6 +157,10 @@ export const restartMatch = async (req: Request, res: Response): Promise<Respons
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(showEvent)
 
@@ -225,6 +233,10 @@ export const addRefereeMatch = async (req: Request, res: Response): Promise<Resp
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(showEvent)
 
@@ -331,7 +343,7 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
                             new: true
                         })
                     } else if (String(category) === 'ELIMINATION') {
-                        
+
                     }
 
                     break;
@@ -374,6 +386,10 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(showEvent)
 
@@ -440,6 +456,10 @@ export const updateDate = async (req: Request, res: Response): Promise<Response>
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(showEvent)
 

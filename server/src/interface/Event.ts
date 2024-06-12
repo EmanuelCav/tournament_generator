@@ -21,6 +21,7 @@ export interface IEvent extends Document {
     competitors: ICompetitor[];
     referees: Types.ObjectId[];
     teams: Types.ObjectId[];
+    campus: Types.ObjectId[];
     matchs: IMatch[][];
     done: boolean;
     isRoundTrip: boolean;
@@ -84,6 +85,14 @@ export interface IStatus extends Document {
 export interface IComment extends Document {
     _id: Types.ObjectId;
     comment: string;
+    created_at: NativeDate;
+    updated_at: NativeDate;
+}
+
+export interface ICampus extends Document {
+    _id: Types.ObjectId;
+    name: string;
+    event: Types.ObjectId;
     created_at: NativeDate;
     updated_at: NativeDate;
 }

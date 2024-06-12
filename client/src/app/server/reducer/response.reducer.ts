@@ -268,6 +268,36 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.updateEventAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(eventAction.createCampusAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.createCampusAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.createCampusAction.rejected, (state) => {
+            state.loading = false
+        })
+
+        builder.addCase(eventAction.removeCampusAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.removeCampusAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.removeCampusAction.rejected, (state) => {
+            state.loading = false
+        })
+
+        builder.addCase(eventAction.updateCampusAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.updateCampusAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.updateCampusAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

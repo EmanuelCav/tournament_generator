@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 
-import { ICompetitor, IEvent, IMatch, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
+import { ICampus, ICompetitor, IEvent, IMatch, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
 import { IUser, IUserInfo } from "../interface/User";
 
 export type EventNavigationPropsType = {
@@ -73,6 +73,16 @@ export type FormAddRefereePropsType = {
     isEdit: boolean;
     refereeInfo: IReferee;
     setIsEditReferee: (isEditReferee: boolean) => void;
+}
+
+export type FormAddCampusPropsType = {
+    handleAddCampus: () => void;
+    dispatch: Dispatch<any>;
+    user: IUserInfo;
+    event: IEvent;
+    isEdit: boolean;
+    campusInfo: IReferee;
+    setIsEditCampus: (isEditCampus: boolean) => void;
 }
 
 export type RefereePropsType = {
@@ -189,4 +199,19 @@ export type DangerActionPropsType = {
 export type RestartEventPropsType = {
     func: () => void;
     handleRestartEvent: () => void;
+}
+
+export type ShowCampusPropsType = {
+    handleAddCampus: () => void;
+    event: IEvent;
+    handleSure: (campus: ICampus) => void;
+    handleEditCampus: (campus: ICampus) => void;
+    user: IUser;
+}
+
+export type CampusPropsType = {
+    campus: ICampus;
+    handleSure: (campus: ICampus) => void;
+    handleEditCampus: (campus: ICampus) => void;
+    isAvailableEdit?: boolean;
 }

@@ -22,6 +22,7 @@ export interface IEvent {
     teams?: ITeam[];
     image?: IImage;
     competitors?: ICompetitor[];
+    campus?: ICampus[];
     matchs?: IMatch[][];
     referees?: IReferee[];
     isRoundTrip?: boolean;
@@ -49,6 +50,14 @@ export interface IPlayer {
     points: number;
     cards: number;
     serialCards: number;
+    team: ITeam;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ICampus {
+    _id: string;
+    name: string;
     team: ITeam;
     createdAt: string;
     updatedAt: string;
@@ -139,6 +148,7 @@ export interface IReducerGet {
     isReferees: boolean;
     isPlayers: boolean;
     isSettings: boolean;
+    isCampus: boolean;
 }
 
 export interface ICreatePlayer {

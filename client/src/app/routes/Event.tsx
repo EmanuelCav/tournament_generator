@@ -17,14 +17,16 @@ import Settings from '../components/event/Settings';
 import Positions from '../components/event/Positions';
 import Players from '../components/event/Players';
 import EliminationTable from '../components/event/EliminationTable';
+import ShowCampus from '../components/event/ShowCampus';
+import FormAddCampus from '../components/event/FormAddCampus';
 
-import { eventAction, joinTeamAction, removeCompetitorAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
+import { eventAction, joinTeamAction, removeCampusAction, removeCompetitorAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
 import { getTeams } from '../server/reducer/statistic.reducer';
 import { getPositionsApi } from '../server/api/event.api';
 
 import { IReducer } from '../interface/General';
-import { ICompetitor, IPlayer, IReferee, ITeam } from '../interface/Event';
+import { ICampus, ICompetitor, IPlayer, IReferee, ITeam } from '../interface/Event';
 
 const Event = () => {
 
@@ -44,11 +46,15 @@ const Event = () => {
     const [isRemovePlayer, setIsRemovePlayer] = useState<boolean>(false)
     const [isEditPlayer, setIsEditPlayer] = useState<boolean>(false)
     const [isRemoveCompetitor, setIsRemoveCompetitor] = useState<boolean>(false)
+    const [isRemoveCampus, setIsRemoveCampus] = useState<boolean>(false)
+    const [isAddCampus, setIsAddCampus] = useState<boolean>(false)
+    const [isEditCampus, setIsEditCampus] = useState<boolean>(false)
 
     const [infoTeam, setInfoTeam] = useState<ITeam | null>(null)
     const [infoReferee, setInfoReferee] = useState<IReferee | null>(null)
     const [infoPlayer, setInfoPlayer] = useState<IPlayer | null>(null)
     const [infoCompetitor, setInfoCompetitor] = useState<ICompetitor | null>(null)
+    const [infoCampus, setInfoCampus] = useState<ICampus | null>(null)
 
     const params = useParams()
     const dispatch = useDispatch()
@@ -72,6 +78,10 @@ const Event = () => {
 
     const handleSureRC = () => {
         setIsRemoveCompetitor(!isRemoveCompetitor)
+    }
+
+    const handleSureRCampus = () => {
+        setIsRemoveCampus(!isRemoveCampus)
     }
 
     const handleAddTeam = () => {
@@ -98,6 +108,11 @@ const Event = () => {
         setIsRemoveCompetitor(!isRemoveCompetitor)
     }
 
+    const handleSureRemoveCampus = (campus: ICampus) => {
+        setInfoCampus(campus)
+        setIsRemoveCampus(!isRemoveCampus)
+    }
+
     const handleEditTeam = (team: ITeam) => {
         setInfoTeam(team)
         setIsEditTeam(!isEditTeam)
@@ -113,8 +128,17 @@ const Event = () => {
         setIsEditPlayer(!isEditPlayer)
     }
 
+    const handleEditCampus = (campus: ICampus) => {
+        setInfoCampus(campus)
+        setIsEditCampus(!isEditCampus)
+    }
+
     const handleAddReferee = () => {
         setIsAddReferee(!isAddReferee)
+    }
+
+    const handleAddCampus = () => {
+        setIsAddCampus(!isAddCampus)
     }
 
     const handleAddPlayer = (team: ITeam) => {
@@ -174,6 +198,17 @@ const Event = () => {
 
     }
 
+    const removeCampus = () => {
+
+        dispatch(removeCampusAction({
+            setIsRemoveCampus,
+            token: user.user.token!,
+            cid: event.event.competitors?.find(c => c.user._id === user.user.user?._id)?._id!,
+            id: infoCampus?._id!
+        }) as any)
+
+    }
+
     const joinTeam = (id: string) => {
 
         dispatch(joinTeamAction({
@@ -216,6 +251,9 @@ const Event = () => {
                 isRemoveCompetitor && <Sure handleSure={handleSureRC} func={removeCompetitor} text='competitor' />
             }
             {
+                isRemoveCampus && <Sure handleSure={handleSureRCampus} func={removeCampus} text='campus' />
+            }
+            {
                 isAddPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} dispatch={dispatch} user={user.user} event={event.event} setIsEditPlayer={setIsEditPlayer} isEdit={false} team={infoTeam!} player={infoPlayer!} />
             }
             {
@@ -225,6 +263,9 @@ const Event = () => {
                 isAddReferee && <FormAddReferee handleAddReferee={handleAddReferee} setIsEditReferee={setIsEditReferee} dispatch={dispatch} user={user.user} event={event.event} isEdit={false} refereeInfo={infoReferee!} />
             }
             {
+                isAddCampus && <FormAddCampus dispatch={dispatch} setIsEditCampus={setIsEditCampus} user={user.user} event={event.event} campusInfo={infoCampus!} isEdit={false} handleAddCampus={handleAddCampus} />
+            }
+            {
                 isEditTeam && <EditTeam dispatch={dispatch} team={infoTeam!} eid={event.event._id!} setIsEditTeam={setIsEditTeam} token={user.user.token!} />
             }
             {
@@ -232,6 +273,9 @@ const Event = () => {
             }
             {
                 isEditPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} setIsEditPlayer={setIsEditPlayer} dispatch={dispatch} user={user.user} event={event.event} isEdit={true} team={infoTeam!} player={infoPlayer!} />
+            }
+            {
+                isEditCampus && <FormAddCampus dispatch={dispatch} setIsEditCampus={setIsEditCampus} user={user.user} event={event.event} campusInfo={infoCampus!} isEdit={true} handleAddCampus={handleAddCampus}  />
             }
             <Box display='flex' justifyContent='flex-start' alignItems='flex-start'>
                 <EventsNavigation dispatch={dispatch} get={get} event={event.event} user={user.user.user!} />
@@ -265,6 +309,9 @@ const Event = () => {
                 }
                 {
                     get.isPlayers && <Players />
+                }
+                {
+                    get.isCampus && <ShowCampus event={event.event} user={user.user.user!} handleAddCampus={handleAddCampus} handleSure={handleSureRemoveCampus} handleEditCampus={handleEditCampus}  />
                 }
             </Box>
         </Container>

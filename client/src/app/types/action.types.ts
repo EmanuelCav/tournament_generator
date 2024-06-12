@@ -169,3 +169,25 @@ export type UpdateEventActionPropsType = {
     token: string;
     formData: FormData;
 }
+
+export type CreateCampusActionPropsType = {
+    id: string;
+    token: string;
+    campusData: ICreateTeam;
+    handleAddCampus: () => void;
+}
+
+export type RemoveCampusActionPropsType = {
+    id: string;
+    cid: string;
+    token: string;
+    setIsRemoveCampus: (isRemoveCampus: boolean) => void;
+}
+
+export type UpdateCampusActionPropsType = {
+    id: string;
+    cid: string;
+    token: string;
+    campusData: ICreateTeam;
+    setIsEditCampus: (isEditCampus: boolean) => void;
+}

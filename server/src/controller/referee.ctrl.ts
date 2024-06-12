@@ -82,7 +82,11 @@ export const createReferee = async (req: Request, res: Response): Promise<Respon
             path: "referees",
             select: "name"
         }).populate("category")
-        .populate("status")
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(showEvent)
 
@@ -100,7 +104,7 @@ export const removeReferee = async (req: Request, res: Response): Promise<Respon
 
         const referee = await Referee.findById(rid)
 
-        if(!referee) {
+        if (!referee) {
             return res.status(400).json({ message: "Referee does not exists" })
         }
 
@@ -152,7 +156,11 @@ export const removeReferee = async (req: Request, res: Response): Promise<Respon
             path: "referees",
             select: "name"
         }).populate("category")
-        .populate("status")
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         await Referee.findByIdAndDelete(rid)
 
@@ -173,7 +181,7 @@ export const updateReferee = async (req: Request, res: Response): Promise<Respon
 
         const referee = await Referee.findById(rid)
 
-        if(!referee) {
+        if (!referee) {
             return res.status(400).json({ message: "Referee does not exists" })
         }
 
@@ -225,7 +233,11 @@ export const updateReferee = async (req: Request, res: Response): Promise<Respon
             path: "referees",
             select: "name"
         }).populate("category")
-        .populate("status")
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(showEvent)
 

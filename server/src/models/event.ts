@@ -56,6 +56,11 @@ const eventSchema = new Schema({
         ref: 'Team'
     }],
 
+    campus: [{
+        type: Types.ObjectId,
+        ref: 'Campus'
+    }],
+
     matchs: [[{
         local: {
             name: String,

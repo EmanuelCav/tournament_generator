@@ -218,3 +218,29 @@ export const getPositionsApi = async (id: string, token: string) => {
         }
     })
 }
+
+export const createCampusApi = async (cid: string, campusData: ICreateTeam, token: string) => {
+    return await api.post(`/campus/competitors/${cid}`, campusData, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const removeCampusApi = async (id: string, cid: string, token: string) => {
+    return await api.delete(`/campus/${id}/competitors/${cid}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const updateCampusApi = async (id: string, cid: string, campusData: ICreateTeam, token: string) => {
+    return await api.put(`/campus/${id}/competitors/${cid}`, campusData, {
+        headers: {
+            'Content-type': "application/json",
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

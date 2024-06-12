@@ -380,3 +380,51 @@ export const updateEventAction = createAsyncThunk('events/updateevent', async (e
     }
 
 })
+
+export const createCampusAction = createAsyncThunk('events/createcampus', async (refereeData: typesActionsEvent.CreateCampusActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.createCampusApi(refereeData.id, refereeData.campusData, refereeData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        refereeData.handleAddCampus()
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const removeCampusAction = createAsyncThunk('events/removecampus', async (refereeData: typesActionsEvent.RemoveCampusActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.removeCampusApi(refereeData.id, refereeData.cid, refereeData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        refereeData.setIsRemoveCampus(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const updateCampusAction = createAsyncThunk('events/updatecampus', async (refereeData: typesActionsEvent.UpdateCampusActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.updateCampusApi(refereeData.id, refereeData.cid, refereeData.campusData, refereeData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        refereeData.setIsEditCampus(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})

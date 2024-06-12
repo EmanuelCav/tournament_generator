@@ -96,6 +96,10 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         if (!event) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -227,6 +231,10 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         if (!eventTeams) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -331,6 +339,10 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(eventCompetitor)
 
@@ -402,6 +414,10 @@ export const updateRole = async (req: Request, res: Response): Promise<Response>
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(showEvent)
 
@@ -466,6 +482,10 @@ export const removeCompetitor = async (req: Request, res: Response): Promise<Res
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         await Competitor.findByIdAndDelete(cid)
 
@@ -584,6 +604,10 @@ export const updateEvent = async (req: Request, res: Response): Promise<Response
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json({
             event: showEvent,

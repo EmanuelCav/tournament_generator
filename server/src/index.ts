@@ -21,6 +21,7 @@ import teamRoute from './routes/team.routes'
 import playerRoute from './routes/player.routes'
 import refereeRoute from './routes/referee.routes'
 import matchRoute from './routes/match.routes'
+import campusRoute from './routes/campus.routes'
 
 const app = express()
 
@@ -42,6 +43,7 @@ app.use(teamRoute)
 app.use(playerRoute)
 app.use(refereeRoute)
 app.use(matchRoute)
+app.use(campusRoute)
 
 app.use(express.static(path.join(__dirname, "../public")))
 

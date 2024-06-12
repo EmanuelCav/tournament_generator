@@ -1,8 +1,8 @@
 import { Schema, Types, model } from 'mongoose'
 
-import { IReferee } from '../interface/User'
+import { ICampus } from '../interface/Event'
 
-const refereeSchema = new Schema({
+const campusSchema = new Schema({
 
     name: {
         type: String,
@@ -20,4 +20,4 @@ const refereeSchema = new Schema({
     versionKey: false
 })
 
-export default model<IReferee>('Referee', refereeSchema)
+export default model<ICampus>('Campus', campusSchema)

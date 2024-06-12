@@ -1,24 +1,17 @@
 import { Request, Response } from "express";
 
 import Event from '../models/event';
-import Team from '../models/team';
-import Player from '../models/player';
+import Campus from '../models/campus';
 import Competitor from '../models/competitor';
 
 import { privileged_role } from "../config/config";
 
-export const createPlayer = async (req: Request, res: Response): Promise<Response> => {
+export const createCampus = async (req: Request, res: Response): Promise<Response> => {
 
-    const { tid, cid } = req.params
-    const { name, position } = req.body
+    const { cid } = req.params
+    const { name } = req.body
 
     try {
-
-        const team = await Team.findById(tid)
-
-        if (!team) {
-            return res.status(400).json({ message: "Team does not exists" })
-        }
 
         const user = await Competitor.findById(cid).populate("role")
 
@@ -27,7 +20,7 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
         }
 
         if (user.role.role !== `${privileged_role}`) {
-            return res.status(401).json({ message: "You cannot create a player" })
+            return res.status(401).json({ message: "You cannot create a campus" })
         }
 
         const event = await Event.findById(user.event)
@@ -36,23 +29,22 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
             return res.status(400).json({ message: "Event does not exists" })
         }
 
-        const newPlayer = new Player({
+        const newCampus = new Campus({
             name,
-            position,
-            team: team._id
+            event: event._id
         })
 
-        const playerSaved = await newPlayer.save()
+        const campusSaved = await newCampus.save()
 
-        await Team.findByIdAndUpdate(tid, {
+        await Event.findByIdAndUpdate(event._id, {
             $push: {
-                players: playerSaved._id
+                campus: campusSaved._id
             }
         }, {
             new: true
         })
 
-        const showEvent = await Event.findById(user.event).populate({
+        const showEvent = await Event.findById(event._id).populate({
             path: "teams",
             populate: [{
                 path: "logo",
@@ -78,11 +70,11 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
             path: "referees",
             select: "name"
         }).populate("category")
-        .populate("status")
-        .populate({
-            path: "campus",
-            select: "name"
-        })
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(showEvent)
 
@@ -92,16 +84,16 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
 
 }
 
-export const removePlayer = async (req: Request, res: Response): Promise<Response> => {
+export const removeCampus = async (req: Request, res: Response): Promise<Response> => {
 
-    const { pid, cid } = req.params
+    const { id, cid } = req.params
 
     try {
 
-        const player = await Player.findById(pid)
+        const campus = await Campus.findById(id)
 
-        if (!player) {
-            return res.status(400).json({ message: "Player does not exists" })
+        if (!campus) {
+            return res.status(400).json({ message: "Campus does not exists" })
         }
 
         const user = await Competitor.findById(cid).populate("role")
@@ -111,7 +103,7 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
         }
 
         if (user.role.role !== `${privileged_role}`) {
-            return res.status(401).json({ message: "You cannot remove a player" })
+            return res.status(401).json({ message: "You cannot remove a campus" })
         }
 
         const event = await Event.findById(user.event)
@@ -120,15 +112,9 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
             return res.status(400).json({ message: "Event does not exists" })
         }
 
-        const team = await Team.findById(player.team)
-
-        if(!team) {
-            return res.status(400).json({ message: "Team does not exists" })
-        }
-
-        await Team.findByIdAndUpdate(player.team, {
+        await Event.findByIdAndUpdate(event._id, {
             $pull: {
-                players: pid
+                campus: id
             }
         }, {
             new: true
@@ -160,13 +146,13 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
             path: "referees",
             select: "name"
         }).populate("category")
-        .populate("status")
-        .populate({
-            path: "campus",
-            select: "name"
-        })
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
-        await Player.findByIdAndDelete(pid)
+        await Campus.findByIdAndDelete(id)
 
         return res.status(200).json(showEvent)
 
@@ -176,17 +162,17 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
 
 }
 
-export const updatePlayer = async (req: Request, res: Response): Promise<Response> => {
+export const updateCampus = async (req: Request, res: Response): Promise<Response> => {
 
-    const { pid, cid } = req.params
-    const { name, position } = req.body
+    const { id, cid } = req.params
+    const { name } = req.body
 
     try {
 
-        const player = await Player.findById(pid)
+        const campus = await Campus.findById(id)
 
-        if (!player) {
-            return res.status(400).json({ message: "Player does not exists" })
+        if (!campus) {
+            return res.status(400).json({ message: "Campus does not exists" })
         }
 
         const user = await Competitor.findById(cid).populate("role")
@@ -196,7 +182,7 @@ export const updatePlayer = async (req: Request, res: Response): Promise<Respons
         }
 
         if (user.role.role !== `${privileged_role}`) {
-            return res.status(401).json({ message: "You cannot update a player" })
+            return res.status(401).json({ message: "You cannot update a campus" })
         }
 
         const event = await Event.findById(user.event)
@@ -205,9 +191,8 @@ export const updatePlayer = async (req: Request, res: Response): Promise<Respons
             return res.status(400).json({ message: "Event does not exists" })
         }
 
-        await Player.findByIdAndUpdate(pid, {
-            name,
-            position
+        await Campus.findByIdAndUpdate(id, {
+            name
         }, {
             new: true
         })
@@ -238,11 +223,11 @@ export const updatePlayer = async (req: Request, res: Response): Promise<Respons
             path: "referees",
             select: "name"
         }).populate("category")
-        .populate("status")
-        .populate({
-            path: "campus",
-            select: "name"
-        })
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(showEvent)
 

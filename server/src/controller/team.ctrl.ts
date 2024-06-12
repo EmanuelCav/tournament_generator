@@ -100,6 +100,10 @@ export const addTeam = async (req: Request, res: Response): Promise<Response> =>
                 select: "name"
             }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(eventCompetitor)
 
@@ -165,6 +169,10 @@ export const removeTeam = async (req: Request, res: Response): Promise<Response>
                 select: "name"
             }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         await cloud.uploader.destroy(team.logo.imageId)
 
@@ -257,6 +265,10 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         if (!eventShow) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -333,6 +345,10 @@ export const joinTeam = async (req: Request, res: Response): Promise<Response> =
             select: "name"
         }).populate("category")
             .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            })
 
         return res.status(200).json(event)
 
