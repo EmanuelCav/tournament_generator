@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import { IPlayer, IStatisticEvent, ITeam } from '../../interface/Event';
+import { IPlayer, IReducerStatistic, ITeam } from '../../interface/Event';
 
-export const initialState: IStatisticEvent = {
+export const initialState: IReducerStatistic = {
     players: [],
     teams: []
 }

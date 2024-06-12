@@ -64,7 +64,7 @@ export interface IMatch {
     schedule?: string;
 }
 
-interface ITeamMatch {
+export interface ITeamMatch {
     logo: string;
     name: string;
 }

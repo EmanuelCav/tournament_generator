@@ -2,8 +2,9 @@ import { Request, Response } from "express";
 
 import Event from '../models/event';
 import Referee from '../models/referee';
+import Team from '../models/team';
 
-import { generateMatchdays, shuffle } from "../helper/functions";
+import { generateElimination, generateMatchdays, shuffle } from "../helper/functions";
 
 export const generateMatch = async (req: Request, res: Response): Promise<Response> => {
 
@@ -35,7 +36,7 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
         if (category === "MATCHDAYS") {
             matchdays = generateMatchdays(shuffleArr, String(round))
         } else if (category === "ELIMINATION") {
-            matchdays = generateMatchdays(shuffleArr, String(round))
+            matchdays = generateElimination(shuffleArr, String(round))
         } else if (category === "SWISS") {
             matchdays = generateMatchdays(shuffleArr, String(round))
         } else {
@@ -105,6 +106,17 @@ export const restartMatch = async (req: Request, res: Response): Promise<Respons
         if (String(event.admin) !== req.user) {
             return res.status(401).json({ message: "You cannot generate matchs" })
         }
+
+        await Team.updateMany({
+            event: id
+        }, {
+            defeat: 0,
+            victory: 0,
+            draw: 0,
+            points: 0,
+            favor: 0,
+            against: 0
+        })
 
         const showEvent = await Event.findByIdAndUpdate(id, {
             $set: {
@@ -239,6 +251,83 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
                 if (String(event.matchs[i][j]._id) === mid) {
                     event.matchs[i][j].targetLocal = Number(targetLocal);
                     event.matchs[i][j].targetVisitant = Number(targetVisitant);
+
+                    const teamLocal = await Team.findOne({ name: event.matchs[i][j].local.name })
+                    const teamVisitant = await Team.findOne({ name: event.matchs[i][j].visitant.name })
+
+                    let resultLocal
+                    let resultVisitant
+
+                    if (!teamLocal) {
+                        return res.status(400).json({ message: "Local team does not exists" })
+                    }
+
+                    if (!teamVisitant) {
+                        return res.status(400).json({ message: "Local visitant does not exists" })
+                    }
+
+                    if (Number(targetLocal) > Number(targetVisitant)) {
+                        resultLocal = await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
+                            victory: teamLocal.victory + 1,
+                            favor: teamLocal.favor + Number(targetLocal),
+                            against: teamLocal.against + Number(targetVisitant)
+                        }, {
+                            new: true
+                        })
+
+                        resultVisitant = await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
+                            defeat: teamVisitant.defeat + 1,
+                            favor: teamLocal.favor + Number(targetVisitant),
+                            against: teamLocal.against + Number(targetLocal)
+                        }, {
+                            new: true
+                        })
+                    } else if (Number(targetLocal) < Number(targetVisitant)) {
+                        resultLocal = await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
+                            defeat: teamLocal.defeat + 1,
+                            favor: teamLocal.favor + Number(targetLocal),
+                            against: teamLocal.against + Number(targetVisitant)
+                        }, {
+                            new: true
+                        })
+
+                        resultVisitant = await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
+                            victory: teamVisitant.victory + 1,
+                            favor: teamLocal.favor + Number(targetVisitant),
+                            against: teamLocal.against + Number(targetLocal)
+                        }, {
+                            new: true
+                        })
+                    } else {
+                        resultLocal = await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
+                            draw: teamLocal.draw + 1,
+                            favor: teamLocal.favor + Number(targetLocal),
+                            against: teamLocal.against + Number(targetVisitant)
+                        }, {
+                            new: true
+                        })
+
+                        resultVisitant = await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
+                            draw: teamVisitant.draw + 1,
+                            favor: teamLocal.favor + Number(targetVisitant),
+                            against: teamLocal.against + Number(targetLocal)
+                        }, {
+                            new: true
+                        })
+                    }
+
+                    await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
+                        points: resultLocal?.draw! + (resultLocal?.victory! * 3)
+                    }, {
+                        new: true
+                    })
+
+                    await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
+                        points: resultVisitant?.draw! + (resultVisitant?.victory! * 3)
+                    }, {
+                        new: true
+                    })
+
                     break;
                 }
 

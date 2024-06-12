@@ -4,6 +4,7 @@ import * as eventApi from "../api/event.api";
 import * as eventReducer from "../reducer/event.reducer";
 
 import * as typesActionsEvent from "../../types/action.types";
+import { getTeams } from "../reducer/statistic.reducer";
 
 export const eventsAction = createAsyncThunk('events/events', async (token: string | undefined, { dispatch }) => {
 
@@ -356,6 +357,7 @@ export const restartMatchsAction = createAsyncThunk('events/restartmatchs', asyn
         const { data } = await eventApi.restartMatchApi(eventData.id, eventData.token)
 
         dispatch(eventReducer.getEvent(data))
+        dispatch(getTeams([]))
 
         eventData.handleRestartEvent()
 

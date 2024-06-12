@@ -1,4 +1,4 @@
-import { ICreateEvent, ICreatePlayer, ICreateTeam, ISchedule, ITarget } from "../../interface/Event";
+import { ICreatePlayer, ICreateTeam, ISchedule, ITarget } from "../../interface/Event";
 
 import { api } from "./api";
 

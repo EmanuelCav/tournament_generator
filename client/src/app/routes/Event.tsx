@@ -16,6 +16,7 @@ import FormAddPlayer from '../components/event/FormAddPlayer';
 import Settings from '../components/event/Settings';
 import Positions from '../components/event/Positions';
 import Players from '../components/event/Players';
+import EliminationTable from '../components/event/EliminationTable';
 
 import { eventAction, joinTeamAction, removeCompetitorAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
@@ -188,10 +189,10 @@ const Event = () => {
     }
 
     useEffect(() => {
-        if(event.event._id) {
+        if (event.event._id) {
             getPositions()
         }
-    }, [event.event._id])
+    }, [event.event._id, get.isPositions])
 
     useEffect(() => {
         dispatch(eventAction({ token: user.user.token!, id: params.id! }) as any)
@@ -242,7 +243,16 @@ const Event = () => {
                     get.isMatchdays && <ShowEvent event={event.event} user={user.user} dispatch={dispatch} />
                 }
                 {
-                    get.isPositions && <Positions teams={statistic.teams} />
+                    get.isPositions && (
+                        <>
+                            {
+                                event.event.category?.category === "MATCHDAYS" && <Positions teams={statistic.teams} />
+                            }
+                            {
+                                event.event.category?.category === "ELIMINATION" && <EliminationTable matchs={event.event.matchs!} />
+                            }
+                        </>
+                    )
                 }
                 {
                     get.isPeople && <ShowPeople competitors={event.event?.competitors!} event={event.event} user={user.user} handleSureRemoveCompetitor={handleSureRemoveCompetitor} dispatch={dispatch} />
