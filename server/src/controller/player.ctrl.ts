@@ -7,6 +7,49 @@ import Competitor from '../models/competitor';
 
 import { privileged_role } from "../config/config";
 
+import { IPlayer } from "../interface/User";
+
+export const players = async (req: Request, res: Response): Promise<Response> => {
+
+    const { id } = req.params
+
+    try {
+
+        const event = await Event.findById(id).populate({
+            path: "teams",
+            populate: {
+                path: "players",
+                populate: {
+                    path: "team",
+                    select: "logo",
+                    populate: {
+                        path: "logo",
+                        select: "image"
+                    }
+                }
+            }
+        })
+
+        if(!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        let playersEvent: IPlayer[] = []
+
+        for (let i = 0; i < event.teams.length; i++) {
+            for (let j = 0; j < event.teams[i].players.length; j++) {
+                playersEvent.push(event.teams[i].players[j])
+            }
+        }
+
+        return res.status(200).json(playersEvent)
+        
+    } catch (error) {
+        throw error
+    }
+
+}
+
 export const createPlayer = async (req: Request, res: Response): Promise<Response> => {
 
     const { tid, cid } = req.params

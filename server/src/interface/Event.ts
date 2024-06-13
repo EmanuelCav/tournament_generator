@@ -1,5 +1,5 @@
 import { Types, Document } from 'mongoose'
-import { ICompetitor } from './User';
+import { ICompetitor, IPlayer } from './User';
 
 export interface IImage extends Document {
     _id: Types.ObjectId;
@@ -20,7 +20,7 @@ export interface IEvent extends Document {
     admin: Types.ObjectId;
     competitors: ICompetitor[];
     referees: Types.ObjectId[];
-    teams: Types.ObjectId[];
+    teams: ITeam[];
     campus: Types.ObjectId[];
     matchs: IMatch[][];
     done: boolean;
@@ -42,6 +42,7 @@ export interface IMatch {
     visitant: ITeamMatch;
     targetVisitant?: number | null;
     referee?: string;
+    campus?: string;
     schedule?: Date;
 }
 
@@ -69,7 +70,7 @@ export interface ITeam extends Document {
     favor: number;
     against: number;
     status: boolean;
-    players: Types.ObjectId[];
+    players: IPlayer[];
     competitors: Types.ObjectId[];
     campus: Types.ObjectId;
     created_at: NativeDate;

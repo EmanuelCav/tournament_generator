@@ -15,6 +15,11 @@ const playerSchema = new Schema({
         default: 0
     },
 
+    assists: {
+        type: Number,
+        default: 0
+    },
+
     cards: {
         type: Number,
         default: 0

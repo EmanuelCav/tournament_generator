@@ -8,9 +8,17 @@ import { privileged_role } from "../config/config";
 
 export const referees = async (req: Request, res: Response): Promise<Response> => {
 
+    const { id } = req.params
+
     try {
 
-        const showReferees = await Referee.find()
+        const event = await Event.findById(id)
+
+        if(!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        const showReferees = await Referee.find({ event: id })
 
         return res.status(200).json(showReferees)
 

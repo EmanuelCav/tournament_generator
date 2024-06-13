@@ -48,6 +48,7 @@ export interface IPlayer {
     name: string;
     position: string;
     points: number;
+    assists: number;
     cards: number;
     serialCards: number;
     team: ITeam;
@@ -77,6 +78,7 @@ export interface IMatch {
     visitant: ITeamMatch;
     targetVisitant?: number;
     referee?: string;
+    campus?: string;
     schedule?: string;
 }
 

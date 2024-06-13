@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import * as eventApi from "../api/event.api";
 import * as eventReducer from "../reducer/event.reducer";
-import { getTeams } from "../reducer/statistic.reducer";
+import { getPlayers, getTeams } from "../reducer/statistic.reducer";
 import { matchdays } from "../reducer/get.reducer";
 
 import * as typesActionsEvent from "../../types/action.types";
@@ -360,6 +360,7 @@ export const restartMatchsAction = createAsyncThunk('events/restartmatchs', asyn
 
         dispatch(eventReducer.getEvent(data))
         dispatch(getTeams([]))
+        dispatch(getPlayers([]))
 
         eventData.handleRestartEvent()
 
@@ -424,6 +425,22 @@ export const updateCampusAction = createAsyncThunk('events/updatecampus', async 
         dispatch(eventReducer.getEvent(data))
 
         refereeData.setIsEditCampus(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+
+export const addCampusAction = createAsyncThunk('events/addcampus', async (eventData: typesActionsEvent.AddCampusActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.campusMatchApi(eventData.match._id, eventData.eid, eventData.campus, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        eventData.handleUpdateCampus(eventData.match)
 
     } catch (error) {
         console.log(error);

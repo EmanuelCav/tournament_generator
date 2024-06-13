@@ -153,8 +153,8 @@ export const refereeMatchApi = async (mid: string, eid: string, referee: string,
     })
 }
 
-export const refereesApi = async (token: string) => {
-    return await api.get(`/referees`, {
+export const refereesApi = async (token: string, id: string) => {
+    return await api.get(`/referees/events/${id}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -240,6 +240,30 @@ export const updateCampusApi = async (id: string, cid: string, campusData: ICrea
     return await api.put(`/campus/${id}/competitors/${cid}`, campusData, {
         headers: {
             'Content-type': "application/json",
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const playersApi = async (id: string, token: string) => {
+    return await api.get(`/players/events/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const campusApi = async (token: string, id: string) => {
+    return await api.get(`/campus/events/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const campusMatchApi = async (mid: string, eid: string, campus: string, token: string) => {
+    return await api.put(`/campus/matchs/${mid}/events/${eid}?name=${campus}`, null, {
+        headers: {
             'Authorization': `Bearer ${token}`
         }
     })

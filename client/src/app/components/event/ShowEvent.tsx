@@ -6,6 +6,7 @@ import Generate from './components/showEvent/Generate'
 import AddReferee from "./components/showEvent/AddReferee";
 import AddScore from "./components/showEvent/AddScore";
 import AddDate from "./components/showEvent/AddDate";
+import AddCampus from "./components/showEvent/AddCampus";
 
 import { generateMatchsAction } from '../../server/actions/event.actions'
 
@@ -17,6 +18,8 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
   const [isAddReferee, setIsAddReferee] = useState<boolean>(false)
   const [isAddScore, setIsAddScore] = useState<boolean>(false)
   const [isAddDate, setIsAddDate] = useState<boolean>(false)
+  const [isAddCampus, setIsAddCampus] = useState<boolean>(false)
+
   const [isRoundTrip, setIsRoundTrip] = useState<boolean>(event.isRoundTrip!)
 
   const [matchData, setMatchData] = useState<IMatch | null>(null)
@@ -49,6 +52,11 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
     setMatchData(match)
   }
 
+  const handleUpdateCampus = (match: IMatch) => {
+    setIsAddCampus(!isAddCampus)
+    setMatchData(match)
+  }
+
   return (
     <Box flex={1} py={2} px={4}>
       {
@@ -59,6 +67,9 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
       }
       {
         isAddDate && <AddDate matchData={matchData!} event={event} handleUpdateSchedule={handleUpdateSchedule} dispatch={dispatch} user={user} />
+      }
+      {
+        isAddCampus && <AddCampus matchData={matchData!} event={event} handleUpdateCampus={handleUpdateCampus} dispatch={dispatch} user={user} />
       }
       <Box width={'100%'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
         <Box component="img" src={event.image?.image} width={120} height={120} borderRadius={25} />
@@ -74,7 +85,7 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
               event.admin === user.user?._id && <Button size="large" variant="contained" color="primary" sx={{ my: 2 }} onClick={generateNow} disabled={event.done}>GENERATE AGAIN</Button>
             }
             <Matchs isAdmin={event.competitors?.find((c) => c.user._id === user.user?._id)?.role.role === 'ADMIN'} event={event}
-              handleAddReferee={handleAddReferee} handleAddScore={handleAddScore} handleUpdateSchedule={handleUpdateSchedule} />
+              handleAddReferee={handleAddReferee} handleAddScore={handleAddScore} handleUpdateSchedule={handleUpdateSchedule} handleUpdateCampus={handleUpdateCampus} />
           </>
         ) : (
           <>

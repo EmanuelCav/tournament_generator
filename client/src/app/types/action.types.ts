@@ -125,6 +125,14 @@ export type AddRefereeActionPropsType = {
     handleAddReferee: (match: IMatch) => void;
 }
 
+export type AddCampusActionPropsType = {
+    eid: string;
+    match: IMatch;
+    token: string;
+    campus: string;
+    handleUpdateCampus: (match: IMatch) => void;
+}
+
 export type AddScoreActionPropsType = {
     eid: string;
     match: IMatch;

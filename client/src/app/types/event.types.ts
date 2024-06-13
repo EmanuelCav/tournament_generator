@@ -129,6 +129,7 @@ export type MatchsPropsType = {
     event: IEvent;
     handleAddScore: (match: IMatch) => void;
     handleUpdateSchedule: (match: IMatch) => void;
+    handleUpdateCampus: (match: IMatch) => void;
     isAdmin: boolean;
 }
 
@@ -152,8 +153,8 @@ export type UpdateSchedulePropsType = {
     dispatch: Dispatch<any>;
     user: IUserInfo;
     event: IEvent;
-    handleUpdateSchedule: (match: IMatch) => void;
     matchData: IMatch;
+    handleUpdateSchedule: (match: IMatch) => void;
 }
 
 export type ShowPeoplePropsType = {
@@ -224,4 +225,12 @@ export type FanPropsType = {
     team: ITeam;
     handleSureQuitFan: (team: ITeam) => void;
     isAvailableEdit: boolean;
+}
+
+export type AddCampusPropsType = {
+    handleUpdateCampus: (match: IMatch) => void;
+    dispatch: Dispatch<any>;
+    user: IUserInfo;
+    event: IEvent;
+    matchData: IMatch;
 }

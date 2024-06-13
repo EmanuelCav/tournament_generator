@@ -8,6 +8,7 @@ import auth from '../middleware/auth/auth'
 
 const router = Router()
 
+router.get('/players/events/:id', playerCtrl.players)
 router.post('/players/teams/:tid/competitors/:cid', auth, createPlayerValid, playerCtrl.createPlayer)
 router.delete('/players/:pid/competitors/:cid', auth, playerCtrl.removePlayer)
 router.put('/players/:pid/competitors/:cid', auth, createPlayerValid, playerCtrl.updatePlayer)

@@ -8,7 +8,7 @@ import auth from '../middleware/auth/auth'
 
 const router = Router()
 
-router.get('/referees', auth, refereeCtrl.referees)
+router.get('/referees/events/:id', auth, refereeCtrl.referees)
 router.post('/referees/competitors/:cid', auth, createRefereeValid, refereeCtrl.createReferee)
 router.delete('/referees/:rid/competitors/:cid', auth, refereeCtrl.removeReferee)
 router.put('/referees/:rid/competitors/:cid', auth, createRefereeValid, refereeCtrl.updateReferee)

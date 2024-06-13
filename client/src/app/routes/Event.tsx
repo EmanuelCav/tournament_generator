@@ -22,8 +22,8 @@ import FormAddCampus from '../components/event/FormAddCampus';
 
 import { eventAction, joinTeamAction, removeCampusAction, removeCompetitorAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
-import { getTeams } from '../server/reducer/statistic.reducer';
-import { getPositionsApi } from '../server/api/event.api';
+import { getPlayers, getTeams } from '../server/reducer/statistic.reducer';
+import { getPositionsApi, playersApi } from '../server/api/event.api';
 
 import { IReducer } from '../interface/General';
 import { ICampus, ICompetitor, IPlayer, IReferee, ITeam } from '../interface/Event';
@@ -240,13 +240,21 @@ const Event = () => {
         dispatch(getTeams(data) as any)
     }
 
+    const getAllPlayers = async () => {
+        const { data } = await playersApi(event.event._id!, user.user.token!)
+        dispatch(getPlayers(data) as any)
+    }
+    
+
     useEffect(() => {
         if (event.event._id && event.event.teams?.length! > 0) {
             getPositions()
+            getAllPlayers()
             return
         }
 
         dispatch(getTeams([]))
+        dispatch(getPlayers([]))
     }, [event.event._id, get.isPositions])
 
     useEffect(() => {
@@ -331,7 +339,7 @@ const Event = () => {
                     get.isSettings && <Settings user={user.user} dispatch={dispatch} eventInfo={event.event} handleSure={handleSure} />
                 }
                 {
-                    get.isPlayers && <Players />
+                    get.isPlayers && <Players players={statistic.players} />
                 }
                 {
                     get.isCampus && <ShowCampus event={event.event} user={user.user.user!} handleAddCampus={handleAddCampus} handleSure={handleSureRemoveCampus} handleEditCampus={handleEditCampus}  />

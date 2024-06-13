@@ -41,6 +41,7 @@ export interface IPlayer extends Document {
     _id: Types.ObjectId;
     name: string;
     points: number;
+    assists: number;
     cards: number;
     serialCards: number;
     position: string;

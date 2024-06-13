@@ -24,6 +24,11 @@ const matchSchema = new Schema({
         default: 0
     },
 
+    campus: {
+        type: Types.ObjectId,
+        ref: 'Campus'
+    },
+
     referee: {
         type: Types.ObjectId,
         ref: 'Referee'

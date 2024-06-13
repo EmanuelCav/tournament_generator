@@ -298,6 +298,16 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.updateCampusAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(eventAction.addCampusAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.addCampusAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.addCampusAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

@@ -6,6 +6,28 @@ import Competitor from '../models/competitor';
 
 import { privileged_role } from "../config/config";
 
+export const campus = async (req: Request, res: Response): Promise<Response> => {
+
+    const { id } = req.params
+
+    try {
+
+        const event = await Event.findById(id)
+
+        if(!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        const showCampus = await Campus.find({ event: id })
+
+        return res.status(200).json(showCampus)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
 export const createCampus = async (req: Request, res: Response): Promise<Response> => {
 
     const { cid } = req.params

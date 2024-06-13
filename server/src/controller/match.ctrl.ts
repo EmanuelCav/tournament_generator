@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import Event from '../models/event';
 import Referee from '../models/referee';
 import Team from '../models/team';
+import Campus from '../models/campus';
 
 import { generateElimination, generateGroups, generateMatchdays, shuffle } from "../helper/functions";
 
@@ -202,6 +203,84 @@ export const addRefereeMatch = async (req: Request, res: Response): Promise<Resp
                     break;
                 }
 
+            }
+        }
+
+        const showEvent = await Event.findByIdAndUpdate(eid, {
+            $set: {
+                matchs: event.matchs
+            },
+            done: true
+        }, {
+            new: true
+        }).populate({
+            path: "teams",
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
+                path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        }).populate("category")
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
+            })
+
+        return res.status(200).json(showEvent)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const addCampusMatch = async (req: Request, res: Response): Promise<Response> => {
+
+    const { eid, mid } = req.params
+    const { name } = req.query
+
+    try {
+
+        const event = await Event.findById(eid)
+
+        if (!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        const campus = await Campus.findOne({ name })
+
+        if (!campus ) {
+            return res.status(400).json({ message: "Campus does not exists" })
+        }
+
+        for (let i = 0; i < event.matchs.length; i++) {
+            for (let j = 0; j < event.matchs[i].length; j++) {
+                if (String(event.matchs[i][j]._id) === mid) {
+                    event.matchs[i][j].campus = name as string;
+                    break;
+                }
             }
         }
 

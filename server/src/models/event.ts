@@ -73,6 +73,7 @@ const eventSchema = new Schema({
         },
         targetVisitant: Number,
         referee: String,
+        campus: String,
         schedule: Date
     }]],
 

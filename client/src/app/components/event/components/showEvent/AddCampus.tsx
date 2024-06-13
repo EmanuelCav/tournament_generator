@@ -1,28 +1,28 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { Box, Button, MenuItem, Paper, TextField, Typography } from "@mui/material"
 
-import { IReferee } from "../../../../interface/Event"
-import { AddRefereePropsType } from "../../../../types/event.types"
+import { ICampus } from "../../../../interface/Event"
+import { AddCampusPropsType } from "../../../../types/event.types"
 
-import { refereesApi } from "../../../../server/api/event.api"
-import { addRefereeAction } from "../../../../server/actions/event.actions"
+import { addCampusAction } from "../../../../server/actions/event.actions"
+import { campusApi } from "../../../../server/api/event.api"
 
-const AddReferee = ({ user, dispatch, event, matchData, handleAddReferee }: AddRefereePropsType) => {
+const AddCampus = ({ user, dispatch, event, matchData, handleUpdateCampus }: AddCampusPropsType) => {
 
-    const [refereeData, setRefereeData] = useState<string>(matchData.referee ? matchData.referee : '')
-    const [referees, setReferees] = useState<IReferee[]>([])
+    const [campusData, setCampusData] = useState<string>(matchData.campus ? matchData.campus : '')
+    const [campus, setCampus] = useState<ICampus[]>([])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target
-        setRefereeData(value)
+        setCampusData(value)
     }
 
     const getData = async () => {
 
         try {
 
-            const { data } = await refereesApi(user.token!, event._id!)
-            setReferees(data)
+            const { data } = await campusApi(user.token!, event._id!)
+            setCampus(data)
 
         } catch (error) {
             console.log(error);
@@ -34,17 +34,17 @@ const AddReferee = ({ user, dispatch, event, matchData, handleAddReferee }: AddR
 
         e.preventDefault()
 
-        if (refereeData.length === 0) {
-            handleAddReferee(matchData)
+        if (campusData.length === 0) {
+            handleUpdateCampus(matchData)
             return
         }
 
-        dispatch(addRefereeAction({
+        dispatch(addCampusAction({
             match: matchData,
             eid: event._id!,
-            referee: refereeData,
+            campus: campusData,
             token: user.token!,
-            handleAddReferee
+            handleUpdateCampus
         }))
 
     }
@@ -58,21 +58,21 @@ const AddReferee = ({ user, dispatch, event, matchData, handleAddReferee }: AddR
             background: 'rgba(0, 0, 0, 0.5)'
         }}>
             <Paper elevation={3} sx={{ p: 2, width: '33.33%' }}>
-                <Typography color='#33CC33' variant="h5">Add a referee</Typography>
+                <Typography color='#33CC33' variant="h5">Add a campus</Typography>
                 <Box component="form" noValidate p={2} onSubmit={handleSumbit}>
                     <TextField
                         fullWidth
-                        id="referee"
-                        name="referee"
+                        id="campus"
+                        name="campus"
                         select
-                        label="Referee"
-                        helperText="Select a Referee"
+                        label="Campus"
+                        helperText="Select a Campus"
                         onChange={handleChange}
-                        defaultValue={refereeData}
+                        defaultValue={campusData}
                     >
-                        {referees.map((referee: IReferee) => (
-                            <MenuItem key={referee._id} value={referee.name}>
-                                {referee.name}
+                        {campus.map((campus: ICampus) => (
+                            <MenuItem key={campus._id} value={campus.name}>
+                                {campus.name}
                             </MenuItem>
                         ))}
                     </TextField>
@@ -92,4 +92,4 @@ const AddReferee = ({ user, dispatch, event, matchData, handleAddReferee }: AddR
     )
 }
 
-export default AddReferee
+export default AddCampus
