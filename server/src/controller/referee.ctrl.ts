@@ -86,6 +86,9 @@ export const createReferee = async (req: Request, res: Response): Promise<Respon
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(showEvent)
@@ -160,6 +163,9 @@ export const removeReferee = async (req: Request, res: Response): Promise<Respon
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         await Referee.findByIdAndDelete(rid)
@@ -237,6 +243,9 @@ export const updateReferee = async (req: Request, res: Response): Promise<Respon
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(showEvent)

@@ -71,6 +71,7 @@ export interface ITeam extends Document {
     status: boolean;
     players: Types.ObjectId[];
     competitors: Types.ObjectId[];
+    campus: Types.ObjectId;
     created_at: NativeDate;
     updated_at: NativeDate;
 }

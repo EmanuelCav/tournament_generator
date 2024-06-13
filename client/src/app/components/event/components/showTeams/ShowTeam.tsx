@@ -4,11 +4,12 @@ import ActionsTeam from './components/ActionsTeam'
 import TextTeam from './components/TextTeam'
 import Player from './components/Player'
 import StatusPlayer from './components/StatusPlayer'
+import Fan from './components/Fan'
 
 import { ShowTeamPropsType } from '../../../../types/event.types'
-import { IPlayer } from '../../../../interface/Event'
+import { ICompetitor, IPlayer } from '../../../../interface/Event'
 
-const ShowTeam = ({ user, team, event, handleSure, handleEditTeam, handleAddPlayer, isShowPlayers, handleSurePlayer, handleEditPlayer, joinTeam, isJoined }: ShowTeamPropsType) => {
+const ShowTeam = ({ user, team, event, handleSure, handleEditTeam, handleAddPlayer, isShowPlayers, handleSurePlayer, handleEditPlayer, joinTeam, isJoined, isShowFans, handleSureQuitFan }: ShowTeamPropsType) => {
 
   return (
     <Box my={2} p={2} display={'flex'} justifyContent={'space-between'} flexDirection={'column'} width={'100%'} alignItems={'center'}>
@@ -28,9 +29,24 @@ const ShowTeam = ({ user, team, event, handleSure, handleEditTeam, handleAddPlay
           )
         }
         {
+          isShowFans && (
+            <>
+              {
+                team.competitors.length === 0 &&  <Typography variant='h6' color='#cc3333'>This team has not fans yet</Typography>
+              }
+            </>
+          )
+        }
+        {
           isShowPlayers && team.players.map((player: IPlayer) => {
             return <Player isAvailableEdit={event.competitors?.find((c) => c.user._id === user._id)?.role.role === 'ADMIN'} 
             player={player} handleSurePlayer={handleSurePlayer!} handleEditPlayer={handleEditPlayer!} key={player._id} />
+          })
+        }
+        {
+          isShowFans && team.competitors.map((fan: ICompetitor) => {
+            return <Fan fan={fan} isAvailableEdit={event.competitors?.find((c) => c.user._id === user._id)?.role.role === 'ADMIN'} 
+            team={team} handleSureQuitFan={handleSureQuitFan!} key={fan._id} />
           })
         }
       </Box>

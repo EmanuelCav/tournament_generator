@@ -2,9 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import * as eventApi from "../api/event.api";
 import * as eventReducer from "../reducer/event.reducer";
+import { getTeams } from "../reducer/statistic.reducer";
+import { matchdays } from "../reducer/get.reducer";
 
 import * as typesActionsEvent from "../../types/action.types";
-import { getTeams } from "../reducer/statistic.reducer";
 
 export const eventsAction = createAsyncThunk('events/events', async (token: string | undefined, { dispatch }) => {
 
@@ -41,6 +42,7 @@ export const eventAction = createAsyncThunk('events/event', async (eventData: ty
         const { data } = await eventApi.eventApi(eventData.id, eventData.token)
 
         dispatch(eventReducer.getEvent(data))
+        dispatch(matchdays(true))
 
     } catch (error) {
         console.log(error);

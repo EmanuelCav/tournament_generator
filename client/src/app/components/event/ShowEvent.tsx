@@ -60,7 +60,10 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
       {
         isAddDate && <AddDate matchData={matchData!} event={event} handleUpdateSchedule={handleUpdateSchedule} dispatch={dispatch} user={user} />
       }
-      <Typography variant="h4" textAlign='center' color='#33cc33'>{event.event}</Typography>
+      <Box width={'100%'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+        <Box component="img" src={event.image?.image} width={120} height={120} borderRadius={25} />
+        <Typography variant="h4" textAlign='center' color='#33cc33' ml={2}>{event.event}</Typography>
+      </Box>
       {
         event.admin === user.user?._id && <FormControlLabel control={<Switch disabled={event.done} checked={isRoundTrip} onChange={handleRoundTrip} />} label="Round trip" />
       }

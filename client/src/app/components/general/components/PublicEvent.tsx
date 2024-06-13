@@ -7,7 +7,7 @@ import { joinEventAction } from '../../../server/actions/event.actions'
 const PublicEvent = ({ event, navigate, text, dispatch, user }: PublicEventPropsType) => {
 
     const joinEvent = () => {
-        if(event.competitors!.find(e => e.user._id === user.user?._id! || user.user?._id! === event.admin!)) {
+        if (event.competitors!.find(e => e.user._id === user.user?._id! || user.user?._id! === event.admin!)) {
             navigate(`/events/${event._id}`)
             return
         }
@@ -25,12 +25,17 @@ const PublicEvent = ({ event, navigate, text, dispatch, user }: PublicEventProps
                 boxShadow: "0 0 2px 1px #33cc33 inset",
                 p: 2,
                 minHeight: 360,
+                height: '100%',
+                backgroundImage: `url('${event.image?.image}')`,
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                width: '100%',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                flexDirection: 'column'
+                flexDirection: 'column',
             }}>
-                <CardContent>
+                <CardContent sx={{ background: '#ffffff', width: '100%', m: 1, border: '2px solid #33cc33' }}>
                     <Typography variant="h5" color='#33cc33' align="center">
                         {event.event}
                     </Typography>

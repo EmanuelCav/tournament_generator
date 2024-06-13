@@ -80,6 +80,9 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(showEvent)
@@ -160,6 +163,9 @@ export const restartMatch = async (req: Request, res: Response): Promise<Respons
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(showEvent)
@@ -236,6 +242,9 @@ export const addRefereeMatch = async (req: Request, res: Response): Promise<Resp
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(showEvent)
@@ -389,6 +398,9 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(showEvent)
@@ -459,6 +471,9 @@ export const updateDate = async (req: Request, res: Response): Promise<Response>
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(showEvent)

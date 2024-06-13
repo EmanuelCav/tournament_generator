@@ -49,6 +49,7 @@ const Event = () => {
     const [isRemoveCampus, setIsRemoveCampus] = useState<boolean>(false)
     const [isAddCampus, setIsAddCampus] = useState<boolean>(false)
     const [isEditCampus, setIsEditCampus] = useState<boolean>(false)
+    const [isRemoveFan, setIsRemoveFan] = useState<boolean>(false)
 
     const [infoTeam, setInfoTeam] = useState<ITeam | null>(null)
     const [infoReferee, setInfoReferee] = useState<IReferee | null>(null)
@@ -84,6 +85,10 @@ const Event = () => {
         setIsRemoveCampus(!isRemoveCampus)
     }
 
+    const handleSureRFan = () => {
+        setIsRemoveFan(!isRemoveFan)
+    }
+
     const handleAddTeam = () => {
         setIsAddTeam(!isAddTeam)
     }
@@ -91,6 +96,11 @@ const Event = () => {
     const handleSureRemoveTeam = (team: ITeam) => {
         setInfoTeam(team)
         setIsRemoveTeam(!isRemoveTeam)
+    }
+
+    const handleSureQuitFan = (team: ITeam) => {
+        setInfoTeam(team)
+        setIsRemoveFan(!isRemoveFan)
     }
 
     const handleSureRemoveReferee = (referee: IReferee) => {
@@ -209,6 +219,13 @@ const Event = () => {
 
     }
 
+    const quitFan = () => {
+        dispatch(joinTeamAction({
+            id: infoTeam?._id!,
+            token: user.user.token!
+        }) as any)
+    }
+
     const joinTeam = (id: string) => {
 
         dispatch(joinTeamAction({
@@ -224,9 +241,12 @@ const Event = () => {
     }
 
     useEffect(() => {
-        if (event.event._id) {
+        if (event.event._id && event.event.teams?.length! > 0) {
             getPositions()
+            return
         }
+
+        dispatch(getTeams([]))
     }, [event.event._id, get.isPositions])
 
     useEffect(() => {
@@ -252,6 +272,9 @@ const Event = () => {
             }
             {
                 isRemoveCampus && <Sure handleSure={handleSureRCampus} func={removeCampus} text='campus' />
+            }
+            {
+                isRemoveFan && <Sure handleSure={handleSureRFan} func={quitFan} text='fan' />
             }
             {
                 isAddPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} dispatch={dispatch} user={user.user} event={event.event} setIsEditPlayer={setIsEditPlayer} isEdit={false} team={infoTeam!} player={infoPlayer!} />
@@ -281,7 +304,7 @@ const Event = () => {
                 <EventsNavigation dispatch={dispatch} get={get} event={event.event} user={user.user.user!} />
                 {
                     get.isTeams && <ShowTeams user={user.user.user!} handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event}
-                        handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} joinTeam={joinTeam} />
+                        handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} joinTeam={joinTeam} handleSureQuitFan={handleSureQuitFan} />
                 }
                 {
                     get.isMatchdays && <ShowEvent event={event.event} user={user.user} dispatch={dispatch} />

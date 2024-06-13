@@ -18,10 +18,17 @@ export const events = async (req: Request, res: Response): Promise<Response> => 
 
     try {
 
+        const publicStatus = await Status.findOne({ status: "PUBLIC" })
+
+        if (!publicStatus) {
+            return res.status(400).json({ message: "Status does not exists" })
+        }
+
         const showEvents = await Event.find({
             admin: {
                 $nin: [req.permission]
-            }
+            },
+            status: publicStatus._id
         }).populate({
             path: "competitors",
             select: "user",
@@ -30,6 +37,10 @@ export const events = async (req: Request, res: Response): Promise<Response> => 
                 select: "nickname"
             }
         })
+            .populate({
+                path: "image",
+                select: "image"
+            })
 
         return res.status(200).json(showEvents)
 
@@ -51,6 +62,9 @@ export const userEvents = async (req: Request, res: Response): Promise<Response>
                     path: "user",
                     select: "nickname"
                 }
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         const showEvents = events.filter(e => e.competitors.find(c => String(c.user._id) === req.user))
@@ -99,6 +113,9 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         if (!event) {
@@ -174,7 +191,7 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
             category: categoryEvent._id,
             status: statusEvent._id,
             admin: req.user,
-            image: image._id,
+            image: image && image._id,
             group: {
                 amount: categoryEvent.category === "GROUP STAGE" ? Number(amount) : 0,
                 qualifiers: categoryEvent.category === "GROUP STAGE" ? Number(qualifiers) : 0,
@@ -234,6 +251,9 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         if (!eventTeams) {
@@ -342,6 +362,9 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(eventCompetitor)
@@ -417,6 +440,9 @@ export const updateRole = async (req: Request, res: Response): Promise<Response>
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(showEvent)
@@ -485,6 +511,9 @@ export const removeCompetitor = async (req: Request, res: Response): Promise<Res
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         await Competitor.findByIdAndDelete(cid)
@@ -500,7 +529,7 @@ export const removeCompetitor = async (req: Request, res: Response): Promise<Res
 export const updateEvent = async (req: Request, res: Response): Promise<Response> => {
 
     const { id } = req.params
-    const { event, description, category, status, qualifiers, amount } = req.body    
+    const { event, description, category, status, qualifiers, amount } = req.body
 
     try {
 
@@ -607,6 +636,9 @@ export const updateEvent = async (req: Request, res: Response): Promise<Response
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json({

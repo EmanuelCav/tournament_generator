@@ -30,6 +30,7 @@ export type ShowTeamsPropsType = {
     handleEditTeam: (team: ITeam) => void;
     handleAddPlayer: (team: ITeam) => void;
     handleSurePlayer: (player: IPlayer) => void;
+    handleSureQuitFan: (team: ITeam) => void;
     handleEditPlayer: (player: IPlayer) => void;
     joinTeam: (id: string) => void;
     user: IUser;
@@ -43,10 +44,12 @@ export type ShowTeamPropsType = {
     isShowPlayers?: boolean;
     handleSurePlayer?: (player: IPlayer) => void;
     handleEditPlayer?: (player: IPlayer) => void;
+    handleSureQuitFan?: (team: ITeam) => void;
     user: IUser;
     event: IEvent;
     joinTeam: (id: string) => void;
     isJoined: boolean;
+    isShowFans?: boolean;
 }
 
 export type EditTeamPropsType = {
@@ -214,4 +217,11 @@ export type CampusPropsType = {
     handleSure: (campus: ICampus) => void;
     handleEditCampus: (campus: ICampus) => void;
     isAvailableEdit?: boolean;
+}
+
+export type FanPropsType = {
+    fan: ICompetitor;
+    team: ITeam;
+    handleSureQuitFan: (team: ITeam) => void;
+    isAvailableEdit: boolean;
 }

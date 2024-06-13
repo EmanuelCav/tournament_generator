@@ -82,6 +82,9 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
         .populate({
             path: "campus",
             select: "name"
+        }).populate({
+            path: "image",
+            select: "image"
         })
 
         return res.status(200).json(showEvent)
@@ -164,6 +167,9 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
         .populate({
             path: "campus",
             select: "name"
+        }).populate({
+            path: "image",
+            select: "image"
         })
 
         await Player.findByIdAndDelete(pid)
@@ -242,6 +248,9 @@ export const updatePlayer = async (req: Request, res: Response): Promise<Respons
         .populate({
             path: "campus",
             select: "name"
+        }).populate({
+            path: "image",
+            select: "image"
         })
 
         return res.status(200).json(showEvent)

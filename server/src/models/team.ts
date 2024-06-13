@@ -63,6 +63,11 @@ const teamSchema = new Schema({
     status: {
         type: Boolean,
         default: false
+    },
+
+    campus: {
+        type: Types.ObjectId,
+        ref: 'Campus'
     }
 
 }, {

@@ -74,6 +74,9 @@ export const createCampus = async (req: Request, res: Response): Promise<Respons
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(showEvent)
@@ -150,6 +153,9 @@ export const removeCampus = async (req: Request, res: Response): Promise<Respons
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         await Campus.findByIdAndDelete(id)
@@ -227,6 +233,9 @@ export const updateCampus = async (req: Request, res: Response): Promise<Respons
             .populate({
                 path: "campus",
                 select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
             })
 
         return res.status(200).json(showEvent)
