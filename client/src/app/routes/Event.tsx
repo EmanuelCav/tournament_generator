@@ -23,8 +23,6 @@ import FormEditPlayerData from '../components/event/FormEditPlayerData';
 
 import { eventAction, joinTeamAction, removeCampusAction, removeCompetitorAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
-import { getPlayers, getTeams } from '../server/reducer/statistic.reducer';
-import { getPositionsApi, playersApi } from '../server/api/event.api';
 
 import { IReducer } from '../interface/General';
 import { ICampus, ICompetitor, IPlayer, IReferee, ITeam } from '../interface/Event';
@@ -242,28 +240,6 @@ const Event = () => {
 
     }
 
-    const getPositions = async () => {
-        const { data } = await getPositionsApi(event.event._id!, user.user.token!)
-        dispatch(getTeams(data) as any)
-    }
-
-    const getAllPlayers = async () => {
-        const { data } = await playersApi(event.event._id!, user.user.token!)
-        dispatch(getPlayers(data) as any)
-    }
-    
-
-    useEffect(() => {
-        if (event.event._id && event.event.teams?.length! > 0) {
-            getPositions()
-            getAllPlayers()
-            return
-        }
-
-        dispatch(getTeams([]))
-        dispatch(getPlayers([]))
-    }, [event.event._id, get.isPositions])
-
     useEffect(() => {
         dispatch(eventAction({ token: user.user.token!, id: params.id! }) as any)
     }, [params.id])
@@ -331,7 +307,7 @@ const Event = () => {
                     get.isPositions && (
                         <>
                             {
-                                event.event.category?.category === "MATCHDAYS" && <Positions teams={statistic.teams} />
+                                event.event.category?.category === "MATCHDAYS" && <Positions teams={statistic.teams} dispatch={dispatch} event={event.event} user={user.user} />
                             }
                             {
                                 event.event.category?.category === "ELIMINATION" && <EliminationTable matchs={event.event.matchs!} />
@@ -349,7 +325,7 @@ const Event = () => {
                     get.isSettings && <Settings user={user.user} dispatch={dispatch} eventInfo={event.event} handleSure={handleSure} />
                 }
                 {
-                    get.isPlayers && <Players players={statistic.players} />
+                    get.isPlayers && <Players players={statistic.players} dispatch={dispatch} event={event.event} user={user.user} />
                 }
                 {
                     get.isCampus && <ShowCampus event={event.event} user={user.user.user!} handleAddCampus={handleAddCampus} handleSure={handleSureRemoveCampus} handleEditCampus={handleEditCampus}  />

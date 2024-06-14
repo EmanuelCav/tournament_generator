@@ -80,3 +80,12 @@ export const updatePlayerDataSchema = z.object({
         message: "Expulsions must be a number"
     })
 })
+
+export const updateScoreSchema = z.object({
+    targetLocal: z.number({
+        message: "Score must be a number"
+    }),
+    targetVisitant: z.number({
+        message: "Score must be a number"
+    }),
+})

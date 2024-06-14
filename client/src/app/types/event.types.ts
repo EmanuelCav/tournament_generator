@@ -256,3 +256,17 @@ export type FormEditPlayerDataPropsType = {
     playerInfo: IPlayer;
     setIsEditPlayerData: (isEditPlayerData: boolean) => void;
 }
+
+export type PositionsPropsType = {
+    dispatch: Dispatch<any>;
+    teams: ITeam[];
+    event: IEvent;
+    user: IUserInfo;
+}
+
+export type PlayersPropsType = {
+    dispatch: Dispatch<any>;
+    players: IPlayer[];
+    event: IEvent;
+    user: IUserInfo;
+}

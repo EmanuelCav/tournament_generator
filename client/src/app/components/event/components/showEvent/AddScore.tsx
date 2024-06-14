@@ -24,7 +24,9 @@ const AddScore = ({ user, dispatch, event, matchData, setIsAddScore }: AddScoreP
 
         if (Number(value) < 0) return
 
-        setTargetData({ ...targetData, [name]: value })
+        const valueScore = Number(value)
+
+        setTargetData({ ...targetData, [name]: valueScore })
     }
 
     const handleSumbit = (e: FormEvent<HTMLFormElement>) => {

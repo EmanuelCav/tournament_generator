@@ -12,6 +12,7 @@ import { IPlayer } from "../interface/User";
 export const players = async (req: Request, res: Response): Promise<Response> => {
 
     const { id } = req.params
+    const { order } = req.query
 
     try {
 
@@ -40,8 +41,16 @@ export const players = async (req: Request, res: Response): Promise<Response> =>
             for (let j = 0; j < event.teams[i].players.length; j++) {
                 playersEvent.push(event.teams[i].players[j])
             }
-        }
+        }    
 
+        playersEvent.sort((a, b) => {
+            if (String(order) === "points") return b.points - a.points
+            if (String(order) === "assists") return b.assists - a.assists
+            if (String(order) === "cards") return b.cards - a.cards
+
+            return b.serialCards - a.serialCards
+        })
+            
         return res.status(200).json(playersEvent)
 
     } catch (error) {

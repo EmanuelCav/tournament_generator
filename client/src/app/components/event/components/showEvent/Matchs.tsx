@@ -36,13 +36,13 @@ const Matchs = ({ event, handleAddReferee, handleAddScore, handleUpdateSchedule,
                     <Box component="img" src={match.local.logo} loading="lazy" width={40} height={40} />
                     <Typography>{match.local.name}</Typography>
                   </TableCell>
-                  <TableCell>{match.targetLocal}</TableCell>
-                  <TableCell>
+                  <TableCell><Typography>{match.targetLocal}</Typography></TableCell>
+                  <TableCell align="center">
                     {
-                      isAdmin ? <Button sx={{ mt: 1 }} variant="contained" color="primary" onClick={() => handleAddScore(match)}>DEFINE</Button> : "-"
+                      (isAdmin && typeof match.targetLocal === 'undefined') ? <Button sx={{ mt: 1 }} variant="contained" color="primary" onClick={() => handleAddScore(match)}>DEFINE</Button> : "-"
                     }
                   </TableCell>
-                  <TableCell>{match.targetVisitant}</TableCell>
+                  <TableCell><Typography>{match.targetVisitant}</Typography></TableCell>
                   <TableCell>
                     <Box component="img" src={match.visitant.logo} loading="lazy" width={40} height={40} />
                     <Typography>{match.visitant.name}</Typography>

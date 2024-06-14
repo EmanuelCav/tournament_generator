@@ -1,14 +1,36 @@
+import { useEffect, useState } from "react"
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material"
 
 import HeadPlayers from "./components/players/HeadlPlayers"
 
 import { IPlayer } from "../../interface/Event"
+import { PlayersPropsType } from "../../types/event.types"
+import { FilterPlayersKeyPropsType } from "../../types/key.types"
 
-const Players = ({ players }: { players: IPlayer[] }) => {
+import { playersApi } from "../../server/api/event.api"
+import { getPlayers } from "../../server/reducer/statistic.reducer"
+
+const Players = ({ players, event, user, dispatch }: PlayersPropsType) => {
+
+  const [filterPlayers, setFilterPlayers] = useState<FilterPlayersKeyPropsType>('points')
+
+  const handleFilterPlayers = (filter: FilterPlayersKeyPropsType) => {
+    setFilterPlayers(filter)
+  }
+
+  const getAllPlayers = async () => {
+    const { data } = await playersApi(event._id!, filterPlayers, user.token!)
+    dispatch(getPlayers(data) as any)
+  }
+
+  useEffect(() => {
+    getAllPlayers()
+  }, [filterPlayers])
+
   return (
     <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4 }}>
       <Table>
-        <HeadPlayers />
+        <HeadPlayers handleFilterPlayers={handleFilterPlayers} />
         <TableBody>
           {
             players.map((player: IPlayer, index: number) => {

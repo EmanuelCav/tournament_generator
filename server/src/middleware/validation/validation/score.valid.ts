@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from 'express'
 import { ZodError } from 'zod'
 
-import { updatePlayerDataSchema } from '../schema/event.schema'
+import { updateScoreSchema } from '../schema/event.schema'
 
-const updatePlayerDataValid = async (req: Request, res: Response, next: NextFunction) => {
+const updateScoreValid = async (req: Request, res: Response, next: NextFunction) => {
     
     try {
         
-        updatePlayerDataSchema.parse(req.body)
+        updateScoreSchema.parse(req.body)
         next()
 
     } catch (error) {
@@ -22,4 +22,4 @@ const updatePlayerDataValid = async (req: Request, res: Response, next: NextFunc
 
 }
 
-export default updatePlayerDataValid
+export default updateScoreValid

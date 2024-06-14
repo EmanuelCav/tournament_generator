@@ -1,4 +1,5 @@
 import { ICreatePlayer, ICreateTeam, IPlayerData, ISchedule, ITarget } from "../../interface/Event";
+import { FilterPlayersKeyPropsType } from "../../types/key.types";
 
 import { api } from "./api";
 
@@ -245,8 +246,8 @@ export const updateCampusApi = async (id: string, cid: string, campusData: ICrea
     })
 }
 
-export const playersApi = async (id: string, token: string) => {
-    return await api.get(`/players/events/${id}`, {
+export const playersApi = async (id: string, order: FilterPlayersKeyPropsType, token: string) => {
+    return await api.get(`/players/events/${id}?order=${order}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
