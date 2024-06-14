@@ -167,3 +167,10 @@ export interface ISchedule {
     schedule: string;
     day: string;
 }
+
+export interface IPlayerData {
+    points: number;
+    assists: number;
+    cards: number;
+    serialCards: number;
+}

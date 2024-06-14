@@ -1,4 +1,4 @@
-import { ICreatePlayer, ICreateTeam, ISchedule, ITarget } from "../../interface/Event";
+import { ICreatePlayer, ICreateTeam, IPlayerData, ISchedule, ITarget } from "../../interface/Event";
 
 import { api } from "./api";
 
@@ -264,6 +264,15 @@ export const campusApi = async (token: string, id: string) => {
 export const campusMatchApi = async (mid: string, eid: string, campus: string, token: string) => {
     return await api.put(`/campus/matchs/${mid}/events/${eid}?name=${campus}`, null, {
         headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const updatePlayerDataApi = async (pid: string, cid: string, playerData: IPlayerData, token: string) => {
+    return await api.put(`/data/players/${pid}/competitors/${cid}`, playerData, {
+        headers: {
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
     })

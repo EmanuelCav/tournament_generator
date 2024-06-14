@@ -31,6 +31,7 @@ export type ShowTeamsPropsType = {
     handleAddPlayer: (team: ITeam) => void;
     handleSurePlayer: (player: IPlayer) => void;
     handleSureQuitFan: (team: ITeam) => void;
+    handleEditPlayerData: (player: IPlayer) => void;
     handleEditPlayer: (player: IPlayer) => void;
     joinTeam: (id: string) => void;
     user: IUser;
@@ -41,15 +42,27 @@ export type ShowTeamPropsType = {
     handleSure: (team: ITeam) => void;
     handleEditTeam: (team: ITeam) => void;
     handleAddPlayer: (team: ITeam) => void;
-    isShowPlayers?: boolean;
-    handleSurePlayer?: (player: IPlayer) => void;
-    handleEditPlayer?: (player: IPlayer) => void;
-    handleSureQuitFan?: (team: ITeam) => void;
+    isShowPlayers: boolean;
+    handleSurePlayer: (player: IPlayer) => void;
+    handleEditPlayer: (player: IPlayer) => void;
+    handleSureQuitFan: (team: ITeam) => void;
+    handleEditPlayerData: (player: IPlayer) => void;
     user: IUser;
     event: IEvent;
     joinTeam: (id: string) => void;
     isJoined: boolean;
-    isShowFans?: boolean;
+    isShowFans: boolean;
+}
+
+export type ActionsTeamPropsType = {
+    team: ITeam;
+    handleSure: (team: ITeam) => void;
+    handleEditTeam: (team: ITeam) => void;
+    handleAddPlayer: (team: ITeam) => void;
+    user: IUser;
+    event: IEvent;
+    joinTeam: (id: string) => void;
+    isJoined: boolean;
 }
 
 export type EditTeamPropsType = {
@@ -110,6 +123,7 @@ export type PlayerPropsType = {
     player: IPlayer;
     handleSurePlayer: (player: IPlayer) => void;
     handleEditPlayer: (player: IPlayer) => void;
+    handleEditPlayerData: (player: IPlayer) => void;
     isAvailableEdit?: boolean;
 }
 
@@ -233,4 +247,12 @@ export type AddCampusPropsType = {
     user: IUserInfo;
     event: IEvent;
     matchData: IMatch;
+}
+
+export type FormEditPlayerDataPropsType = {
+    user: IUserInfo;
+    event: IEvent;
+    dispatch: Dispatch<any>;
+    playerInfo: IPlayer;
+    setIsEditPlayerData: (isEditPlayerData: boolean) => void;
 }

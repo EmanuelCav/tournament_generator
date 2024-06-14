@@ -9,13 +9,14 @@ import Fan from './components/Fan'
 import { ShowTeamPropsType } from '../../../../types/event.types'
 import { ICompetitor, IPlayer } from '../../../../interface/Event'
 
-const ShowTeam = ({ user, team, event, handleSure, handleEditTeam, handleAddPlayer, isShowPlayers, handleSurePlayer, handleEditPlayer, joinTeam, isJoined, isShowFans, handleSureQuitFan }: ShowTeamPropsType) => {
+const ShowTeam = ({ user, team, event, handleSure, handleEditTeam, handleAddPlayer, isShowPlayers, handleSurePlayer, handleEditPlayer, joinTeam, isJoined, isShowFans, handleSureQuitFan, handleEditPlayerData }: ShowTeamPropsType) => {
 
   return (
     <Box my={2} p={2} display={'flex'} justifyContent={'space-between'} flexDirection={'column'} width={'100%'} alignItems={'center'}>
       <Box display={'flex'} justifyContent={'space-between'} width={'100%'} alignItems={'center'}>
         <TextTeam team={team} />
-        <ActionsTeam isJoined={isJoined} event={event} user={user} handleSure={handleSure} team={team} handleEditTeam={handleEditTeam} handleAddPlayer={handleAddPlayer} joinTeam={joinTeam} />
+        <ActionsTeam isJoined={isJoined} event={event} user={user} handleSure={handleSure} team={team} 
+        handleEditTeam={handleEditTeam} handleAddPlayer={handleAddPlayer} joinTeam={joinTeam} />
       </Box>
       <Box width={'100%'} mt={2}>
         {
@@ -40,7 +41,7 @@ const ShowTeam = ({ user, team, event, handleSure, handleEditTeam, handleAddPlay
         {
           isShowPlayers && team.players.map((player: IPlayer) => {
             return <Player isAvailableEdit={event.competitors?.find((c) => c.user._id === user._id)?.role.role === 'ADMIN'} 
-            player={player} handleSurePlayer={handleSurePlayer!} handleEditPlayer={handleEditPlayer!} key={player._id} />
+            player={player} handleSurePlayer={handleSurePlayer!} handleEditPlayer={handleEditPlayer!} handleEditPlayerData={handleEditPlayerData} key={player._id} />
           })
         }
         {

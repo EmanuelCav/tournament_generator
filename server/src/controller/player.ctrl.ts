@@ -30,7 +30,7 @@ export const players = async (req: Request, res: Response): Promise<Response> =>
             }
         })
 
-        if(!event) {
+        if (!event) {
             return res.status(400).json({ message: "Event does not exists" })
         }
 
@@ -43,7 +43,7 @@ export const players = async (req: Request, res: Response): Promise<Response> =>
         }
 
         return res.status(200).json(playersEvent)
-        
+
     } catch (error) {
         throw error
     }
@@ -121,14 +121,14 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
             path: "referees",
             select: "name"
         }).populate("category")
-        .populate("status")
-        .populate({
-            path: "campus",
-            select: "name"
-        }).populate({
-            path: "image",
-            select: "image"
-        })
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
+            })
 
         return res.status(200).json(showEvent)
 
@@ -168,7 +168,7 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
 
         const team = await Team.findById(player.team)
 
-        if(!team) {
+        if (!team) {
             return res.status(400).json({ message: "Team does not exists" })
         }
 
@@ -206,14 +206,14 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
             path: "referees",
             select: "name"
         }).populate("category")
-        .populate("status")
-        .populate({
-            path: "campus",
-            select: "name"
-        }).populate({
-            path: "image",
-            select: "image"
-        })
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
+            })
 
         await Player.findByIdAndDelete(pid)
 
@@ -287,14 +287,95 @@ export const updatePlayer = async (req: Request, res: Response): Promise<Respons
             path: "referees",
             select: "name"
         }).populate("category")
-        .populate("status")
-        .populate({
-            path: "campus",
-            select: "name"
-        }).populate({
-            path: "image",
-            select: "image"
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
+            })
+
+        return res.status(200).json(showEvent)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const updatePlayerData = async (req: Request, res: Response): Promise<Response> => {
+
+    const { pid, cid } = req.params
+    const { points, assists, cards, serialCards } = req.body
+
+    try {
+
+        const player = await Player.findById(pid)
+
+        if (!player) {
+            return res.status(400).json({ message: "Player does not exists" })
+        }
+
+        const user = await Competitor.findById(cid).populate("role")
+
+        if (!user) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        if (user.role.role !== `${privileged_role}`) {
+            return res.status(401).json({ message: "You cannot update a player" })
+        }
+
+        const event = await Event.findById(user.event)
+
+        if (!event) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        await Player.findByIdAndUpdate(pid, {
+            points,
+            assists,
+            cards,
+            serialCards
+        }, {
+            new: true
         })
+
+        const showEvent = await Event.findById(event._id).populate({
+            path: "teams",
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
+                path: "players"
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        }).populate("category")
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
+            })
 
         return res.status(200).json(showEvent)
 

@@ -6,7 +6,7 @@ import ShowTeam from "./components/showTeams/ShowTeam"
 import { ITeam } from "../../interface/Event"
 import { ShowTeamsPropsType } from "../../types/event.types"
 
-const ShowTeams = ({ event, user, handleSure, handleAddTeam, handleEditTeam, handleAddPlayer, handleSurePlayer, handleEditPlayer, joinTeam, handleSureQuitFan }: ShowTeamsPropsType) => {
+const ShowTeams = ({ event, user, handleSure, handleAddTeam, handleEditTeam, handleAddPlayer, handleSurePlayer, handleEditPlayer, joinTeam, handleSureQuitFan, handleEditPlayerData }: ShowTeamsPropsType) => {
 
     const [isShowPlayers, setIsShowPlayers] = useState<boolean>(false)
     const [isShowFans, setIsShowFans] = useState<boolean>(false)
@@ -59,7 +59,7 @@ const ShowTeams = ({ event, user, handleSure, handleAddTeam, handleEditTeam, han
             {
                 event.teams?.map((team: ITeam) => {
                     return <ShowTeam isJoined={isJoined} joinTeam={joinTeam} user={user} event={event} team={team} handleSure={handleSure} isShowPlayers={isShowPlayers} isShowFans={isShowFans}
-                    handleEditPlayer={handleEditPlayer} handleSurePlayer={handleSurePlayer} handleSureQuitFan={handleSureQuitFan} handleEditTeam={handleEditTeam} handleAddPlayer={handleAddPlayer} 
+                    handleEditPlayer={handleEditPlayer} handleSurePlayer={handleSurePlayer} handleSureQuitFan={handleSureQuitFan} handleEditTeam={handleEditTeam} handleAddPlayer={handleAddPlayer} handleEditPlayerData={handleEditPlayerData} 
                     key={team._id} />
                 })
             }

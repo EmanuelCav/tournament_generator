@@ -12,7 +12,7 @@ const Elimination = () => {
             <Container fixed maxWidth="lg">
                 <Box display="flex" justifyContent='center' alignItems='center' flexWrap='wrap'>
                     <CategoryImage Icon={AccountTreeIcon} />
-                    <CategoryText text='Direct Elimination' color='#ffffff' 
+                    <CategoryText text='Direct Elimination' 
                         description='Automatic creation of direct elimination tournaments: Set up direct elimination tournaments in a few steps, generating brackets automatically according to the number of participants. Customize the tournament structure with options to include preliminary rounds.'
                     />
                 </Box>

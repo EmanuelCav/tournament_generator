@@ -12,7 +12,7 @@ const Swiss = () => {
             <Container fixed maxWidth="lg">
                 <Box display="flex" justifyContent='center' alignItems='center' flexWrap='wrap'>
                     <CategoryImage Icon={CompareArrowsIcon} />
-                    <CategoryText text="Swiss Format" color='#ffffff' 
+                    <CategoryText text="Swiss Format"
                     description='Automatic Swiss-format tournament generation: Set up Swiss-format tournaments in a few steps, allowing all participants to compete in each round. Advanced algorithms evenly match participants based on their previous results.' />
                 </Box>
             </Container>

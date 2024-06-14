@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 
 import { ILogin, IRegister } from "../interface/User";
-import { ICreateEvent, ICreatePlayer, ICreateTeam, IMatch, ISchedule, ITarget, ITeam } from "../interface/Event";
+import { ICreateEvent, ICreatePlayer, ICreateTeam, IMatch, IPlayerData, ISchedule, ITarget, ITeam } from "../interface/Event";
 
 export type LoginActionPropsType = {
     navigate: NavigateFunction;
@@ -198,4 +198,12 @@ export type UpdateCampusActionPropsType = {
     token: string;
     campusData: ICreateTeam;
     setIsEditCampus: (isEditCampus: boolean) => void;
+}
+
+export type UpdatePlayerDataActionPropsType = {
+    pid: string;
+    cid: string;
+    playerData: IPlayerData;
+    token: string;
+    setIsEditPlayerData: (isEditPlayerData: boolean) => void;
 }

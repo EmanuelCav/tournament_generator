@@ -19,6 +19,7 @@ import Players from '../components/event/Players';
 import EliminationTable from '../components/event/EliminationTable';
 import ShowCampus from '../components/event/ShowCampus';
 import FormAddCampus from '../components/event/FormAddCampus';
+import FormEditPlayerData from '../components/event/FormEditPlayerData';
 
 import { eventAction, joinTeamAction, removeCampusAction, removeCompetitorAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
@@ -50,6 +51,7 @@ const Event = () => {
     const [isAddCampus, setIsAddCampus] = useState<boolean>(false)
     const [isEditCampus, setIsEditCampus] = useState<boolean>(false)
     const [isRemoveFan, setIsRemoveFan] = useState<boolean>(false)
+    const [isEditPlayerData, setIsEditPlayerData] = useState<boolean>(false)
 
     const [infoTeam, setInfoTeam] = useState<ITeam | null>(null)
     const [infoReferee, setInfoReferee] = useState<IReferee | null>(null)
@@ -136,6 +138,11 @@ const Event = () => {
     const handleEditPlayer = (player: IPlayer) => {
         setInfoPlayer(player)
         setIsEditPlayer(!isEditPlayer)
+    }
+
+    const handleEditPlayerData = (player: IPlayer) => {
+        setInfoPlayer(player)
+        setIsEditPlayerData(!isEditPlayerData)
     }
 
     const handleEditCampus = (campus: ICampus) => {
@@ -308,11 +315,14 @@ const Event = () => {
             {
                 isEditCampus && <FormAddCampus dispatch={dispatch} setIsEditCampus={setIsEditCampus} user={user.user} event={event.event} campusInfo={infoCampus!} isEdit={true} handleAddCampus={handleAddCampus}  />
             }
+            {
+                isEditPlayerData && <FormEditPlayerData dispatch={dispatch} user={user.user} event={event.event} playerInfo={infoPlayer!} setIsEditPlayerData={setIsEditPlayerData} />
+            }
             <Box display='flex' justifyContent='flex-start' alignItems='flex-start'>
                 <EventsNavigation dispatch={dispatch} get={get} event={event.event} user={user.user.user!} />
                 {
                     get.isTeams && <ShowTeams user={user.user.user!} handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event}
-                        handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} joinTeam={joinTeam} handleSureQuitFan={handleSureQuitFan} />
+                        handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} joinTeam={joinTeam} handleSureQuitFan={handleSureQuitFan} handleEditPlayerData={handleEditPlayerData} />
                 }
                 {
                     get.isMatchdays && <ShowEvent event={event.event} user={user.user} dispatch={dispatch} />

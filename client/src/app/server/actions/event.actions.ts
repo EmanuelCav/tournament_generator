@@ -447,3 +447,19 @@ export const addCampusAction = createAsyncThunk('events/addcampus', async (event
     }
 
 })
+
+export const updatePlayerDataAction = createAsyncThunk('events/updateplayerdata', async (eventData: typesActionsEvent.UpdatePlayerDataActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.updatePlayerDataApi(eventData.pid, eventData.cid, eventData.playerData, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        eventData.setIsEditPlayerData(false)
+
+    } catch (error) {
+        console.log(error);
+    }
+
+})

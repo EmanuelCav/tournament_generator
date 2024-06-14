@@ -308,6 +308,16 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.addCampusAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(eventAction.updatePlayerDataAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.updatePlayerDataAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.updatePlayerDataAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

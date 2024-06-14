@@ -33,7 +33,7 @@ const Matchs = ({ event, handleAddReferee, handleAddScore, handleUpdateSchedule,
                     </Box>
                   </TableCell>
                   <TableCell align="right">
-                    <Box component="img" src={match.local.logo} width={40} height={40} />
+                    <Box component="img" src={match.local.logo} loading="lazy" width={40} height={40} />
                     <Typography>{match.local.name}</Typography>
                   </TableCell>
                   <TableCell>{match.targetLocal}</TableCell>
@@ -44,7 +44,7 @@ const Matchs = ({ event, handleAddReferee, handleAddScore, handleUpdateSchedule,
                   </TableCell>
                   <TableCell>{match.targetVisitant}</TableCell>
                   <TableCell>
-                    <Box component="img" src={match.visitant.logo} width={40} height={40} />
+                    <Box component="img" src={match.visitant.logo} loading="lazy" width={40} height={40} />
                     <Typography>{match.visitant.name}</Typography>
                   </TableCell>
                   <TableCell>

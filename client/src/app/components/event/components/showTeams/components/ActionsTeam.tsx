@@ -2,9 +2,9 @@ import { Box, Button } from "@mui/material"
 import Delete from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { ShowTeamPropsType } from "../../../../../types/event.types";
+import { ActionsTeamPropsType } from "../../../../../types/event.types";
 
-const ActionsTeam = ({ handleSure, team, handleEditTeam, handleAddPlayer, event, user, joinTeam, isJoined }: ShowTeamPropsType) => {
+const ActionsTeam = ({ handleSure, team, handleEditTeam, handleAddPlayer, event, user, joinTeam, isJoined }: ActionsTeamPropsType) => {
     return (
         <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
             {
