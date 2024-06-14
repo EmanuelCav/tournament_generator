@@ -1,4 +1,5 @@
 import { Box, Container } from '@mui/material'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import CategoryText from './components/categoriesInfo/CategoryText'
 import CategoryImage from './components/categoriesInfo/CategoryImage'
@@ -10,8 +11,10 @@ const Matchdays = () => {
         }}>
             <Container fixed maxWidth="lg">
                 <Box display="flex" justifyContent='center' alignItems='center' flexWrap='wrap'>
-                    <CategoryText text='All against all' color='#33CC33' />
-                    <CategoryImage image='/fixture.png' />
+                    <CategoryText text='All against all' color='#33CC33' 
+                        description='Automatic fixture generation: Create detailed fixtures for any type of championship in just a few clicks with our advanced algorithms ensure a balanced and fair schedule for all participants.'
+                    />
+                    <CategoryImage Icon={CalendarMonthIcon} />
                 </Box>
             </Container>
         </Box>

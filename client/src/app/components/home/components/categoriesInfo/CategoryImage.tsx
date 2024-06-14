@@ -1,13 +1,9 @@
 import { Box } from "@mui/material"
 
-const CategoryImage = ({ image }: { image: string }) => {
+const CategoryImage = ({ Icon }: { Icon: any }) => {
     return (
         <Box display='flex' justifyContent='center' alignItems='center' width='50%'>
-            <Box
-                component="img"
-                src={image}
-                alt="image_index"
-            />
+            <Icon color='success' fontSize={'large'} sx={{ fontSize: '21.2em' }} />
         </Box>
     )
 }

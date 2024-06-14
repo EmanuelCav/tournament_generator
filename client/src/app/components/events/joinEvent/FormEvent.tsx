@@ -16,6 +16,11 @@ const FormEvent = ({ dispatch, navigate, user }: FormEventPropsType) => {
     const handleSumbit = (e: FE<HTMLFormElement>) => {
         e.preventDefault()
 
+        if(!user.token) {
+            navigate('/auth')
+            return
+        }
+
         dispatch(joinEventAction({
             navigate,
             id,

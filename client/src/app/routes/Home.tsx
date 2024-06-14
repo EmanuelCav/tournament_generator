@@ -8,6 +8,7 @@ import Matchdays from '../components/home/Matchdays'
 import Elimination from '../components/home/Elimination'
 import Groups from '../components/home/Groups'
 import Swiss from '../components/home/Swiss'
+import Footer from '../components/home/Footer'
 
 import { IReducer } from '../interface/General'
 
@@ -35,6 +36,7 @@ const Home = () => {
           <Elimination />
           <Groups />
           <Swiss />
+          <Footer navigate={navigate} />
         </>
       }
     </Box>

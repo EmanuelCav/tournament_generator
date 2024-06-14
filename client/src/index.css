@@ -33,16 +33,28 @@
   transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 }
 
-#fileInput{
+#fileInput {
   display: none;
 }
-#icon{
+
+#icon {
   width: 100px;
   cursor: pointer;
 }
 
 .swiper-button-next,
-.swiper-button-prev{
-    visibility: hidden;
-  }
+.swiper-button-prev {
+  visibility: hidden;
+}
 
+.nav-footer {
+  cursor: pointer;
+}
+
+.nav-footer:hover {
+  text-decoration: underline;
+}
+
+.nav-footer:active {
+  text-decoration: none;
+}

@@ -12,6 +12,11 @@ const PublicEvent = ({ event, navigate, text, dispatch, user }: PublicEventProps
             return
         }
 
+        if(!user.token) {
+            navigate('/auth')
+            return
+        }
+
         dispatch(joinEventAction({
             id: event.id!,
             token: user.token!,
