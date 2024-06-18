@@ -168,7 +168,7 @@ const Settings = ({ user, eventInfo, dispatch, handleSure }: SettingsPropsType) 
         <Box className='image-event-form' display='flex' justifyContent='space-evenly' alignItems='center' flexDirection='column' my={2}>
           <Typography variant='h6' my={1}>Tournament image</Typography>
           <InputLabel htmlFor="fileInput" sx={{ cursor: 'pointer' }}>
-            <Box component="img" src={image} width={40} height={40} />
+            <Box component="img" src={image !== eventInfo.image?.image! ? URL.createObjectURL(image as any) : image} width={40} height={40} />
           </InputLabel>
           <input id="fileInput" name='image' type="file" onChange={handleChangeImage} />
         </Box>

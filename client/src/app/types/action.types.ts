@@ -138,7 +138,6 @@ export type AddScoreActionPropsType = {
     match: IMatch;
     token: string;
     targetData: ITarget;
-    update: string;
     category: string;
     setIsAddScore: (isScore: boolean) => void;
 }

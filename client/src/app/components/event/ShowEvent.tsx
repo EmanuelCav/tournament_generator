@@ -90,7 +90,7 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
         ) : (
           <>
             {
-              event.admin === user.user?._id && <Generate disabled={event.teams?.length! < 2} generateNow={generateNow} />
+              event.admin === user.user?._id && <Generate disabled={event.teams?.length! < 2} generateNow={generateNow} event={event} />
             }
           </>
         )

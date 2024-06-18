@@ -43,7 +43,8 @@ export const generateElimination = (shuffleArr: any[], round: string): IMatch[][
             visitant: {
                 name: shuffleArr[shuffleArr.length - 1 - i].name,
                 logo: shuffleArr[shuffleArr.length - 1 - i].logo.image
-            }
+            },
+            isMatchTrip: round === "trip"
         })
     }
 
@@ -90,7 +91,8 @@ const matchdaysGenerator = (matchdays: IMatch[][], shuffleArr: any[], isTrip: bo
                     visitant: {
                         name: j % 2 !== 0 ? shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].name : shuffleArr[shuffleArr.length - 1 - j].name,
                         logo: j % 2 !== 0 ? shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
-                    }
+                    },
+                    isMatchTrip: isTrip
                 })
             } else {
                 matchs.push({
@@ -101,7 +103,8 @@ const matchdaysGenerator = (matchdays: IMatch[][], shuffleArr: any[], isTrip: bo
                     visitant: {
                         name: j % 2 === 0 ? shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].name : shuffleArr[shuffleArr.length - 1 - j].name,
                         logo: j % 2 === 0 ? shuffleArr[shuffleArr.length % 2 === 0 ? j : j + 1].logo.image : shuffleArr[shuffleArr.length - 1 - j].logo.image
-                    }
+                    },
+                    isMatchTrip: isTrip
                 })
             }
         }

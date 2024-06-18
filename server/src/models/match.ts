@@ -34,6 +34,8 @@ const matchSchema = new Schema({
         ref: 'Referee'
     },
 
+    isMatchTrip: Boolean,
+
     schedule: Date
 
 }, {

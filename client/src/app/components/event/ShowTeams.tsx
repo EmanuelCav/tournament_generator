@@ -51,10 +51,10 @@ const ShowTeams = ({ event, user, handleSure, handleAddTeam, handleEditTeam, han
                 event.teams?.length === 0 && <Typography mt={2} textAlign='center' color='#33cc33' variant='h5'>There are not teams yet. Start to add.</Typography>
             }
             {
-                event.teams?.length! >= 0 && <Button color="inherit" variant="outlined" sx={{ mt: 4, mx: 2 }} onClick={handlePlayers}>{isShowPlayers ? "Hide players" : "Show players"}</Button>
+                event.teams?.length! > 0 && <Button color="inherit" variant="outlined" sx={{ mt: 4, mx: 2 }} onClick={handlePlayers}>{isShowPlayers ? "Hide players" : "Show players"}</Button>
             }
             {
-                event.teams?.length! >= 0 && <Button color="inherit" variant="outlined" sx={{ mt: 4, mx: 2 }} onClick={handleFans}>{isShowFans ? "Hide fans joined" : "Show fans joined"}</Button>
+                event.teams?.length! > 0 && <Button color="inherit" variant="outlined" sx={{ mt: 4, mx: 2 }} onClick={handleFans}>{isShowFans ? "Hide fans joined" : "Show fans joined"}</Button>
             }
             {
                 event.teams?.map((team: ITeam) => {

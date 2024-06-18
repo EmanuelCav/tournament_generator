@@ -71,6 +71,7 @@ const eventSchema = new Schema({
             name: String,
             logo: String
         },
+        isMatchTrip: Boolean,
         targetVisitant: Number,
         referee: String,
         campus: String,

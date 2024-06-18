@@ -68,6 +68,11 @@ const teamSchema = new Schema({
     campus: {
         type: Types.ObjectId,
         ref: 'Campus'
+    },
+
+    pot: {
+        type: Number,
+        default: 0
     }
 
 }, {

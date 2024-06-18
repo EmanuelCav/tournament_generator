@@ -162,8 +162,8 @@ export const refereesApi = async (token: string, id: string) => {
     })
 }
 
-export const updateScoreApi = async (mid: string, eid: string, targetData: ITarget, update: string, category: string, token: string) => {
-    return await api.put(`/score/matchs/${mid}/events/${eid}?update=${update}&category=${category}`, targetData, {
+export const updateScoreApi = async (mid: string, eid: string, targetData: ITarget, category: string, token: string) => {
+    return await api.put(`/score/matchs/${mid}/events/${eid}?category=${category}`, targetData, {
         headers: {
             'Content-type': "application/json",
             'Authorization': `Bearer ${token}`

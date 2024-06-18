@@ -136,6 +136,7 @@ export type ShowEventPropsType = {
 export type GeneratePropsType = {
     generateNow: () => void;
     disabled: boolean;
+    event: IEvent;
 }
 
 export type MatchsPropsType = {

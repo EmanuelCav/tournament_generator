@@ -40,6 +40,7 @@ export interface IMatch {
     local: ITeamMatch;
     targetLocal?: number | null;
     visitant: ITeamMatch;
+    isMatchTrip: boolean;
     targetVisitant?: number | null;
     referee?: string;
     campus?: string;
@@ -73,6 +74,7 @@ export interface ITeam extends Document {
     players: IPlayer[];
     competitors: Types.ObjectId[];
     campus: Types.ObjectId;
+    pot: number;
     created_at: NativeDate;
     updated_at: NativeDate;
 }

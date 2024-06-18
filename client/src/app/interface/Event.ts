@@ -76,6 +76,7 @@ export interface IMatch {
     local: ITeamMatch;
     targetLocal?: number;
     visitant: ITeamMatch;
+    isMatchTrip: boolean;
     targetVisitant?: number;
     referee?: string;
     campus?: string;

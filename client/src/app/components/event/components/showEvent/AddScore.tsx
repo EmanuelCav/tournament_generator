@@ -38,7 +38,6 @@ const AddScore = ({ user, dispatch, event, matchData, setIsAddScore }: AddScoreP
             match: matchData,
             setIsAddScore,
             targetData,
-            update: 'yes',
             category: event.category?.category!,
             token: user.token!
         }))

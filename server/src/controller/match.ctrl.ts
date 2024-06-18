@@ -271,7 +271,7 @@ export const addCampusMatch = async (req: Request, res: Response): Promise<Respo
 
         const campus = await Campus.findOne({ name })
 
-        if (!campus ) {
+        if (!campus) {
             return res.status(400).json({ message: "Campus does not exists" })
         }
 
@@ -338,7 +338,7 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
 
     const { eid, mid } = req.params
     const { targetLocal, targetVisitant } = req.body
-    const { update, category } = req.query
+    const { category } = req.query
 
     try {
 
@@ -354,8 +354,14 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
                     event.matchs[i][j].targetLocal = Number(targetLocal);
                     event.matchs[i][j].targetVisitant = Number(targetVisitant);
 
-                    const teamLocal = await Team.findOne({ name: event.matchs[i][j].local.name })
-                    const teamVisitant = await Team.findOne({ name: event.matchs[i][j].visitant.name })
+                    if (String(category) === 'ELIMINATION') {
+                        if (Number(targetVisitant) === Number(targetLocal)) {
+                            return res.status(400).json({ message: "the score cannot be a draw" })
+                        }
+                    }
+
+                    const teamLocal = await Team.findOne({ name: event.matchs[i][j].local.name }).populate("logo")
+                    const teamVisitant = await Team.findOne({ name: event.matchs[i][j].visitant.name }).populate("logo")
 
                     let resultLocal
                     let resultVisitant
@@ -365,73 +371,143 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
                     }
 
                     if (!teamVisitant) {
-                        return res.status(400).json({ message: "Local visitant does not exists" })
+                        return res.status(400).json({ message: "Visitant team does not exists" })
                     }
 
-                    if (String(category) === 'MATCHDAYS') {
-                        if (Number(targetLocal) > Number(targetVisitant)) {
-                            resultLocal = await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
-                                victory: teamLocal.victory + 1,
-                                favor: teamLocal.favor + Number(targetLocal),
-                                against: teamLocal.against + Number(targetVisitant)
-                            }, {
-                                new: true
-                            })
+                    if (Number(targetLocal) > Number(targetVisitant)) {
+                        resultLocal = await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
+                            victory: teamLocal.victory + 1,
+                            favor: teamLocal.favor + Number(targetLocal),
+                            against: teamLocal.against + Number(targetVisitant)
+                        }, {
+                            new: true
+                        })
 
-                            resultVisitant = await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
-                                defeat: teamVisitant.defeat + 1,
-                                favor: teamLocal.favor + Number(targetVisitant),
-                                against: teamLocal.against + Number(targetLocal)
-                            }, {
-                                new: true
-                            })
-                        } else if (Number(targetLocal) < Number(targetVisitant)) {
-                            resultLocal = await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
-                                defeat: teamLocal.defeat + 1,
-                                favor: teamLocal.favor + Number(targetLocal),
-                                against: teamLocal.against + Number(targetVisitant)
-                            }, {
-                                new: true
-                            })
+                        resultVisitant = await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
+                            defeat: teamVisitant.defeat + 1,
+                            favor: teamLocal.favor + Number(targetVisitant),
+                            against: teamLocal.against + Number(targetLocal)
+                        }, {
+                            new: true
+                        })
+                    } else if (Number(targetLocal) < Number(targetVisitant)) {
+                        resultLocal = await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
+                            defeat: teamLocal.defeat + 1,
+                            favor: teamLocal.favor + Number(targetLocal),
+                            against: teamLocal.against + Number(targetVisitant)
+                        }, {
+                            new: true
+                        })
 
-                            resultVisitant = await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
-                                victory: teamVisitant.victory + 1,
-                                favor: teamLocal.favor + Number(targetVisitant),
-                                against: teamLocal.against + Number(targetLocal)
-                            }, {
-                                new: true
-                            })
-                        } else {
-                            resultLocal = await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
-                                draw: teamLocal.draw + 1,
-                                favor: teamLocal.favor + Number(targetLocal),
-                                against: teamLocal.against + Number(targetVisitant)
-                            }, {
-                                new: true
-                            })
+                        resultVisitant = await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
+                            victory: teamVisitant.victory + 1,
+                            favor: teamLocal.favor + Number(targetVisitant),
+                            against: teamLocal.against + Number(targetLocal)
+                        }, {
+                            new: true
+                        })
+                    } else {
+                        resultLocal = await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
+                            draw: teamLocal.draw + 1,
+                            favor: teamLocal.favor + Number(targetLocal),
+                            against: teamLocal.against + Number(targetVisitant)
+                        }, {
+                            new: true
+                        })
 
-                            resultVisitant = await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
-                                draw: teamVisitant.draw + 1,
-                                favor: teamLocal.favor + Number(targetVisitant),
-                                against: teamLocal.against + Number(targetLocal)
-                            }, {
-                                new: true
-                            })
+                        resultVisitant = await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
+                            draw: teamVisitant.draw + 1,
+                            favor: teamLocal.favor + Number(targetVisitant),
+                            against: teamLocal.against + Number(targetLocal)
+                        }, {
+                            new: true
+                        })
+                    }
+
+                    await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
+                        points: resultLocal?.draw! + (resultLocal?.victory! * 3)
+                    }, {
+                        new: true
+                    })
+
+                    await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
+                        points: resultVisitant?.draw! + (resultVisitant?.victory! * 3)
+                    }, {
+                        new: true
+                    })
+
+                    if (String(category) === 'ELIMINATION') {
+                        if (!event.isRoundTrip || event.matchs[i][j].isMatchTrip) {
+                            if (!event.matchs[i][j % 2 === 0 ? j + 1 : j - 1].targetLocal) {
+                                if (event.matchs[event.matchs.length - 1].length > 1) {
+                                    if (Number(targetLocal) > Number(targetVisitant)) {
+                                        event.matchs.push([{
+                                            isMatchTrip: event.matchs[0][0].isMatchTrip,
+                                            local: {
+                                                logo: teamLocal.logo.image,
+                                                name: teamLocal.name
+                                            },
+                                            visitant: {
+                                                logo: "",
+                                                name: ""
+                                            }
+                                        }])
+                                    }
+
+                                    if (Number(targetLocal) < Number(targetVisitant)) {
+                                        event.matchs.push([{
+                                            isMatchTrip: event.matchs[0][0].isMatchTrip,
+                                            local: {
+                                                logo: teamVisitant.logo.image,
+                                                name: teamVisitant.name
+                                            },
+                                            visitant: {
+                                                logo: "",
+                                                name: ""
+                                            }
+                                        }])
+                                    }
+                                } else {
+                                    if (Number(targetLocal) > Number(targetVisitant)) {
+                                        event.matchs[event.matchs.length - 1].splice(Math.floor(j / 2), 0, {
+                                            isMatchTrip: event.matchs[0][0].isMatchTrip,
+                                            local: {
+                                                logo: teamLocal.logo.image,
+                                                name: teamLocal.name
+                                            },
+                                            visitant: {
+                                                logo: "",
+                                                name: ""
+                                            }
+                                        })
+                                    }
+
+                                    if (Number(targetLocal) < Number(targetVisitant)) {
+                                        event.matchs[event.matchs.length - 1].splice(Math.floor(j / 2), 0, {
+                                            isMatchTrip: event.matchs[0][0].isMatchTrip,
+                                            local: {
+                                                logo: teamVisitant.logo.image,
+                                                name: teamVisitant.name
+                                            },
+                                            visitant: {
+                                                logo: "",
+                                                name: ""
+                                            }
+                                        })
+                                    }
+                                }
+                            } else {
+                                let isMatchExists = event.matchs[event.matchs.length - 1][Math.floor(j / 2)]
+                                if (Number(targetLocal) > Number(targetVisitant)) {
+                                    event.matchs[event.matchs.length - 1][isMatchExists ? Math.floor(j / 2) : event.matchs[event.matchs.length - 1].length - 1].visitant.logo = teamLocal.logo.image
+                                    event.matchs[event.matchs.length - 1][isMatchExists ? Math.floor(j / 2) : event.matchs[event.matchs.length - 1].length - 1].visitant.name = teamLocal.name
+                                }
+                                if (Number(targetLocal) < Number(targetVisitant)) {
+                                    event.matchs[event.matchs.length - 1][isMatchExists ? Math.floor(j / 2) : event.matchs[event.matchs.length - 1].length - 1].visitant.logo = teamVisitant.logo.image
+                                    event.matchs[event.matchs.length - 1][isMatchExists ? Math.floor(j / 2) : event.matchs[event.matchs.length - 1].length - 1].visitant.name = teamVisitant.name
+                                }
+                            }
                         }
-
-                        await Team.findOneAndUpdate({ name: event.matchs[i][j].local.name }, {
-                            points: resultLocal?.draw! + (resultLocal?.victory! * 3)
-                        }, {
-                            new: true
-                        })
-
-                        await Team.findOneAndUpdate({ name: event.matchs[i][j].visitant.name }, {
-                            points: resultVisitant?.draw! + (resultVisitant?.victory! * 3)
-                        }, {
-                            new: true
-                        })
-                    } else if (String(category) === 'ELIMINATION') {
-
                     }
 
                     break;
