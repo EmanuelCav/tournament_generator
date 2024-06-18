@@ -1,6 +1,6 @@
 import { Schema, Types, model } from 'mongoose'
 
-import { IReferee } from '../interface/User'
+import { IReferee } from '../interface/Event'
 
 const refereeSchema = new Schema({
 

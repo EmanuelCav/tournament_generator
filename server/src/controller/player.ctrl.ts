@@ -7,7 +7,7 @@ import Competitor from '../models/competitor';
 
 import { privileged_role } from "../config/config";
 
-import { IPlayer } from "../interface/User";
+import { IPlayer } from "../interface/Event";
 
 export const players = async (req: Request, res: Response): Promise<Response> => {
 

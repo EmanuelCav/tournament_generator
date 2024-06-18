@@ -35,3 +35,13 @@ export interface IRegister {
     password?: string;
     confirm?: string;
 }
+
+export interface ISubscription {
+    _id: string;
+    subscription: string;
+    descriptions: string[];
+    price: number;
+    hierarchy: number;
+    created_at: string;
+    updated_at: string;
+}

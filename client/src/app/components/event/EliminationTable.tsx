@@ -5,8 +5,10 @@ import TeamElimination from "./components/eliminationTable/TeamElimination"
 import { IEvent, IMatch } from "../../interface/Event"
 
 import HeadEliminationTable from "./components/eliminationTable/HeadEliminationTable"
+import { useEffect } from "react"
 
 const EliminationTable = ({ event }: { event: IEvent }) => {
+
   return (
     <TableContainer component={Paper} sx={{ mt: 2, ml: 1 }}>
       <Table>
@@ -16,15 +18,35 @@ const EliminationTable = ({ event }: { event: IEvent }) => {
             {event.matchs!.map((fixture: IMatch[], index: number) => (
               <TableCell align="center" component="th" scope="row" key={index}>
                 {
-                  fixture.slice(0, event.isRoundTrip ? event.matchs![0].length! / 2 : event.matchs![0].length).map((match: IMatch, i: number) => {
+                  fixture.slice(0, event.isRoundTrip ? event.matchs![index].length! / 2 : event.matchs![index].length).map((match: IMatch, i: number) => {
                     return <Paper key={i} elevation={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column', p: 2, mt: 1 }}>
                       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                         <TeamElimination team={match.local} />
                         <Typography>{match.targetLocal}</Typography>
+                        {
+                          event.matchs?.length! > 0 && event.isRoundTrip && <>
+                            <Typography>
+                              {fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.local.name === match.visitant.name)?.targetLocal}
+                            </Typography>
+                            <Typography>
+                              {fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.local.name === match.visitant.name)?.targetLocal}
+                            </Typography>
+                          </>
+                        }
                       </Box>
                       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                         <TeamElimination team={match.visitant} />
                         <Typography>{match.targetVisitant}</Typography>
+                        {
+                          event.matchs?.length! > 0 && event.isRoundTrip && <>
+                            <Typography>
+                              {fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.visitant.name === match.local.name)?.targetVisitant}
+                            </Typography>
+                            <Typography>
+                              {fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.visitant.name === match.local.name)?.targetVisitant}
+                            </Typography>
+                          </>
+                        }
                       </Box>
                     </Paper>
                   })

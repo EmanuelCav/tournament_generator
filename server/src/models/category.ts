@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 
 import { ICategory } from '../interface/Event'
 
@@ -9,6 +9,11 @@ const categorySchema = new Schema({
         required: true,
         trim: true,
         unique: true
+    },
+
+    subscription: {
+        type: Types.ObjectId,
+        ref: 'Subscription'
     }
 
 }, {

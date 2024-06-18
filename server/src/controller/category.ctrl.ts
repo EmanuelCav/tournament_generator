@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import Category from '../models/category'
+import Subscription from '../models/subscription'
 
 export const categories = async (req: Request, res: Response): Promise<Response> => {
 
@@ -18,12 +19,19 @@ export const categories = async (req: Request, res: Response): Promise<Response>
 
 export const createCategory = async (req: Request, res: Response): Promise<Response> => {
 
-    const { category } = req.body
+    const { category, subscription } = req.body
 
     try {
 
+        const subscriptionCategory = await Subscription.findOne({ subscription })
+
+        if(!subscriptionCategory) {
+            return res.status(400).json({ message: "Subscription does not exists" })
+        }
+
         const newCategory = new Category({
-            category
+            category,
+            subscription: subscriptionCategory._id
         })
 
         await newCategory.save()

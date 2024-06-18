@@ -8,7 +8,18 @@ export interface IUser extends Document {
     phone: string;
     role: Types.ObjectId;
     status: boolean;
+    subscription: Types.ObjectId;
     password: string;
+    created_at: NativeDate;
+    updated_at: NativeDate;
+}
+
+export interface ISubscription extends Document {
+    _id: Types.ObjectId;
+    subscription: string;
+    descriptions: string[];
+    price: number;
+    hierarchy: number;
     created_at: NativeDate;
     updated_at: NativeDate;
 }
@@ -25,27 +36,6 @@ export interface ICompetitor extends Document {
     user: Types.ObjectId;
     event: Types.ObjectId;
     role: IRole;
-    created_at: NativeDate;
-    updated_at: NativeDate;
-}
-
-export interface IReferee extends Document {
-    _id: Types.ObjectId;
-    name: string;
-    event: Types.ObjectId;
-    created_at: NativeDate;
-    updated_at: NativeDate;
-}
-
-export interface IPlayer extends Document {
-    _id: Types.ObjectId;
-    name: string;
-    points: number;
-    assists: number;
-    cards: number;
-    serialCards: number;
-    position: string;
-    team: Types.ObjectId;
     created_at: NativeDate;
     updated_at: NativeDate;
 }

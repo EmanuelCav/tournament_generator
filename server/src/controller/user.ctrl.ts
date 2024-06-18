@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import User from '../models/user'
 import Role from '../models/role'
+import Subscription from '../models/subscription'
 
 import { default_role } from "../config/config";
 
@@ -70,12 +71,19 @@ export const register = async (req: Request, res: Response): Promise<Response> =
             return res.status(400).json({ message: "Role does not exists" })
         }
 
+        const subscription = await Subscription.findOne({ subscription: "FREE" })
+
+        if(!subscription) {
+            return res.status(400).json({ message: "Subscription does not exists" })
+        }
+
         const passwordHashed = await hashText(password)
 
         const newUser = new User({
             fullname,
             nickname,
             email,
+            subscription: subscription._id,
             password: passwordHashed,
             role: role._id
         })

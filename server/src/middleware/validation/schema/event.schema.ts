@@ -13,6 +13,9 @@ export const createCategorySchema = z.object({
         message: "There are empty fields"
     }).refine((value) => /^[A-Z\s]+$/.test(value), {
         message: "Only uppercase letters are allowed"
+    }),
+    subscription: z.string().trim().min(1, {
+        message: "There are empty fields"
     })
 })
 

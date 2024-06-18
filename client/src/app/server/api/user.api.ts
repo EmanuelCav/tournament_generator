@@ -17,3 +17,7 @@ export const registerApi = async (userData: IRegister) => {
         }
     })
 }
+
+export const subscriptionsApi = async () => {
+    return await api.get('/subscriptions')
+}

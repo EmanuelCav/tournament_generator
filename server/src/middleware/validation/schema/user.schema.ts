@@ -43,3 +43,17 @@ export const loginUserSchema = z.object({
         message: "There are empty fields. Please Complete"
     })
 })
+
+export const createSubscriptionSchema = z.object({
+    subscription: z.string().trim().min(1, {
+        message: "There are empty fields"
+    }).refine((value) => /^[A-Z\s]+$/.test(value), {
+        message: "Subscription only uppercase letters are allowed"
+    }),
+    price: z.number({
+        message: "Price must be a number"
+    }),
+    hierarchy: z.number({
+        message: "Price must be a number"
+    }),
+})

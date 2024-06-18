@@ -1,5 +1,5 @@
 import { Types, Document } from 'mongoose'
-import { ICompetitor, IPlayer } from './User';
+import { ICompetitor} from './User';
 
 export interface IImage extends Document {
     _id: Types.ObjectId;
@@ -55,6 +55,28 @@ interface ITeamMatch {
 export interface ICategory extends Document {
     _id: Types.ObjectId;
     category: string;
+    subscription: Types.ObjectId;
+    created_at: NativeDate;
+    updated_at: NativeDate;
+}
+
+export interface IReferee extends Document {
+    _id: Types.ObjectId;
+    name: string;
+    event: Types.ObjectId;
+    created_at: NativeDate;
+    updated_at: NativeDate;
+}
+
+export interface IPlayer extends Document {
+    _id: Types.ObjectId;
+    name: string;
+    points: number;
+    assists: number;
+    cards: number;
+    serialCards: number;
+    position: string;
+    team: Types.ObjectId;
     created_at: NativeDate;
     updated_at: NativeDate;
 }
