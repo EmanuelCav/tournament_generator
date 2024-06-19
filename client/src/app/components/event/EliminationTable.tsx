@@ -1,11 +1,9 @@
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material"
 
 import TeamElimination from "./components/eliminationTable/TeamElimination"
+import HeadEliminationTable from "./components/eliminationTable/HeadEliminationTable"
 
 import { IEvent, IMatch } from "../../interface/Event"
-
-import HeadEliminationTable from "./components/eliminationTable/HeadEliminationTable"
-import { useEffect } from "react"
 
 const EliminationTable = ({ event }: { event: IEvent }) => {
 
@@ -26,10 +24,10 @@ const EliminationTable = ({ event }: { event: IEvent }) => {
                         {
                           event.matchs?.length! > 0 && event.isRoundTrip && <>
                             <Typography>
-                              {fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.local.name === match.visitant.name)?.targetLocal}
+                              {fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.visitant.name === match.local.name)?.targetVisitant}
                             </Typography>
                             <Typography>
-                              {fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.local.name === match.visitant.name)?.targetLocal}
+                            {(fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.visitant.name === match.local.name)?.targetVisitant! && match.targetLocal) ? (fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.visitant.name === match.local.name)?.targetVisitant!) + match.targetLocal! : 0}
                             </Typography>
                           </>
                         }
@@ -40,10 +38,10 @@ const EliminationTable = ({ event }: { event: IEvent }) => {
                         {
                           event.matchs?.length! > 0 && event.isRoundTrip && <>
                             <Typography>
-                              {fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.visitant.name === match.local.name)?.targetVisitant}
+                              {fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.local.name === match.visitant.name)?.targetLocal}
                             </Typography>
                             <Typography>
-                              {fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.visitant.name === match.local.name)?.targetVisitant}
+                            {(fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.local.name === match.visitant.name)?.targetLocal!  && match.targetVisitant) ? fixture.slice(event.matchs![index].length! / 2, event.matchs![index].length!).find(ev => ev.local.name === match.visitant.name)?.targetLocal! + match.targetVisitant! : 0}
                             </Typography>
                           </>
                         }

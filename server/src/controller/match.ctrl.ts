@@ -348,17 +348,19 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
             return res.status(400).json({ message: "Event does not exists" })
         }
 
+        if (String(category) === 'ELIMINATION') {
+            if (!event.isRoundTrip) {
+                if (Number(targetVisitant) === Number(targetLocal)) {
+                    return res.status(400).json({ message: "the score cannot be a draw" })
+                }
+            }
+        }
+
         for (let i = 0; i < event.matchs.length; i++) {
             for (let j = 0; j < event.matchs[i].length; j++) {
                 if (String(event.matchs[i][j]._id) === mid) {
                     event.matchs[i][j].targetLocal = Number(targetLocal);
                     event.matchs[i][j].targetVisitant = Number(targetVisitant);
-
-                    if (String(category) === 'ELIMINATION') {
-                        if (Number(targetVisitant) === Number(targetLocal)) {
-                            return res.status(400).json({ message: "the score cannot be a draw" })
-                        }
-                    }
 
                     const teamLocal = await Team.findOne({ name: event.matchs[i][j].local.name }).populate("logo")
                     const teamVisitant = await Team.findOne({ name: event.matchs[i][j].visitant.name }).populate("logo")
@@ -372,6 +374,13 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
 
                     if (!teamVisitant) {
                         return res.status(400).json({ message: "Visitant team does not exists" })
+                    }
+
+
+                    if (event.isRoundTrip) {
+                        if ((event.matchs[i].find(m => m.visitant.name === teamLocal.name)?.targetVisitant! + Number(targetLocal)) === (event.matchs[i].find(m => m.local.name === teamVisitant.name)?.targetLocal! + Number(targetVisitant))) {
+                            return res.status(400).json({ message: "The global score cannot be a draw" })
+                        }
                     }
 
                     if (Number(targetLocal) > Number(targetVisitant)) {
@@ -437,74 +446,58 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
                     })
 
                     if (String(category) === 'ELIMINATION') {
-                        if (!event.isRoundTrip || event.matchs[i][j].isMatchTrip) {
-                            if (!event.matchs[i][j % 2 === 0 ? j + 1 : j - 1].targetLocal) {
-                                if (event.matchs[event.matchs.length - 1].length > 1) {
-                                    if (Number(targetLocal) > Number(targetVisitant)) {
-                                        event.matchs.push([{
-                                            isMatchTrip: event.matchs[0][0].isMatchTrip,
-                                            local: {
-                                                logo: teamLocal.logo.image,
-                                                name: teamLocal.name
-                                            },
-                                            visitant: {
-                                                logo: "",
-                                                name: ""
-                                            }
-                                        }])
+                        
+                        if (i < event.matchs.length - 1) {
+                            
+                            if (!event.isRoundTrip || typeof(event.matchs[i].find(m => (m.isMatchTrip !== event.matchs[i][j].isMatchTrip) && (m.local.name === event.matchs[i][j].visitant.name || m.visitant.name === event.matchs[i][j].local.name))?.targetLocal) !== 'undefined') {
+                                
+                                let targetLocalHigher = event.isRoundTrip ?
+                                    (event.matchs[i].find(m => m.visitant.name === teamLocal.name)?.targetVisitant! + Number(targetLocal)) > (event.matchs[i].find(m => m.local.name === teamVisitant.name)?.targetLocal! + Number(targetVisitant)) :
+                                    Number(targetLocal) > Number(targetVisitant)
+                                let targetVisitantHigher = event.isRoundTrip ?
+                                    (event.matchs[i].find(m => m.local.name === teamVisitant.name)?.targetLocal! + Number(targetVisitant)) > (event.matchs[i].find(m => m.visitant.name === teamLocal.name)?.targetVisitant! + Number(targetLocal)) :
+                                    Number(targetVisitant) > Number(targetLocal)
+
+                                if (targetLocalHigher) {
+
+                                    if (j % 2 === 0) {
+                                        event.matchs[i + 1][Math.floor(j / 2)].local.logo = teamLocal.logo.image
+                                        event.matchs[i + 1][Math.floor(j / 2)].local.name = teamLocal.name
+                                    } else {
+                                        event.matchs[i + 1][Math.floor(j / 2)].visitant.logo = teamLocal.logo.image
+                                        event.matchs[i + 1][Math.floor(j / 2)].visitant.name = teamLocal.name
                                     }
 
-                                    if (Number(targetLocal) < Number(targetVisitant)) {
-                                        event.matchs.push([{
-                                            isMatchTrip: event.matchs[0][0].isMatchTrip,
-                                            local: {
-                                                logo: teamVisitant.logo.image,
-                                                name: teamVisitant.name
-                                            },
-                                            visitant: {
-                                                logo: "",
-                                                name: ""
-                                            }
-                                        }])
+                                    if (event.isRoundTrip) {
+                                        if (j % 2 === 0) {
+                                            event.matchs[i + 1][event.matchs[i][j].isMatchTrip ? Math.floor(j / 2) - Math.floor(event.matchs[i + 1].length / 2) : Math.floor(j / 2) + Math.floor(event.matchs[i + 1].length / 2)].visitant.logo = teamLocal.logo.image
+                                            event.matchs[i + 1][event.matchs[i][j].isMatchTrip ? Math.floor(j / 2) - Math.floor(event.matchs[i + 1].length / 2) : Math.floor(j / 2) + Math.floor(event.matchs[i + 1].length / 2)].visitant.name = teamLocal.name
+                                        } else {
+                                            event.matchs[i + 1][event.matchs[i][j].isMatchTrip ? Math.floor(j / 2) - Math.floor(event.matchs[i + 1].length / 2) : Math.floor(j / 2) + Math.floor(event.matchs[i + 1].length / 2)].local.logo = teamLocal.logo.image
+                                            event.matchs[i + 1][event.matchs[i][j].isMatchTrip ? Math.floor(j / 2) - Math.floor(event.matchs[i + 1].length / 2) : Math.floor(j / 2) + Math.floor(event.matchs[i + 1].length / 2)].local.name = teamLocal.name
+                                        }
                                     }
-                                } else {
-                                    if (Number(targetLocal) > Number(targetVisitant)) {
-                                        event.matchs[event.matchs.length - 1].splice(Math.floor(j / 2), 0, {
-                                            isMatchTrip: event.matchs[0][0].isMatchTrip,
-                                            local: {
-                                                logo: teamLocal.logo.image,
-                                                name: teamLocal.name
-                                            },
-                                            visitant: {
-                                                logo: "",
-                                                name: ""
-                                            }
-                                        })
+                                }
+
+                                if (targetVisitantHigher) {
+
+                                    if (j % 2 === 0) {
+                                        event.matchs[i + 1][Math.floor(j / 2)].local.logo = teamVisitant.logo.image
+                                        event.matchs[i + 1][Math.floor(j / 2)].local.name = teamVisitant.name
+                                    } else {
+                                        event.matchs[i + 1][Math.floor(j / 2)].visitant.logo = teamVisitant.logo.image
+                                        event.matchs[i + 1][Math.floor(j / 2)].visitant.name = teamVisitant.name
                                     }
 
-                                    if (Number(targetLocal) < Number(targetVisitant)) {
-                                        event.matchs[event.matchs.length - 1].splice(Math.floor(j / 2), 0, {
-                                            isMatchTrip: event.matchs[0][0].isMatchTrip,
-                                            local: {
-                                                logo: teamVisitant.logo.image,
-                                                name: teamVisitant.name
-                                            },
-                                            visitant: {
-                                                logo: "",
-                                                name: ""
-                                            }
-                                        })
+                                    if (event.isRoundTrip) {
+                                        if (j % 2 === 0) {
+                                            event.matchs[i + 1][event.matchs[i][j].isMatchTrip ? Math.floor(j / 2) - Math.floor(event.matchs[i + 1].length / 2) : Math.floor(j / 2) + Math.floor(event.matchs[i + 1].length / 2)].visitant.logo = teamVisitant.logo.image
+                                            event.matchs[i + 1][event.matchs[i][j].isMatchTrip ? Math.floor(j / 2) - Math.floor(event.matchs[i + 1].length / 2) : Math.floor(j / 2) + Math.floor(event.matchs[i + 1].length / 2)].visitant.name = teamVisitant.name
+                                        } else {
+                                            event.matchs[i + 1][event.matchs[i][j].isMatchTrip ? Math.floor(j / 2) - Math.floor(event.matchs[i + 1].length / 2) : Math.floor(j / 2) + Math.floor(event.matchs[i + 1].length / 2)].local.logo = teamVisitant.logo.image
+                                            event.matchs[i + 1][event.matchs[i][j].isMatchTrip ? Math.floor(j / 2) - Math.floor(event.matchs[i + 1].length / 2) : Math.floor(j / 2) + Math.floor(event.matchs[i + 1].length / 2)].local.name = teamVisitant.name
+                                        }
                                     }
-                                }
-                            } else {
-                                let isMatchExists = event.matchs[event.matchs.length - 1][Math.floor(j / 2)]
-                                if (Number(targetLocal) > Number(targetVisitant)) {
-                                    event.matchs[event.matchs.length - 1][isMatchExists ? Math.floor(j / 2) : event.matchs[event.matchs.length - 1].length - 1].visitant.logo = teamLocal.logo.image
-                                    event.matchs[event.matchs.length - 1][isMatchExists ? Math.floor(j / 2) : event.matchs[event.matchs.length - 1].length - 1].visitant.name = teamLocal.name
-                                }
-                                if (Number(targetLocal) < Number(targetVisitant)) {
-                                    event.matchs[event.matchs.length - 1][isMatchExists ? Math.floor(j / 2) : event.matchs[event.matchs.length - 1].length - 1].visitant.logo = teamVisitant.logo.image
-                                    event.matchs[event.matchs.length - 1][isMatchExists ? Math.floor(j / 2) : event.matchs[event.matchs.length - 1].length - 1].visitant.name = teamVisitant.name
                                 }
                             }
                         }

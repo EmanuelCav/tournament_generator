@@ -5,6 +5,8 @@ import HeadMatchs from "./components/HeadMatchs"
 import { IMatch } from "../../../../interface/Event"
 import { MatchsPropsType } from "../../../../types/event.types"
 
+import { eliminationMatch } from "../../../../helper/functions"
+
 const Matchs = ({ event, handleAddReferee, handleAddScore, handleUpdateSchedule, handleUpdateCampus, isAdmin }: MatchsPropsType) => {
   return (
     <TableContainer component={Paper} sx={{ mt: 2 }}>
@@ -12,7 +14,14 @@ const Matchs = ({ event, handleAddReferee, handleAddScore, handleUpdateSchedule,
         <HeadMatchs />
         {event.matchs!.map((fixture: IMatch[], index: number) => (
           <TableBody key={index}>
-            <Typography variant="h6" m={1} width={'100%'} color={'#33cc33'}>Matchday {index + 1}</Typography>
+            {
+              event.category?.category === "MATCHDAYS" && <Typography variant="h6" m={1} width={'100%'} color={'#33cc33'}>Matchday {index + 1}</Typography>
+            }
+            {
+              event.category?.category === "ELIMINATION" && <Typography variant="h6" m={1} width={'100%'} color={'#33cc33'}>
+                {eliminationMatch(event.matchs!, index, event.matchs?.length! > 0 ? event.isRoundTrip ? Math.log(event.matchs![0].length) / Math.log(2) : Math.log(event.matchs![0].length * 2) / Math.log(2) : 0)}
+                </Typography>
+            }
             {
               fixture.map((match: IMatch, i: number) => {
                 return <TableRow key={i}>

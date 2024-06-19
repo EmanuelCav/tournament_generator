@@ -9,7 +9,7 @@ import CardInfo from './components/CardInfo';
 const Cards = () => {
 
   return (
-    <Box width='100%' display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+    <Box width='100%' display={'flex'} justifyContent={'space-between'} alignItems={'center'} flexWrap={'wrap'}>
       <CardInfo text="Matchdays" Icon={CalendarMonthIcon}  />
       <CardInfo text="Elimination" Icon={AccountTreeIcon} />
       <CardInfo text="Group Stage" Icon={DatasetIcon} />

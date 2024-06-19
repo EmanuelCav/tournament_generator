@@ -1,3 +1,5 @@
+import { IMatch } from "../interface/Event"
+
 export const isPowerTwo = (n: number): boolean => {
 
     let i = 1
@@ -29,4 +31,16 @@ export const headersElimination = (n: number): string[] => {
 
     return array
 
+}
+
+export const eliminationMatch = (matchs: IMatch[][], index: number, n: number): string => {
+    if(index === matchs.length - 1) {
+        return "Final"
+    }
+
+    if(index === matchs.length - 2) {
+        return "Semi-finals"
+    }
+
+    return `Round of ${Math.pow(2, (n - index))}`
 }
