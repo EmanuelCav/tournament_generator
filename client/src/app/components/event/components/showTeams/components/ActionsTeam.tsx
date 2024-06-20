@@ -12,7 +12,9 @@ const ActionsTeam = ({ handleSure, team, handleEditTeam, handleAddPlayer, event,
                 <>
                     <Button variant="outlined" onClick={() => handleAddPlayer(team)}>Add player</Button>
                     <EditIcon color="primary" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => handleEditTeam(team)} />
-                    <Delete color="error" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => handleSure(team)} />
+                    {
+                        !event.done && <Delete color="error" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => handleSure(team)} />
+                    }
                 </>
             }
             {

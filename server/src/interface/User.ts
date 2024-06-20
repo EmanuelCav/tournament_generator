@@ -8,7 +8,7 @@ export interface IUser extends Document {
     phone: string;
     role: Types.ObjectId;
     status: boolean;
-    subscription: Types.ObjectId;
+    subscription: ISubscription;
     password: string;
     created_at: NativeDate;
     updated_at: NativeDate;

@@ -4,6 +4,8 @@ import Event from '../models/event';
 import Team from '../models/team';
 import Player from '../models/player';
 import Competitor from '../models/competitor';
+import User from '../models/user';
+import Subscription from '../models/subscription';
 
 import { privileged_role } from "../config/config";
 
@@ -70,6 +72,30 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
 
         if (!team) {
             return res.status(400).json({ message: "Team does not exists" })
+        }
+
+        const userLoggedIn = await User.findById(req.user)
+
+        if (!userLoggedIn) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const subscription = await Subscription.findById(userLoggedIn.subscription)
+
+        if(!subscription) {
+            return res.status(400).json({ message: "Subscription does not exists" })
+        }
+
+        if(subscription.hierarchy <= 1) {
+            if(team.players.length >= 15) {
+                return res.status(400).json({ message: "You cannot add more than 15 players per team" })
+            }
+        }
+
+        if(subscription.hierarchy <= 2) {
+            if(team.players.length >= 30) {
+                return res.status(400).json({ message: "You cannot add more than 30 players per team" })
+            }
         }
 
         const user = await Competitor.findById(cid).populate("role")

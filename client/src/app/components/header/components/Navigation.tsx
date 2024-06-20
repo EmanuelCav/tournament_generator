@@ -29,7 +29,7 @@ const Navigation = ({ navigate, location, isLoggedIn, dispatch }: NavigationProp
                 isLoggedIn ? (
                     <Box>
                         {
-                            isMenu && <MenuHeader dispatch={dispatch} navigate={navigate} />
+                            isMenu && <MenuHeader setIsMenu={setIsMenu} dispatch={dispatch} navigate={navigate} />
                         }
                         <ButtonNav text='Panel' Icon={CoPresentIcon} redirect={redirectRoute} route='panel' />
                         <Button variant='contained' sx={{

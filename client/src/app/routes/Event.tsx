@@ -289,7 +289,7 @@ const Event = () => {
                 isEditPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} setIsEditPlayer={setIsEditPlayer} dispatch={dispatch} user={user.user} event={event.event} isEdit={true} team={infoTeam!} player={infoPlayer!} />
             }
             {
-                isEditCampus && <FormAddCampus dispatch={dispatch} setIsEditCampus={setIsEditCampus} user={user.user} event={event.event} campusInfo={infoCampus!} isEdit={true} handleAddCampus={handleAddCampus}  />
+                isEditCampus && <FormAddCampus dispatch={dispatch} setIsEditCampus={setIsEditCampus} user={user.user} event={event.event} campusInfo={infoCampus!} isEdit={true} handleAddCampus={handleAddCampus} />
             }
             {
                 isEditPlayerData && <FormEditPlayerData dispatch={dispatch} user={user.user} event={event.event} playerInfo={infoPlayer!} setIsEditPlayerData={setIsEditPlayerData} />
@@ -331,7 +331,7 @@ const Event = () => {
                     get.isPlayers && <Players players={statistic.players} dispatch={dispatch} event={event.event} user={user.user} />
                 }
                 {
-                    get.isCampus && <ShowCampus event={event.event} user={user.user.user!} handleAddCampus={handleAddCampus} handleSure={handleSureRemoveCampus} handleEditCampus={handleEditCampus}  />
+                    get.isCampus && <ShowCampus event={event.event} user={user.user.user!} handleAddCampus={handleAddCampus} handleSure={handleSureRemoveCampus} handleEditCampus={handleEditCampus} />
                 }
             </Box>
         </Container>

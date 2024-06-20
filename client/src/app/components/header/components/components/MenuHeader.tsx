@@ -4,10 +4,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { MenuHeaderPropsType } from '../../../../types/header.types';
 import { logoutAction } from '../../../../server/actions/user.actions';
 
-const MenuHeader = ({ dispatch, navigate }: MenuHeaderPropsType) => {
+const MenuHeader = ({ dispatch, navigate, setIsMenu }: MenuHeaderPropsType) => {
 
     const handleLogout = () => {
-        dispatch(logoutAction(navigate))
+        dispatch(logoutAction({
+            navigate,
+            setIsMenu
+        }))
     }
 
     return (

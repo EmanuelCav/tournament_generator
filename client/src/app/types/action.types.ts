@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 
 import { ILogin, IRegister } from "../interface/User";
-import { ICreateEvent, ICreatePlayer, ICreateTeam, IMatch, IPlayerData, ISchedule, ITarget, ITeam } from "../interface/Event";
+import { ICreatePlayer, ICreateTeam, IMatch, IPlayerData, ISchedule, ITarget, ITeam } from "../interface/Event";
 
 export type LoginActionPropsType = {
     navigate: NavigateFunction;
@@ -12,6 +12,11 @@ export type RegisterActionPropsType = {
     navigate: NavigateFunction;
     userData: IRegister;
     setIsRegister: (isRegister: boolean) => void;
+}
+
+export type LogoutActionPropsType = {
+    setIsMenu: (isMenu: boolean) => void;
+    navigate: NavigateFunction;
 }
 
 export type EventActionPropsType = {

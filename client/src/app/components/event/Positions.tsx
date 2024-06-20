@@ -41,7 +41,7 @@ const Positions = ({ teams, dispatch, event, user }: PositionsPropsType) => {
 
   useEffect(() => {
     getPositions()
-  }, [])
+  }, [event.event])
 
   return (
     <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4, ml: 1 }}>

@@ -18,6 +18,7 @@ export type NavigationPropsType = {
 export type MenuHeaderPropsType = {
     dispatch: Dispatch<any>;
     navigate: NavigateFunction;
+    setIsMenu: (isMenu: boolean) => void;
 }
 
 export type LogoPropsType = {

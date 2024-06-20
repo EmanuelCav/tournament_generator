@@ -4,7 +4,7 @@ import { NavigateFunction } from "react-router-dom";
 import * as userApi from "../api/user.api";
 import * as userReducer from "../reducer/user.reducer";
 
-import { LoginActionPropsType, RegisterActionPropsType } from "../../types/action.types";
+import { LoginActionPropsType, LogoutActionPropsType, RegisterActionPropsType } from "../../types/action.types";
 
 export const loginAction = createAsyncThunk('users/login', async (loginData: LoginActionPropsType, { dispatch }) => {
 
@@ -40,13 +40,15 @@ export const registerAction = createAsyncThunk('users/register', async (register
 
 })
 
-export const logoutAction = createAsyncThunk('users/logout', async (navigate: NavigateFunction, { dispatch }) => {
+export const logoutAction = createAsyncThunk('users/logout', async (logoutData: LogoutActionPropsType, { dispatch }) => {
 
     try {
 
         dispatch(userReducer.logout())
 
-        navigate('/')
+        logoutData.setIsMenu(false)
+    
+        logoutData.navigate('/')
 
     } catch (error) {
         console.log(error);

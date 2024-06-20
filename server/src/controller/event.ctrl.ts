@@ -5,12 +5,13 @@ import Event from '../models/event'
 import Category from '../models/category'
 import Status from '../models/status'
 import Image from '../models/image'
+import User from '../models/user'
 import Competitor from '../models/competitor'
 import Role from '../models/role'
+import Subscription from '../models/subscription'
 
 import { image_default_id, default_role, privileged_role } from "../config/config";
 
-import { EVENTS } from "../helper/mocks";
 import { cloud } from "../helper/cloud";
 import { generateId } from "../helper/encrypt";
 
@@ -135,6 +136,40 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
     const { event, description, category, status, qualifiers, amount } = req.body
 
     try {
+
+        const user = await User.findById(req.user)
+
+        if (!user) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const subscription = await Subscription.findById(user.subscription)
+
+        if (!subscription) {
+            return res.status(400).json({ message: "Subscription does not exists" })
+        }
+
+        if (subscription.hierarchy <= 1) {
+
+            const events = await Event.find()
+                .populate({
+                    path: "competitors",
+                    select: "user",
+                    populate: {
+                        path: "user",
+                        select: "nickname"
+                    }
+                }).populate({
+                    path: "image",
+                    select: "image"
+                })
+
+            const showEvents = events.filter(e => e.competitors.find(c => String(c.user._id) === req.user))
+
+            if(showEvents.length >= 5) {
+                return res.status(401).json({ message: "You cannot have more than 5 events on panel" })
+            }
+        }
 
         const categoryEvent = await Category.findOne({ category })
 
@@ -314,7 +349,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             return res.status(400).json({ message: "Role does not exists" })
         }
 
-        if (event.competitors.find(c => String(c) === req.user)) {
+        if (event.competitors.find(c => String(c.user) === req.user)) {
             return res.status(400).json({ message: "You have alraedy joined to this tournament" })
         }
 

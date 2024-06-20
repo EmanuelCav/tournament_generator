@@ -40,7 +40,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
             return res.status(400).json({ message: "Fields do not match" })
         }
 
-        const userLoggedIn = await User.findOne({ email }).select("-password -email -phone").populate("role")
+        const userLoggedIn = await User.findOne({ email }).select("-password -email -phone -subscription")
 
         if(!userLoggedIn) {
             return res.status(400).json({ message: "User does not exists" })
@@ -90,7 +90,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
 
         const userSaved = await newUser.save()
 
-        const user = await User.findById(userSaved._id).select("-password -email -phone").populate("role")
+        const user = await User.findById(userSaved._id).select("-password -email -phone -subscription")
 
         if(!user) {
             return res.status(400).json({ message: "User does not exists" })
@@ -170,7 +170,7 @@ export const generateUser = async (req: Request, res: Response): Promise<Respons
 
         const userSaved = await newUser.save()
 
-        const user = await User.findById(userSaved._id).select("-password -email -phone").populate("role")
+        const user = await User.findById(userSaved._id).select("-password -email -phone -subscription")
 
         if(!user) {
             return res.status(400).json({ message: "User does not exists" })
@@ -195,7 +195,7 @@ export const autoLogin = async (req: Request, res: Response): Promise<Response> 
 
     try {
 
-        const user = await User.findOne({ nickname }).select("-password -phone -email").populate("role")
+        const user = await User.findOne({ nickname }).select("-password -phone -email -subscription")
 
         if(!user) {
             return res.status(400).json({ message: "User does not exists" })

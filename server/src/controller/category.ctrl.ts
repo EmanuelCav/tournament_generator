@@ -2,14 +2,21 @@ import { Request, Response } from "express";
 
 import Category from '../models/category'
 import Subscription from '../models/subscription'
+import User from '../models/user'
 
 export const categories = async (req: Request, res: Response): Promise<Response> => {
 
     try {
 
-        const categories = await Category.find()
+        const user = await User.findById(req.user).populate("subscription")
 
-        return res.status(200).json(categories)
+        if(!user) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const categories = await Category.find().populate("subscription")
+
+        return res.status(200).json(categories.filter(c => c.subscription.hierarchy <= user.subscription.hierarchy))
 
     } catch (error) {
         throw error

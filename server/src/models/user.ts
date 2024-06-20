@@ -38,6 +38,11 @@ const userSchema = new Schema({
         default: false
     },
 
+    subscription: {
+        type: Types.ObjectId,
+        ref: 'Subscription'
+    },
+
     password: {
         type: String,
         required: true,

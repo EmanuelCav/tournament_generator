@@ -5,10 +5,10 @@ import Team from '../models/team'
 import Event from '../models/event'
 import Competitor from '../models/competitor'
 import Image from '../models/image'
+import User from '../models/user'
+import Subscription from '../models/subscription'
 
 import { image_default_id } from "../config/config";
-
-import { ITeam } from "../interface/Event";
 
 import { cloud } from "../helper/cloud";
 
@@ -23,6 +23,24 @@ export const addTeam = async (req: Request, res: Response): Promise<Response> =>
 
         if (!event) {
             return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        const userLoggedIn = await User.findById(req.user)
+
+        if (!userLoggedIn) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const subscription = await Subscription.findById(userLoggedIn.subscription)
+
+        if(!subscription) {
+            return res.status(400).json({ message: "Subscription does not exists" })
+        }
+
+        if(subscription.hierarchy <= 1) {
+            if(event.teams.length >= 32) {
+                return res.status(400).json({ message: "You cannot add more than 32 teams" })
+            }
         }
 
         const teams = await Team.find({

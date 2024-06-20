@@ -25,7 +25,7 @@ const Players = ({ players, event, user, dispatch }: PlayersPropsType) => {
 
   useEffect(() => {
     getAllPlayers()
-  }, [filterPlayers])
+  }, [filterPlayers, event.event])
 
   return (
     <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4 }}>

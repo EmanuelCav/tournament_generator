@@ -26,7 +26,7 @@ const Events = () => {
     return (
         <Box>
             <JoinEvent dispatch={dispatch} navigate={navigate} user={user.user} />
-            <PublicEvents events={event.events} navigate={navigate} dispatch={dispatch} user={user.user} text='JOIN' />
+            <PublicEvents events={event.events.filter(e => !e.competitors?.find(c => c.user._id === user.user.user?._id!))} navigate={navigate} dispatch={dispatch} user={user.user} text='JOIN' />
         </Box>
     )
 }

@@ -1,5 +1,5 @@
 import { Types, Document } from 'mongoose'
-import { ICompetitor} from './User';
+import { ICompetitor, ISubscription} from './User';
 
 export interface IImage extends Document {
     _id: Types.ObjectId;
@@ -56,7 +56,7 @@ interface ITeamMatch {
 export interface ICategory extends Document {
     _id: Types.ObjectId;
     category: string;
-    subscription: Types.ObjectId;
+    subscription: ISubscription;
     created_at: NativeDate;
     updated_at: NativeDate;
 }
