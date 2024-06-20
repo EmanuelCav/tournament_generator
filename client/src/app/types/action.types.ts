@@ -110,6 +110,7 @@ export type GenerateMatchsActionPropsType = {
     round: string;
     category: string;
     token: string;
+    singleFinal: string;
 }
 
 export type JoinTeamActionPropsType = {

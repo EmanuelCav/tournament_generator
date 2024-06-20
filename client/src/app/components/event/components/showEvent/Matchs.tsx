@@ -8,11 +8,14 @@ import { MatchsPropsType } from "../../../../types/event.types"
 import { eliminationMatch } from "../../../../helper/functions"
 
 const Matchs = ({ event, handleAddReferee, handleAddScore, handleUpdateSchedule, handleUpdateCampus, isAdmin }: MatchsPropsType) => {
+
+  const orderMatchdays = [...event.matchs!].sort((a, b) => b.length - a.length)
+
   return (
     <TableContainer component={Paper} sx={{ mt: 2 }}>
       <Table>
         <HeadMatchs />
-        {event.matchs!.map((fixture: IMatch[], index: number) => (
+        {orderMatchdays!.map((fixture: IMatch[], index: number) => (
           <TableBody key={index}>
             {
               event.category?.category === "MATCHDAYS" && <Typography variant="h6" m={1} width={'100%'} color={'#33cc33'}>Matchday {index + 1}</Typography>

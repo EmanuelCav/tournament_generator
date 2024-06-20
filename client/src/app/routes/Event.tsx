@@ -312,6 +312,9 @@ const Event = () => {
                             {
                                 event.event.category?.category === "ELIMINATION" && <EliminationTable event={event.event} />
                             }
+                            {
+                                event.event.category?.category === "SWISS" && <EliminationTable event={event.event} />
+                            }
                         </>
                     )
                 }

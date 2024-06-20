@@ -28,7 +28,7 @@ export const generateMatchdays = (shuffleArr: any[], round: string): IMatch[][] 
     return matchdays
 }
 
-export const generateElimination = (shuffleArr: any[], round: string): IMatch[][] => {
+export const generateElimination = (shuffleArr: any[], round: string, singleFinal: string): IMatch[][] => {
 
     let matchdays: IMatch[][] = []
 
@@ -36,6 +36,10 @@ export const generateElimination = (shuffleArr: any[], round: string): IMatch[][
     let n = (round === "trip" ? shuffleArr.length : Math.floor(shuffleArr.length / 2))
 
     for (let t = 0; t < rounds; t++) {
+
+        if ((t === rounds - 1) && (round === "trip") && (singleFinal === "single")) {
+            n = 1
+        }
 
         let matchs: IMatch[] = []
 
@@ -76,7 +80,95 @@ export const generateElimination = (shuffleArr: any[], round: string): IMatch[][
 
 }
 
-export const generateGroups = (shuffleArr: any[], amountOfGroups: number, round: string) => {
+export const generateSwiss = (shuffleArr: any[], round: string, singleFinal: string) => {
+
+    let matchdays: IMatch[][] = []
+    let lossOfLossMatchs: IMatch[][] = []
+
+    let rounds = Math.log(shuffleArr.length) / Math.log(2)
+    let n = (round === "trip" ? shuffleArr.length : Math.floor(shuffleArr.length / 2))
+
+    for (let t = 0; t < rounds; t++) {
+
+        let matchs: IMatch[] = []
+        let lossMatchs: IMatch[] = []
+
+        if ((t === rounds - 1) && (round === "trip") && (singleFinal === "single")) {
+            n = 1
+        }
+
+        for (let i = 0; i < n; i++) {
+            if (t === 0) {
+                matchs.push({
+                    local: {
+                        name: round === "trip" ? i < (shuffleArr.length / 2) ? shuffleArr[i].name : shuffleArr[shuffleArr.length - 1 - i + (shuffleArr.length / 2)].name : shuffleArr[i].name,
+                        logo: round === "trip" ? i < (shuffleArr.length / 2) ? shuffleArr[i].logo.image : shuffleArr[shuffleArr.length - 1 - i + (shuffleArr.length / 2)].logo.image : shuffleArr[i].logo.image
+                    },
+                    visitant: {
+                        name: round === "trip" ? i < (shuffleArr.length / 2) ? shuffleArr[shuffleArr.length - 1 - i].name : shuffleArr[i - (shuffleArr.length / 2)].name : shuffleArr[shuffleArr.length - 1 - i].name,
+                        logo: round === "trip" ? i < (shuffleArr.length / 2) ? shuffleArr[shuffleArr.length - 1 - i].logo.image : shuffleArr[i - (shuffleArr.length / 2)].logo.image : shuffleArr[shuffleArr.length - 1 - i].logo.image
+                    },
+                    isMatchTrip: round === "trip" ? i < (shuffleArr.length / 2) ? false : round === "trip" : round === "trip"
+                })
+            } else {
+                matchs.push({
+                    local: {
+                        name: "Not defined",
+                        logo: "https://res.cloudinary.com/ddfm1znoo/image/upload/v1717421190/_715ec024-a870-44b1-9553-5499482553f9_ahgxhu.jpg"
+                    },
+                    visitant: {
+                        name: "Not defined",
+                        logo: "https://res.cloudinary.com/ddfm1znoo/image/upload/v1717421190/_715ec024-a870-44b1-9553-5499482553f9_ahgxhu.jpg"
+                    },
+                    isMatchTrip: round === "trip" ? i < (n / 2) ? false : round === "trip" : round === "trip"
+                })
+
+                lossMatchs.push({
+                    local: {
+                        name: "Not defined",
+                        logo: "https://res.cloudinary.com/ddfm1znoo/image/upload/v1717421190/_715ec024-a870-44b1-9553-5499482553f9_ahgxhu.jpg"
+                    },
+                    visitant: {
+                        name: "Not defined",
+                        logo: "https://res.cloudinary.com/ddfm1znoo/image/upload/v1717421190/_715ec024-a870-44b1-9553-5499482553f9_ahgxhu.jpg"
+                    },
+                    isMatchTrip: round === "trip" ? i < (n / 2) ? false : round === "trip" : round === "trip"
+                })
+
+                for (let j = 0; j < Math.floor(n / 2); j++) {
+                    lossOfLossMatchs.push([{
+                        local: {
+                            name: "Not defined",
+                            logo: "https://res.cloudinary.com/ddfm1znoo/image/upload/v1717421190/_715ec024-a870-44b1-9553-5499482553f9_ahgxhu.jpg"
+                        },
+                        visitant: {
+                            name: "Not defined",
+                            logo: "https://res.cloudinary.com/ddfm1znoo/image/upload/v1717421190/_715ec024-a870-44b1-9553-5499482553f9_ahgxhu.jpg"
+                        },
+                        isMatchTrip: round === "trip" ? i < (n / 2) ? false : round === "trip" : round === "trip"
+                    }])
+                }
+            }
+        }
+
+        n /= 2
+
+        matchdays.unshift(lossMatchs)
+        matchdays.push(matchs)
+    }
+
+    let count = 2
+
+    for (let t = 0; t < lossOfLossMatchs.length; t++) {
+        matchdays.splice(t + count, 0, lossOfLossMatchs[t])
+        count += 2
+    }
+
+    return matchdays
+
+}
+
+export const generateGroups = (shuffleArr: any[], amountOfGroups: number, round: string, singleFinal: string) => {
 
     let matchdays: IMatch[][] = []
     let index: number = 0

@@ -248,7 +248,7 @@ export const generateMatchsAction = createAsyncThunk('events/generateMatchs', as
 
     try {
 
-        const { data } = await eventApi.generateMatchApi(eventData.id, eventData.category, eventData.round, eventData.token)
+        const { data } = await eventApi.generateMatchApi(eventData.id, eventData.category, eventData.round, eventData.singleFinal, eventData.token)
 
         dispatch(eventReducer.getEvent(data))
 

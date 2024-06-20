@@ -26,6 +26,7 @@ export interface IEvent extends Document {
     done: boolean;
     isRoundTrip: boolean;
     group: IGroup; 
+    champion: Types.ObjectId;
     created_at: NativeDate;
     updated_at: NativeDate;
 }

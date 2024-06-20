@@ -21,6 +21,7 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
   const [isAddCampus, setIsAddCampus] = useState<boolean>(false)
 
   const [isRoundTrip, setIsRoundTrip] = useState<boolean>(event.isRoundTrip!)
+  const [isSingleFinal, setIsSingleFinal] = useState<boolean>(true)
 
   const [matchData, setMatchData] = useState<IMatch | null>(null)
 
@@ -29,9 +30,14 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
       id: event._id!,
       token: user.token!,
       category: event.category?.category!,
-      round: isRoundTrip ? 'trip' : 'one'
+      round: isRoundTrip ? 'trip' : 'one',
+      singleFinal: isSingleFinal ? 'single' : 'trip'
     }))
   }
+
+  const handleSingleFinal = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsSingleFinal(event.target.checked);
+  };
 
   const handleRoundTrip = (event: ChangeEvent<HTMLInputElement>) => {
     setIsRoundTrip(event.target.checked);
@@ -77,6 +83,10 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
       </Box>
       {
         event.admin === user.user?._id && <FormControlLabel control={<Switch disabled={event.done} checked={isRoundTrip} onChange={handleRoundTrip} />} label="Round trip" />
+      }
+      {
+        event.admin === user.user?._id && isRoundTrip && (event.category?.category === "GROUP STAGE" || event.category?.category === "SWISS" || event.category?.category === "ELIMINATION") && 
+        <FormControlLabel control={<Switch disabled={event.done} checked={isSingleFinal} onChange={handleSingleFinal} />} label="Single final" />
       }
       {
         event.matchs?.length! > 0 ? (

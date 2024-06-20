@@ -96,6 +96,11 @@ const eventSchema = new Schema({
     group: {
         qualifiers: Number,
         amount: Number
+    },
+
+    champion: {
+        type: Types.ObjectId,
+        ref: 'Team'
     }
 
 }, {

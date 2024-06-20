@@ -5,12 +5,12 @@ import Referee from '../models/referee';
 import Team from '../models/team';
 import Campus from '../models/campus';
 
-import { generateElimination, generateGroups, generateMatchdays, shuffle } from "../helper/functions";
+import { generateElimination, generateGroups, generateMatchdays, generateSwiss, shuffle } from "../helper/functions";
 
 export const generateMatch = async (req: Request, res: Response): Promise<Response> => {
 
     const { id } = req.params
-    const { category, round } = req.query
+    const { category, round, singleFinal } = req.query
 
     try {
 
@@ -37,11 +37,11 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
         if (category === "MATCHDAYS") {
             matchdays = generateMatchdays(shuffleArr, String(round))
         } else if (category === "ELIMINATION") {
-            matchdays = generateElimination(shuffleArr, String(round))
+            matchdays = generateElimination(shuffleArr, String(round), String(singleFinal))
         } else if (category === "SWISS") {
-            matchdays = generateElimination(shuffleArr, String(round))
+            matchdays = generateSwiss(shuffleArr, String(round), String(singleFinal))
         } else {
-            matchdays = generateGroups(shuffleArr, event.group.amount, String(round))
+            matchdays = generateGroups(shuffleArr, event.group.amount, String(round), String(singleFinal))
         }
 
         const showEvent = await Event.findByIdAndUpdate(id, {
@@ -445,7 +445,7 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
                         new: true
                     })
 
-                    if (String(category) === 'ELIMINATION') {
+                    if (String(category) === 'ELIMINATION' || String(category) === 'SWISS') {
                         
                         if (i < event.matchs.length - 1) {
                             
