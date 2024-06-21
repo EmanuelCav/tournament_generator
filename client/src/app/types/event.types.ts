@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 
-import { ICampus, ICompetitor, IEvent, IMatch, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
+import { ICampus, IComment, ICompetitor, IEvent, IMatch, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
 import { IUser, IUserInfo } from "../interface/User";
 
 export type EventNavigationPropsType = {
@@ -282,4 +282,14 @@ export type SendMessagesPropsType = {
     event: IEvent;
     user: IUserInfo;
     dispatch: Dispatch<any>;
+}
+
+export type ShowMessagesPropsType = {
+    user: IUserInfo;
+    event: IEvent;
+}
+
+export type CommentPropsType = {
+    comment: IComment;
+    user: IUserInfo;
 }
