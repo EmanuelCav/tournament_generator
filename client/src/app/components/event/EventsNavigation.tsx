@@ -8,10 +8,11 @@ import SportsIcon from '@mui/icons-material/Sports';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import SettingsIcon from '@mui/icons-material/Settings';
 import StadiumIcon from '@mui/icons-material/Stadium';
+import SmsIcon from '@mui/icons-material/Sms';
 
 import EventNavigation from './components/eventsNavigation/EventNavigation'
 
-import { matchdays, teams, people, referees, players, settings, positions, campus } from '../../server/reducer/get.reducer';
+import { matchdays, teams, people, referees, players, settings, positions, campus, chat } from '../../server/reducer/get.reducer';
 
 import { EventsNavigationPropsType } from '../../types/event.types';
 
@@ -49,6 +50,10 @@ const EventsNavigation = ({ dispatch, get, event, user }: EventsNavigationPropsT
     dispatch(campus(true))
   }
 
+  const handleChat = () => {
+    dispatch(chat(true))
+  }
+
   return (
     <Box width='20%' py={2} position={'relative'}>
       <List sx={{ width: 225, position: 'fixed', zIndex: 4 }}>
@@ -59,6 +64,7 @@ const EventsNavigation = ({ dispatch, get, event, user }: EventsNavigationPropsT
         <EventNavigation Icon={GroupsIcon} isHere={get.isPeople} text='People' func={handlePeople} />
         <EventNavigation Icon={ShieldIcon} isHere={get.isTeams} text='Teams' func={handleTeams} />
         <EventNavigation Icon={StadiumIcon} isHere={get.isCampus} text='Campus' func={handleCampus} />
+        <EventNavigation Icon={SmsIcon} isHere={get.isChat} text='Chat' func={handleChat} />
         {
           user._id === event.admin && <EventNavigation Icon={SettingsIcon} isHere={get.isSettings} text='Settings' func={handleSettings} />
         }

@@ -22,6 +22,7 @@ export interface IEvent extends Document {
     referees: Types.ObjectId[];
     teams: ITeam[];
     campus: Types.ObjectId[];
+    comments: Types.ObjectId[];
     matchs: IMatch[][];
     done: boolean;
     isRoundTrip: boolean;
@@ -95,6 +96,7 @@ export interface ITeam extends Document {
     against: number;
     status: boolean;
     players: IPlayer[];
+    comments: Types.ObjectId[];
     competitors: Types.ObjectId[];
     campus: Types.ObjectId;
     pot: number;
@@ -112,6 +114,8 @@ export interface IStatus extends Document {
 export interface IComment extends Document {
     _id: Types.ObjectId;
     comment: string;
+    user: Types.ObjectId;
+    event: Types.ObjectId;
     created_at: NativeDate;
     updated_at: NativeDate;
 }
@@ -122,4 +126,10 @@ export interface ICampus extends Document {
     event: Types.ObjectId;
     created_at: NativeDate;
     updated_at: NativeDate;
+}
+
+export interface ICommentFetch {
+    id: string;
+    comment: string;
+    token: string;
 }

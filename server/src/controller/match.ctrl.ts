@@ -84,6 +84,13 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)
@@ -167,6 +174,13 @@ export const restartMatch = async (req: Request, res: Response): Promise<Respons
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)
@@ -246,6 +260,13 @@ export const addRefereeMatch = async (req: Request, res: Response): Promise<Resp
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)
@@ -324,6 +345,13 @@ export const addCampusMatch = async (req: Request, res: Response): Promise<Respo
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)
@@ -549,6 +577,13 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)
@@ -622,6 +657,13 @@ export const updateDate = async (req: Request, res: Response): Promise<Response>
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)

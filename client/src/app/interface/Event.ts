@@ -25,10 +25,20 @@ export interface IEvent {
     campus?: ICampus[];
     matchs?: IMatch[][];
     referees?: IReferee[];
+    comments?: IComment[];
     isRoundTrip?: boolean;
     group?: IGroup;
     createdAt?: string;
     updatedAt?: string;
+}
+
+export interface IComment {
+    _id: string;
+    comment: string;
+    user: IUser;
+    event: IEvent;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface IGroup {
@@ -151,6 +161,7 @@ export interface IReducerGet {
     isReferees: boolean;
     isPlayers: boolean;
     isSettings: boolean;
+    isChat: boolean;
     isCampus: boolean;
 }
 
@@ -174,4 +185,8 @@ export interface IPlayerData {
     assists: number;
     cards: number;
     serialCards: number;
+}
+
+export interface ICreateComment {
+    comment: string;
 }

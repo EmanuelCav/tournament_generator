@@ -6,7 +6,6 @@ import auth from '../middleware/auth/auth'
 
 const router = Router()
 
-router.patch('/comments/events/:id', auth, commentCtrl.createComment)
-router.delete('/comments/:id', auth, commentCtrl.removeComment)
+router.post('/comments/events/:id', auth, commentCtrl.createComment)
 
 export default router

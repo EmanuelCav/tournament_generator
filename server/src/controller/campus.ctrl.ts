@@ -14,7 +14,7 @@ export const campus = async (req: Request, res: Response): Promise<Response> => 
 
         const event = await Event.findById(id)
 
-        if(!event) {
+        if (!event) {
             return res.status(400).json({ message: "Event does not exists" })
         }
 
@@ -99,6 +99,13 @@ export const createCampus = async (req: Request, res: Response): Promise<Respons
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)
@@ -178,6 +185,13 @@ export const removeCampus = async (req: Request, res: Response): Promise<Respons
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         await Campus.findByIdAndDelete(id)
@@ -258,6 +272,13 @@ export const updateCampus = async (req: Request, res: Response): Promise<Respons
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)

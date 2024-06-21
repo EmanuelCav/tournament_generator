@@ -1,14 +1,22 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 
 import { IComment } from '../interface/Event'
 
 const commentSchema = new Schema({
 
-    status: {
+    comment: {
         type: String,
-        required: true,
-        trim: true,
-        unique: true
+        trim: true
+    },
+
+    user: {
+        type: Types.ObjectId,
+        ref: 'User'
+    },
+
+    event: {
+        type: Types.ObjectId,
+        ref: 'Event'
     }
 
 }, {

@@ -11,6 +11,7 @@ const initialState: IReducerGet = {
     isReferees: false,
     isPlayers: false,
     isSettings: false,
+    isChat: false,
     isCampus: false
 }
 
@@ -26,6 +27,7 @@ const getSlice = createSlice({
             state.isPlayers = false
             state.isPositions = false
             state.isSettings = false
+            state.isChat = false
             state.isCampus = false
         },
         teams: (state, action: PayloadAction<boolean>) => {
@@ -36,6 +38,7 @@ const getSlice = createSlice({
             state.isPlayers = false
             state.isPositions = false
             state.isSettings = false
+            state.isChat = false
             state.isCampus = false
         },
         people: (state, action: PayloadAction<boolean>) => {
@@ -46,6 +49,7 @@ const getSlice = createSlice({
             state.isPlayers = false
             state.isPositions = false
             state.isSettings = false
+            state.isChat = false
             state.isCampus = false
         },
         referees: (state, action: PayloadAction<boolean>) => {
@@ -56,6 +60,7 @@ const getSlice = createSlice({
             state.isPlayers = false
             state.isPositions = false
             state.isSettings = false
+            state.isChat = false
             state.isCampus = false
         },
         players: (state, action: PayloadAction<boolean>) => {
@@ -66,6 +71,7 @@ const getSlice = createSlice({
             state.isMatchdays = false
             state.isPositions = false
             state.isSettings = false
+            state.isChat = false
             state.isCampus = false
         },
         positions: (state, action: PayloadAction<boolean>) => {
@@ -75,7 +81,8 @@ const getSlice = createSlice({
             state.isTeams = false
             state.isMatchdays = false
             state.isPlayers = false
-            state.isSettings = false
+            state.isSettings = 
+            state.isChat = false
             state.isCampus = false
         },
         settings: (state, action: PayloadAction<boolean>) => {
@@ -86,10 +93,23 @@ const getSlice = createSlice({
             state.isMatchdays = false
             state.isPlayers = false
             state.isPositions = false
+            state.isChat = false
             state.isCampus = false
         },
         campus: (state, action: PayloadAction<boolean>) => {
             state.isCampus = action.payload
+            state.isReferees = false
+            state.isPeople = false
+            state.isTeams = false
+            state.isMatchdays = false
+            state.isPlayers = false
+            state.isPositions = false
+            state.isChat = false
+            state.isSettings = false
+        },
+        chat: (state, action: PayloadAction<boolean>) => {
+            state.isChat = action.payload
+            state.isCampus = false
             state.isReferees = false
             state.isPeople = false
             state.isTeams = false
@@ -102,6 +122,6 @@ const getSlice = createSlice({
 
 })
 
-export const { matchdays, teams, people, referees, players, positions, settings, campus } = getSlice.actions
+export const { matchdays, teams, people, referees, players, positions, settings, campus, chat } = getSlice.actions
 
 export default getSlice.reducer

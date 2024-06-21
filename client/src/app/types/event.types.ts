@@ -266,8 +266,20 @@ export type PositionsPropsType = {
 }
 
 export type PlayersPropsType = {
-    dispatch: Dispatch<any>;
     players: IPlayer[];
+    dispatch: Dispatch<any>;
     event: IEvent;
     user: IUserInfo;
+}
+
+export type ChatEventPropsType = {
+    user: IUserInfo;
+    event: IEvent;
+    dispatch: Dispatch<any>;
+}
+
+export type SendMessagesPropsType = {
+    event: IEvent;
+    user: IUserInfo;
+    dispatch: Dispatch<any>;
 }

@@ -117,6 +117,13 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         if (!event) {
@@ -289,6 +296,13 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         if (!eventTeams) {
@@ -400,6 +414,13 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(eventCompetitor)
@@ -478,6 +499,13 @@ export const updateRole = async (req: Request, res: Response): Promise<Response>
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)
@@ -549,6 +577,13 @@ export const removeCompetitor = async (req: Request, res: Response): Promise<Res
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         await Competitor.findByIdAndDelete(cid)
@@ -674,6 +709,13 @@ export const updateEvent = async (req: Request, res: Response): Promise<Response
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json({

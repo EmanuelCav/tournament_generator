@@ -3,12 +3,15 @@ import dotenv from 'dotenv'
 import morgan from 'morgan'
 import cors from 'cors'
 import path from 'path'
+import http from 'http';
+import { Server } from 'socket.io';
 
 dotenv.config()
 
 import { port } from "./config/config";
 
 import './database/database'
+import socketConnect from './socket';
 
 import categoryRoute from './routes/category.routes'
 import commentRoute from './routes/comment.routes'
@@ -25,6 +28,13 @@ import campusRoute from './routes/campus.routes'
 import subscriptionRoute from './routes/subscription.routes'
 
 const app = express()
+
+const server = http.createServer(app)
+const io = new Server(server, {
+    cors: {
+        origin: "*"
+    }
+})
 
 app.set('port', port)
 
@@ -49,6 +59,8 @@ app.use(subscriptionRoute)
 
 app.use(express.static(path.join(__dirname, "../public")))
 
-app.listen(app.get('port'), () => {
+socketConnect(io)
+
+server.listen(app.get('port'), () => {
     console.log("Server on port", app.get('port'));
 })

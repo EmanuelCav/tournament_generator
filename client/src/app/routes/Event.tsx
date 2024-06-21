@@ -20,6 +20,7 @@ import EliminationTable from '../components/event/EliminationTable';
 import ShowCampus from '../components/event/ShowCampus';
 import FormAddCampus from '../components/event/FormAddCampus';
 import FormEditPlayerData from '../components/event/FormEditPlayerData';
+import ChatEvent from '../components/event/ChatEvent';
 
 import { eventAction, joinTeamAction, removeCampusAction, removeCompetitorAction, removeEventAction, removePlayerAction, removeRefereeAction, removeTeamAction } from '../server/actions/event.actions';
 import { selector } from '../server/selector';
@@ -332,6 +333,9 @@ const Event = () => {
                 }
                 {
                     get.isCampus && <ShowCampus event={event.event} user={user.user.user!} handleAddCampus={handleAddCampus} handleSure={handleSureRemoveCampus} handleEditCampus={handleEditCampus} />
+                }
+                {
+                    get.isChat && <ChatEvent event={event.event} user={user.user} dispatch={dispatch} />
                 }
             </Box>
         </Container>

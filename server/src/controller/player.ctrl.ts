@@ -163,6 +163,13 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)
@@ -248,6 +255,13 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         await Player.findByIdAndDelete(pid)
@@ -329,6 +343,13 @@ export const updatePlayer = async (req: Request, res: Response): Promise<Respons
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)
@@ -410,6 +431,13 @@ export const updatePlayerData = async (req: Request, res: Response): Promise<Res
             }).populate({
                 path: "image",
                 select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
             })
 
         return res.status(200).json(showEvent)

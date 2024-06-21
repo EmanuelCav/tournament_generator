@@ -60,6 +60,11 @@ const teamSchema = new Schema({
         ref: 'Player'
     }],
 
+    comments: [{
+        type: Types.ObjectId,
+        ref: 'Comment'
+    }],
+
     status: {
         type: Boolean,
         default: false
