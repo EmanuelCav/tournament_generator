@@ -307,7 +307,7 @@ const Event = () => {
                     get.isPositions && (
                         <>
                             {
-                                event.event.category?.category === "MATCHDAYS" && <Positions teams={statistic.teams} dispatch={dispatch} event={event.event} user={user.user} />
+                                event.event.category?.category === "FIXTURE" && <Positions teams={statistic.teams} dispatch={dispatch} event={event.event} user={user.user} />
                             }
                             {
                                 event.event.category?.category === "ELIMINATION" && <EliminationTable event={event.event} />

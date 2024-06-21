@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { NavigateFunction } from "react-router-dom";
 
 import * as userApi from "../api/user.api";
 import * as userReducer from "../reducer/user.reducer";
 
 import { LoginActionPropsType, LogoutActionPropsType, RegisterActionPropsType } from "../../types/action.types";
+
+import { dangerMessage } from "../../helper/message";
 
 export const loginAction = createAsyncThunk('users/login', async (loginData: LoginActionPropsType, { dispatch }) => {
 
@@ -16,8 +17,8 @@ export const loginAction = createAsyncThunk('users/login', async (loginData: Log
 
         loginData.navigate('/')
 
-    } catch (error) {
-        console.log(error);
+    } catch (error: any) {
+        dangerMessage(error.response.data[0].message)
     }
 
 })
@@ -34,8 +35,8 @@ export const registerAction = createAsyncThunk('users/register', async (register
 
         registerData.navigate('/')
 
-    } catch (error) {
-        console.log(error);
+    } catch (error: any) {
+        dangerMessage(error.response.data[0].message)
     }
 
 })

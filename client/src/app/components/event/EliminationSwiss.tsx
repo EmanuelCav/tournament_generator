@@ -7,7 +7,7 @@ import { IEvent, IMatch } from "../../interface/Event"
 const EliminationSwiss = ({ event }: { event: IEvent }) => {
 
   return (
-    <TableContainer component={Paper} sx={{ mt: 2, ml: 1 }}>
+    <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4, mt: 2, ml: 1 }}>
       <Table>
 
         <TableBody>

@@ -34,7 +34,7 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
 
         let matchdays;
 
-        if (category === "MATCHDAYS") {
+        if (category === "FIXTURE") {
             matchdays = generateMatchdays(shuffleArr, String(round))
         } else if (category === "ELIMINATION") {
             matchdays = generateElimination(shuffleArr, String(round), String(singleFinal))

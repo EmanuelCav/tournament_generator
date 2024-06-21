@@ -8,7 +8,7 @@ import { IEvent, IMatch } from "../../interface/Event"
 const EliminationTable = ({ event }: { event: IEvent }) => {
 
   return (
-    <TableContainer component={Paper} sx={{ mt: 2, ml: 1 }}>
+    <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4, mt: 2, ml: 1 }}>
       <Table>
         <HeadEliminationTable n={event.matchs?.length! > 0 ? event.isRoundTrip ? Math.log(event.matchs![0].length) / Math.log(2) : Math.log(event.matchs![0].length * 2) / Math.log(2) : 0} />
         <TableBody>

@@ -12,5 +12,6 @@ const router = Router()
 router.get('/categories', auth, categoriesCtrl.categories)
 router.post('/categories', [auth, admin], categoryValid, categoriesCtrl.createCategory)
 router.delete('/categories/:id', [auth, admin], categoriesCtrl.removeCategory)
+router.put('/categories/:id', [auth, admin], categoriesCtrl.updateCategory)
 
 export default router

@@ -10,7 +10,7 @@ const Cards = () => {
 
   return (
     <Box width='100%' display={'flex'} justifyContent={'space-between'} alignItems={'center'} flexWrap={'wrap'}>
-      <CardInfo text="Matchdays" Icon={CalendarMonthIcon}  />
+      <CardInfo text="Fixture" Icon={CalendarMonthIcon}  />
       <CardInfo text="Elimination" Icon={AccountTreeIcon} />
       <CardInfo text="Group Stage" Icon={DatasetIcon} />
       <CardInfo text="Swiss Format" Icon={CompareArrowsIcon} />

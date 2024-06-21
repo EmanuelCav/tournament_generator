@@ -28,7 +28,7 @@ const Players = ({ players, event, user, dispatch }: PlayersPropsType) => {
   }, [filterPlayers, event.event])
 
   return (
-    <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4 }}>
+    <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4, mt: 2, ml: 1 }}>
       <Table>
         <HeadPlayers handleFilterPlayers={handleFilterPlayers} />
         <TableBody>

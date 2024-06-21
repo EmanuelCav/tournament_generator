@@ -337,7 +337,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
 
     try {
 
-        const event = await Event.findOne({ id })
+        const event = await Event.findOne({ id }).populate("competitors")
 
         if (!event) {
             return res.status(400).json({ message: "Event does not exists" })

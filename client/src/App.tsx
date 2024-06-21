@@ -3,6 +3,8 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import { Box } from "@mui/material";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Header from "./app/components/header/Header";
 import Home from "./app/routes/Home";
@@ -24,6 +26,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ToastContainer limit={1} />
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
           <Loading />

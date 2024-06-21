@@ -18,7 +18,7 @@ const Matchs = ({ event, handleAddReferee, handleAddScore, handleUpdateSchedule,
         {orderMatchdays!.map((fixture: IMatch[], index: number) => (
           <TableBody key={index}>
             {
-              event.category?.category === "MATCHDAYS" && <Typography variant="h6" m={1} width={'100%'} color={'#33cc33'}>Matchday {index + 1}</Typography>
+              event.category?.category === "FIXTURE" && <Typography variant="h6" m={1} width={'100%'} color={'#33cc33'}>Matchday {index + 1}</Typography>
             }
             {
               event.category?.category === "ELIMINATION" && <Typography variant="h6" m={1} width={'100%'} color={'#33cc33'}>

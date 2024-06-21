@@ -16,7 +16,7 @@ const FormEvent = ({ dispatch, navigate, user }: FormEventPropsType) => {
     const handleSumbit = (e: FE<HTMLFormElement>) => {
         e.preventDefault()
 
-        if(!user.token) {
+        if (!user.token) {
             navigate('/auth')
             return
         }
@@ -46,6 +46,8 @@ const FormEvent = ({ dispatch, navigate, user }: FormEventPropsType) => {
                         },
                     }}
                     onChange={handleChange}
+                    autoComplete='off'
+                    inputProps={{ maxLength: 7 }}
                 />
                 <Button
                     type="submit"

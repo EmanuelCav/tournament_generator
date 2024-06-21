@@ -50,8 +50,8 @@ const EventsNavigation = ({ dispatch, get, event, user }: EventsNavigationPropsT
   }
 
   return (
-    <Box width='20%' py={2}>
-      <List sx={{ width: '100%' }}>
+    <Box width='20%' py={2} position={'relative'}>
+      <List sx={{ width: 225, position: 'fixed', zIndex: 4 }}>
         <EventNavigation Icon={CalendarMonthIcon} isHere={get.isMatchdays} text='Matchdays' func={handleMatchdays} />
         <EventNavigation Icon={LeaderboardIcon} isHere={get.isPositions} text='Positions' func={handlePositions} />
         <EventNavigation Icon={CrisisAlertIcon} isHere={get.isPlayers} text='Players' func={handlePlayers} />

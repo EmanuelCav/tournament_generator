@@ -72,3 +72,30 @@ export const removeCategory = async (req: Request, res: Response): Promise<Respo
     }
 
 }
+
+export const updateCategory = async (req: Request, res: Response): Promise<Response> => {
+
+    const { id } = req.params
+    const { category } = req.body
+
+    try {
+
+        const categoryFound = await Category.findById(id)
+
+        if (!categoryFound) {
+            return res.status(400).json({ message: "Category does not exists" })
+        }
+
+        await Category.findByIdAndUpdate(id, {
+            category
+        }, {
+            new: true
+        })
+
+        return res.status(200).json({ message: "Category updated successfully" })
+
+    } catch (error) {
+        throw error
+    }
+
+}
