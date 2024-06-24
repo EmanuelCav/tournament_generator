@@ -3,6 +3,7 @@ import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableR
 
 import HeadPlayers from "./components/players/HeadPlayers"
 import FormStatistics from "./components/players/FormStatistics"
+import Sure from "./Sure"
 
 import { IPlayer, IStatistic } from "../../interface/Event"
 import { PlayersPropsType } from "../../types/event.types"
@@ -10,6 +11,7 @@ import { FilterPlayersKeyPropsType } from "../../types/key.types"
 
 import { playersApi } from "../../server/api/event.api"
 import { getPlayers } from "../../server/reducer/statistic.reducer"
+import { removeStatisticAction } from "../../server/actions/event.actions"
 
 const Players = ({ players, event, user, dispatch }: PlayersPropsType) => {
 
@@ -25,6 +27,20 @@ const Players = ({ players, event, user, dispatch }: PlayersPropsType) => {
     setFilterPlayers(filter)
   }
 
+  const handleSure = () => {
+    setIsRemoveStatistic(!isRemoveStatistic)
+  }
+
+  const handleRemoveStatistic = (statistic: IStatistic) => {
+    setStatisticInfo(statistic)
+    setIsRemoveStatistic(!isRemoveStatistic)
+  }
+
+  const handleEditStatistic = (statistic: IStatistic) => {
+    setStatisticInfo(statistic)
+    setIsEditStatistic(!isEditStatistic)
+  }
+
   const handleAddStatistics = () => {
     setIsAddStatistic(!isAddStatistic)
   }
@@ -32,6 +48,15 @@ const Players = ({ players, event, user, dispatch }: PlayersPropsType) => {
   const getAllPlayers = async () => {
     const { data } = await playersApi(event._id!, filterPlayers, user.token!)
     dispatch(getPlayers(data) as any)
+  }
+
+  const removeStatistic = () => {
+    dispatch(removeStatisticAction({
+      token: user.token!,
+      cid: event.competitors?.find(c => c.user._id === user.user?._id)?._id!,
+      sid: statisticInfo?._id!,
+      handleSure
+    }))
   }
 
   useEffect(() => {
@@ -43,12 +68,19 @@ const Players = ({ players, event, user, dispatch }: PlayersPropsType) => {
       {
         isAddStatistic && <FormStatistics handleAddStatistics={handleAddStatistics} event={event} dispatch={dispatch} user={user} isEdit={false} statisticInfo={statisticInfo!} setIsEditStatistic={setIsEditStatistic} />
       }
+      {
+        isRemoveStatistic && <Sure handleSure={handleSure} func={removeStatistic} text='statistic' />
+      }
+      {
+        isEditStatistic && <FormStatistics handleAddStatistics={handleAddStatistics} event={event} dispatch={dispatch} user={user} isEdit={true} statisticInfo={statisticInfo!} setIsEditStatistic={setIsEditStatistic} />
+      }
       <Button variant="contained" color="success" disabled={players.length < 1} onClick={handleAddStatistics}>Add statistic</Button>
       {
         players.length < 1 && <Typography color="#cc3333" variant="h6" my={2}>Create a player to add statistics</Typography>
       }
       <Table>
-        <HeadPlayers handleFilterPlayers={handleFilterPlayers} player={players.length > 0 ? players[0] : undefined} />
+        <HeadPlayers handleFilterPlayers={handleFilterPlayers} statistics={players.length > 0 ? players[0].statistics : []} 
+        handleRemoveStatistic={handleRemoveStatistic} handleEditStatistic={handleEditStatistic} event={event} user={user.user!} />
         <TableBody>
           {
             players.map((player: IPlayer, index: number) => {

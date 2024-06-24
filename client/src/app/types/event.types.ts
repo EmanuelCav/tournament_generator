@@ -307,5 +307,9 @@ export type FormStatisticsPropsType = {
 
 export type HeadPlayersPropsType = {
     handleFilterPlayers: (filter: FilterPlayersKeyPropsType) => void;
-    player?: IPlayer;
+    statistics: IStatistic[];
+    handleRemoveStatistic: (statistic: IStatistic) => void;
+    handleEditStatistic: (statistic: IStatistic) => void;
+    event: IEvent;
+    user: IUser;
 }

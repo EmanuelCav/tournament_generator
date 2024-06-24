@@ -472,9 +472,41 @@ export const createStatisticAction = createAsyncThunk('events/createstatistic', 
 
         const { data } = await eventApi.createStatisticApi(eventData.eid, eventData.cid, eventData.statisticData, eventData.token)
 
-        dispatch(eventReducer.getEvent(data))
+        dispatch(getPlayers(data))
 
         eventData.handleAddStatistics()
+
+    } catch (error: any) {
+        dangerMessage(error.response.data[0].message)
+    }
+
+})
+
+export const removeStatisticAction = createAsyncThunk('events/removestatistic', async (eventData: typesActionsEvent.RemoveStatisticActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.removeStatisticApi(eventData.sid, eventData.cid, eventData.token)
+
+        dispatch(getPlayers(data))
+
+        eventData.handleSure()
+
+    } catch (error: any) {
+        console.log(error);
+    }
+
+})
+
+export const updateStatisticAction = createAsyncThunk('events/updatestatistic', async (eventData: typesActionsEvent.UpdateStatisticActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.updateStatisticApi(eventData.sid, eventData.cid, eventData.statisticData, eventData.token)
+
+        dispatch(getPlayers(data))
+
+        eventData.setIsEditStatistic(false)
 
     } catch (error: any) {
         dangerMessage(error.response.data[0].message)

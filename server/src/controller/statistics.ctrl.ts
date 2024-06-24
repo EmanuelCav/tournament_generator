@@ -69,9 +69,9 @@ export const createStatistics = async (req: Request, res: Response): Promise<Res
 
         let playersEvent: IPlayer[] = []
 
-        for (let i = 0; i < event.teams.length; i++) {
-            for (let j = 0; j < event.teams[i].players.length; j++) {
-                playersEvent.push(event.teams[i].players[j])
+        for (let i = 0; i < showEvent.teams.length; i++) {
+            for (let j = 0; j < showEvent.teams[i].players.length; j++) {
+                playersEvent.push(showEvent.teams[i].players[j])
             }
         }
 
@@ -119,50 +119,36 @@ export const removeStatistics = async (req: Request, res: Response): Promise<Res
 
         const showEvent = await Event.findById(event._id).populate({
             path: "teams",
-            populate: [{
-                path: "logo",
-                select: "image"
-            }, {
+            populate: {
                 path: "players",
-                
-            }, {
-                path: "competitors",
-                populate: {
-                    path: "user",
-                    select: "nickname"
-                }
-            }]
-        }).populate({
-            path: "competitors",
-            populate: [{
-                path: "user",
-                select: "nickname"
-            }, {
-                path: "role",
-            }]
-        }).populate({
-            path: "referees",
-            select: "name"
-        }).populate("category")
-            .populate("status")
-            .populate({
-                path: "campus",
-                select: "name"
-            }).populate({
-                path: "image",
-                select: "image"
-            }).populate({
-                path: "comments",
-                select: "user comment",
-                populate: {
-                    path: "user",
-                    select: "nickname"
-                }
-            })
+                populate: [{
+                    path: "team",
+                    select: "logo",
+                    populate: {
+                        path: "logo",
+                        select: "image"
+                    }
+                }, {
+                    path: "statistics"
+                }]
+            }
+        })
+
+        if (!showEvent) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        let playersEvent: IPlayer[] = []
+
+        for (let i = 0; i < showEvent.teams.length; i++) {
+            for (let j = 0; j < showEvent.teams[i].players.length; j++) {
+                playersEvent.push(showEvent.teams[i].players[j])
+            }
+        }
 
         await Statistic.findByIdAndDelete(sid)
 
-        return res.status(200).json(showEvent)
+        return res.status(200).json(playersEvent)
 
     } catch (error) {
         throw error
@@ -207,48 +193,34 @@ export const updateStatistics = async (req: Request, res: Response): Promise<Res
 
         const showEvent = await Event.findById(event._id).populate({
             path: "teams",
-            populate: [{
-                path: "logo",
-                select: "image"
-            }, {
+            populate: {
                 path: "players",
-                
-            }, {
-                path: "competitors",
-                populate: {
-                    path: "user",
-                    select: "nickname"
-                }
-            }]
-        }).populate({
-            path: "competitors",
-            populate: [{
-                path: "user",
-                select: "nickname"
-            }, {
-                path: "role",
-            }]
-        }).populate({
-            path: "referees",
-            select: "name"
-        }).populate("category")
-            .populate("status")
-            .populate({
-                path: "campus",
-                select: "name"
-            }).populate({
-                path: "image",
-                select: "image"
-            }).populate({
-                path: "comments",
-                select: "user comment",
-                populate: {
-                    path: "user",
-                    select: "nickname"
-                }
-            })
+                populate: [{
+                    path: "team",
+                    select: "logo",
+                    populate: {
+                        path: "logo",
+                        select: "image"
+                    }
+                }, {
+                    path: "statistics"
+                }]
+            }
+        })
 
-        return res.status(200).json(showEvent)
+        if (!showEvent) {
+            return res.status(400).json({ message: "Event does not exists" })
+        }
+
+        let playersEvent: IPlayer[] = []
+
+        for (let i = 0; i < showEvent.teams.length; i++) {
+            for (let j = 0; j < showEvent.teams[i].players.length; j++) {
+                playersEvent.push(showEvent.teams[i].players[j])
+            }
+        }
+
+        return res.status(200).json(playersEvent)
 
     } catch (error) {
         throw error

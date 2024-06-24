@@ -220,3 +220,18 @@ export type CreateStatisticActionPropsType = {
     token: string;
     handleAddStatistics: () => void;
 }
+
+export type RemoveStatisticActionPropsType = {
+    sid: string;
+    cid: string;
+    token: string;
+    handleSure: () => void;
+}
+
+export type UpdateStatisticActionPropsType = {
+    sid: string;
+    cid: string;
+    statisticData: ICreateStatistic;
+    token: string;
+    setIsEditStatistic: (isEditStatistic: boolean) => void;
+}

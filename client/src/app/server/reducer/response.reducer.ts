@@ -338,6 +338,26 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.createStatisticAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(eventAction.removeStatisticAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.removeStatisticAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.removeStatisticAction.rejected, (state) => {
+            state.loading = false
+        })
+
+        builder.addCase(eventAction.updateStatisticAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.updateStatisticAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.updateStatisticAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

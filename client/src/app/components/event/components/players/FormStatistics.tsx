@@ -6,7 +6,7 @@ import CloseForm from "../../../general/CloseForm"
 import { ICreateStatistic } from "../../../../interface/Event"
 import { FormStatisticsPropsType } from "../../../../types/event.types"
 
-import { createStatisticAction } from "../../../../server/actions/event.actions"
+import { createStatisticAction, updateStatisticAction } from "../../../../server/actions/event.actions"
 
 const FormStatistics = ({ handleAddStatistics, dispatch, user, event, statisticInfo, isEdit, setIsEditStatistic }: FormStatisticsPropsType) => {
 
@@ -27,16 +27,16 @@ const FormStatistics = ({ handleAddStatistics, dispatch, user, event, statisticI
 
         e.preventDefault()
 
-        // if(isEdit) {
-        //   dispatch(updateRefereeAction({
-        //     token: user.token!,
-        //     refereeData,
-        //     cid: event.competitors?.find(c => c.user._id === user.user?._id)?._id!,
-        //     rid: refereeInfo._id,
-        //     setIsEditReferee
-        //   }))
-        //   return
-        // }
+        if (isEdit) {
+            dispatch(updateStatisticAction({
+                token: user.token!,
+                statisticData,
+                cid: event.competitors?.find(c => c.user._id === user.user?._id)?._id!,
+                sid: statisticInfo._id,
+                setIsEditStatistic
+            }))
+            return
+        }
 
         dispatch(createStatisticAction({
             token: user.token!,
