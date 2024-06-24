@@ -4,9 +4,11 @@ import User from '../models/user'
 import Role from '../models/role'
 import Subscription from '../models/subscription'
 
-import { default_role } from "../config/config";
+import { default_role, main_subscription } from "../config/config";
 
-import { compareHash, generateNumberUser, generatePassword, generateUserToken, hashText } from "../helper/encrypt";
+import { compareHash, generateEmailVerification, generateNumberUser, generatePassword, generateUserToken, hashText } from "../helper/encrypt";
+
+import { infoEmail } from "../messages/messages";
 
 export const users = async (req: Request, res: Response): Promise<Response> => {
 
@@ -30,19 +32,19 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
         const user = await User.findOne({ email })
 
-        if(!user) {
+        if (!user) {
             return res.status(400).json({ message: "Fields do not match" })
         }
 
         const comparePassword = await compareHash(password, user.password)
 
-        if(!comparePassword) {
+        if (!comparePassword) {
             return res.status(400).json({ message: "Fields do not match" })
         }
 
-        const userLoggedIn = await User.findOne({ email }).select("-password -email -phone -subscription")
+        const userLoggedIn = await User.findOne({ email }).select("-password -email -phone -subscription -status -role")
 
-        if(!userLoggedIn) {
+        if (!userLoggedIn) {
             return res.status(400).json({ message: "User does not exists" })
         }
 
@@ -67,13 +69,13 @@ export const register = async (req: Request, res: Response): Promise<Response> =
 
         const role = await Role.findOne({ role: `${default_role}` })
 
-        if(!role) {
+        if (!role) {
             return res.status(400).json({ message: "Role does not exists" })
         }
 
-        const subscription = await Subscription.findOne({ subscription: "FREE" })
+        const subscription = await Subscription.findOne({ subscription: `${main_subscription}` })
 
-        if(!subscription) {
+        if (!subscription) {
             return res.status(400).json({ message: "Subscription does not exists" })
         }
 
@@ -90,16 +92,18 @@ export const register = async (req: Request, res: Response): Promise<Response> =
 
         const userSaved = await newUser.save()
 
-        const user = await User.findById(userSaved._id).select("-password -email -phone -subscription")
+        const user = await User.findById(userSaved._id).select("-password -email -phone -subscription -status -role")
 
-        if(!user) {
+        if (!user) {
             return res.status(400).json({ message: "User does not exists" })
         }
 
-        const token = generateUserToken(user._id)
+        const token = generateEmailVerification(user._id)
+
+        await infoEmail(email)
 
         return res.status(200).json({
-            user,
+            message: "Check your email",
             token
         })
 
@@ -111,6 +115,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
 
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
 
+    const { id } = req.params
     const { fullname, nickname, email, password, role } = req.body
 
     try {
@@ -123,8 +128,14 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
             userRole = await Role.findOne({ role: `${default_role}` })
         }
 
-        if(!userRole) {
+        if (!userRole) {
             return res.status(400).json({ message: "Role does not exists" })
+        }
+
+        const subscription = await Subscription.findById(id)
+
+        if (!subscription) {
+            return res.status(400).json({ message: "Subscription does not exists" })
         }
 
         const passwordHashed = await hashText(password)
@@ -134,7 +145,9 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
             nickname,
             email,
             password: passwordHashed,
-            role: userRole._id
+            subscription: subscription._id,
+            role: userRole._id,
+            status: true
         })
 
         await newUser.save()
@@ -153,7 +166,7 @@ export const generateUser = async (req: Request, res: Response): Promise<Respons
 
         const userRole = await Role.findOne({ role: `${default_role}` })
 
-        if(!userRole) {
+        if (!userRole) {
             return res.status(400).json({ message: "Role does not exists" })
         }
 
@@ -170,9 +183,9 @@ export const generateUser = async (req: Request, res: Response): Promise<Respons
 
         const userSaved = await newUser.save()
 
-        const user = await User.findById(userSaved._id).select("-password -email -phone -subscription")
+        const user = await User.findById(userSaved._id).select("-password -email -phone -subscription -status -role")
 
-        if(!user) {
+        if (!user) {
             return res.status(400).json({ message: "User does not exists" })
         }
 
@@ -182,7 +195,7 @@ export const generateUser = async (req: Request, res: Response): Promise<Respons
             user,
             token
         })
-        
+
     } catch (error) {
         throw error
     }
@@ -195,9 +208,9 @@ export const autoLogin = async (req: Request, res: Response): Promise<Response> 
 
     try {
 
-        const user = await User.findOne({ nickname }).select("-password -phone -email -subscription")
+        const user = await User.findOne({ nickname }).select("-password -phone -email -subscription -status -role")
 
-        if(!user) {
+        if (!user) {
             return res.status(400).json({ message: "User does not exists" })
         }
 
@@ -207,7 +220,7 @@ export const autoLogin = async (req: Request, res: Response): Promise<Response> 
             user,
             token
         })
-        
+
     } catch (error) {
         throw error
     }
@@ -229,6 +242,30 @@ export const removeUser = async (req: Request, res: Response): Promise<Response>
         await User.findByIdAndDelete(id)
 
         return res.status(200).json({ message: "User removed successfully" })
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const updateStatus = async (req: Request, res: Response): Promise<Response> => {
+
+    try {
+
+        const user = await User.findById(req.verification)
+
+        if (!user) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const userUpdated = await User.findByIdAndUpdate(user._id, {
+            status: true
+        }, {
+            new: true
+        }).select("nickname")
+
+        return res.status(200).json(userUpdated)
 
     } catch (error) {
         throw error

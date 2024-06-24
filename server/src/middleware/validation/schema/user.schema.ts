@@ -12,7 +12,7 @@ export const createUserSchema = z.object({
     fullname: z.string().trim().min(3, {
         message: "Fullname field must has more than 2 characters"
     }).refine((value) => /^([\w]{3,})+\s+([\w\s]{3,})+$/i.test(value), {
-        message: "Please try to use letters to complete your fullname"
+        message: "Please try to complete a full name"
     }),
     nickname: z.string().trim().min(3, {
         message: "Nickname field must has more than 2 characters"

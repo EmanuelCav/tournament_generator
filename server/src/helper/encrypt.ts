@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { genSalt, hash, compare } from "bcryptjs";
 import { Types } from 'mongoose';
 
-import { jwt_user } from '../config/config';
+import { jwt_user, jwt_verification } from '../config/config';
 import { IEvent } from 'interface/Event';
 
 export const hashText = async (password: string): Promise<string> => {
@@ -23,6 +23,14 @@ export const generateUserToken = (id: Types.ObjectId): string => {
 
     return jwt.sign({ id }, `${jwt_user}`, {
         expiresIn: '90d'
+    })
+
+}
+
+export const generateEmailVerification = (id: Types.ObjectId): string => {
+
+    return jwt.sign({ id }, `${jwt_verification}`, {
+        expiresIn: '2h'
     })
 
 }

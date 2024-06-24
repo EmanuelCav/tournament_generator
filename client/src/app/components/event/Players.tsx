@@ -74,13 +74,16 @@ const Players = ({ players, event, user, dispatch }: PlayersPropsType) => {
       {
         isEditStatistic && <FormStatistics handleAddStatistics={handleAddStatistics} event={event} dispatch={dispatch} user={user} isEdit={true} statisticInfo={statisticInfo!} setIsEditStatistic={setIsEditStatistic} />
       }
-      <Button variant="contained" color="success" disabled={players.length < 1} onClick={handleAddStatistics}>Add statistic</Button>
+      {
+        event.competitors?.find((c) => c.user._id === user.user!._id)?.role.role === 'ADMIN' &&
+        <Button variant="contained" color="success" disabled={players.length < 1} onClick={handleAddStatistics}>Add statistic</Button>
+      }
       {
         players.length < 1 && <Typography color="#cc3333" variant="h6" my={2}>Create a player to add statistics</Typography>
       }
       <Table>
-        <HeadPlayers handleFilterPlayers={handleFilterPlayers} statistics={players.length > 0 ? players[0].statistics : []} 
-        handleRemoveStatistic={handleRemoveStatistic} handleEditStatistic={handleEditStatistic} event={event} user={user.user!} />
+        <HeadPlayers handleFilterPlayers={handleFilterPlayers} statistics={players.length > 0 ? players[0].statistics : []}
+          handleRemoveStatistic={handleRemoveStatistic} handleEditStatistic={handleEditStatistic} event={event} user={user.user!} />
         <TableBody>
           {
             players.map((player: IPlayer, index: number) => {

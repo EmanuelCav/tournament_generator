@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Box } from '@mui/material'
 
 import Info from '../components/home/Info'
@@ -15,13 +15,15 @@ import { IReducer } from '../interface/General'
 import { ISubscription } from '../interface/User'
 
 import { selector } from '../server/selector'
-import { subscriptionsApi } from '../server/api/user.api'
+import { statusApi, subscriptionsApi } from '../server/api/user.api'
+import { autoLoginAction } from '../server/actions/user.actions'
 
 const Home = () => {
 
   const user = useSelector((state: IReducer) => selector(state).user)
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [showSubscriptions, setShowSubscriptions] = useState<ISubscription[]>([])
 
@@ -37,6 +39,31 @@ const Home = () => {
     }
 
   }
+
+  const getVerification = async () => {
+
+    try {
+
+      const { data } = await statusApi(user.user.token!)
+
+      dispatch(autoLoginAction({
+        navigate,
+        nickname: data.nickname
+      }) as any)
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  useEffect(() => {
+    if (!user.isLoggedIn) {
+      if (user.user.token) {
+        getVerification()
+      }
+    }
+  }, [])
 
   useEffect(() => {
     getSubscriptions()

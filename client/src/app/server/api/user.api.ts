@@ -21,3 +21,15 @@ export const registerApi = async (userData: IRegister) => {
 export const subscriptionsApi = async () => {
     return await api.get('/subscriptions')
 }
+
+export const statusApi = async (token: string) => {
+    return await api.put("/users", null, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const autoLoginApi = async (nickname: string) => {
+    return await api.post(`/users/autologin/${nickname}`)
+}

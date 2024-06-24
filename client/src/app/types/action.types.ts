@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 
 import { ILogin, IRegister } from "../interface/User";
-import { ICreatePlayer, ICreateStatistic, ICreateTeam, IMatch, IPlayerData, ISchedule, IStatistic, ITarget, ITeam } from "../interface/Event";
+import { ICreatePlayer, ICreateStatistic, ICreateTeam, IMatch, IPlayerData, ISchedule, ITarget, ITeam } from "../interface/Event";
 
 export type LoginActionPropsType = {
     navigate: NavigateFunction;
@@ -16,6 +16,11 @@ export type RegisterActionPropsType = {
 
 export type LogoutActionPropsType = {
     setIsMenu: (isMenu: boolean) => void;
+    navigate: NavigateFunction;
+}
+
+export type AutoLoginActionPropsType = {
+    nickname: string;
     navigate: NavigateFunction;
 }
 

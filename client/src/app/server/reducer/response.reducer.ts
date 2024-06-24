@@ -358,6 +358,16 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.updateStatisticAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(userAction.autoLoginAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(userAction.autoLoginAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(userAction.autoLoginAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 
