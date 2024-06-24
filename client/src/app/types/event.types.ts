@@ -259,6 +259,15 @@ export type FormEditPlayerDataPropsType = {
     setIsEditPlayerData: (isEditPlayerData: boolean) => void;
 }
 
+export type FormPlayerDataPropsType = {
+    user: IUserInfo;
+    event: IEvent;
+    dispatch: Dispatch<any>;
+    statistic: IStatistic;
+    setIsEditValue: (isEditValue: boolean) => void;
+    setIsEditPlayerData: (isEditPlayerData: boolean) => void;
+}
+
 export type PositionsPropsType = {
     dispatch: Dispatch<any>;
     teams: ITeam[];

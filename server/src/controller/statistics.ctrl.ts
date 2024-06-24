@@ -5,8 +5,9 @@ import Statistic from '../models/statistic';
 import Player from '../models/player';
 import Competitor from '../models/competitor';
 
+import { IPlayer } from "../interface/Event";
+
 import { privileged_role } from "../config/config";
-import { IPlayer } from "interface/Event";
 
 export const createStatistics = async (req: Request, res: Response): Promise<Response> => {
 
@@ -48,20 +49,48 @@ export const createStatistics = async (req: Request, res: Response): Promise<Res
 
         const showEvent = await Event.findById(eid).populate({
             path: "teams",
-            populate: {
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
                 path: "players",
-                populate: [{
-                    path: "team",
-                    select: "logo",
-                    populate: {
-                        path: "logo",
-                        select: "image"
-                    }
-                }, {
+                populate: {
                     path: "statistics"
-                }]
-            }
-        })
+                }
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        }).populate("category")
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            })
 
         if (!showEvent) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -75,7 +104,10 @@ export const createStatistics = async (req: Request, res: Response): Promise<Res
             }
         }
 
-        return res.status(200).json(playersEvent)
+        return res.status(200).json({
+            players: playersEvent,
+            event: showEvent
+        })
 
     } catch (error) {
         throw error
@@ -119,20 +151,48 @@ export const removeStatistics = async (req: Request, res: Response): Promise<Res
 
         const showEvent = await Event.findById(event._id).populate({
             path: "teams",
-            populate: {
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
                 path: "players",
-                populate: [{
-                    path: "team",
-                    select: "logo",
-                    populate: {
-                        path: "logo",
-                        select: "image"
-                    }
-                }, {
+                populate: {
                     path: "statistics"
-                }]
-            }
-        })
+                }
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        }).populate("category")
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            })
 
         if (!showEvent) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -148,7 +208,10 @@ export const removeStatistics = async (req: Request, res: Response): Promise<Res
 
         await Statistic.findByIdAndDelete(sid)
 
-        return res.status(200).json(playersEvent)
+        return res.status(200).json({
+            players: playersEvent,
+            event: showEvent
+        })
 
     } catch (error) {
         throw error
@@ -193,20 +256,48 @@ export const updateStatistics = async (req: Request, res: Response): Promise<Res
 
         const showEvent = await Event.findById(event._id).populate({
             path: "teams",
-            populate: {
+            populate: [{
+                path: "logo",
+                select: "image"
+            }, {
                 path: "players",
-                populate: [{
-                    path: "team",
-                    select: "logo",
-                    populate: {
-                        path: "logo",
-                        select: "image"
-                    }
-                }, {
+                populate: {
                     path: "statistics"
-                }]
-            }
-        })
+                }
+            }, {
+                path: "competitors",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            }]
+        }).populate({
+            path: "competitors",
+            populate: [{
+                path: "user",
+                select: "nickname"
+            }, {
+                path: "role",
+            }]
+        }).populate({
+            path: "referees",
+            select: "name"
+        }).populate("category")
+            .populate("status")
+            .populate({
+                path: "campus",
+                select: "name"
+            }).populate({
+                path: "image",
+                select: "image"
+            }).populate({
+                path: "comments",
+                select: "user comment",
+                populate: {
+                    path: "user",
+                    select: "nickname"
+                }
+            })
 
         if (!showEvent) {
             return res.status(400).json({ message: "Event does not exists" })
@@ -220,7 +311,10 @@ export const updateStatistics = async (req: Request, res: Response): Promise<Res
             }
         }
 
-        return res.status(200).json(playersEvent)
+        return res.status(200).json({
+            players: playersEvent,
+            event: showEvent
+        })
 
     } catch (error) {
         throw error

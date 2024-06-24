@@ -70,17 +70,8 @@ export const createPlayerSchema = z.object({
 })
 
 export const updatePlayerDataSchema = z.object({
-    points: z.number({
+    value: z.number({
         message: "Points must be a number"
-    }),
-    assists: z.number({
-        message: "Assists must be a number"
-    }),
-    cards: z.number({
-        message: "Cards must be a number"
-    }),
-    serialCards: z.number({
-        message: "Expulsions must be a number"
     })
 })
 

@@ -186,17 +186,14 @@ export interface ISchedule {
     day: string;
 }
 
-export interface IPlayerData {
-    points: number;
-    assists: number;
-    cards: number;
-    serialCards: number;
-}
-
 export interface ICreateComment {
     comment: string;
 }
 
 export interface ICreateStatistic {
     name: string;
+}
+
+export interface IPlayerData {
+    value: number;
 }

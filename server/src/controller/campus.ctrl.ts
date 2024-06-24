@@ -73,7 +73,9 @@ export const createCampus = async (req: Request, res: Response): Promise<Respons
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
@@ -160,7 +162,9 @@ export const removeCampus = async (req: Request, res: Response): Promise<Respons
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
@@ -248,7 +252,9 @@ export const updateCampus = async (req: Request, res: Response): Promise<Respons
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {

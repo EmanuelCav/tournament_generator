@@ -6,6 +6,7 @@ import Player from '../models/player';
 import Competitor from '../models/competitor';
 import User from '../models/user';
 import Subscription from '../models/subscription';
+import Statistic from '../models/statistic';
 
 import { privileged_role } from "../config/config";
 
@@ -140,7 +141,9 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
                 select: "image"
             }, {
                 path: "players",
-
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
@@ -233,7 +236,9 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
@@ -322,7 +327,9 @@ export const updatePlayer = async (req: Request, res: Response): Promise<Respons
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
@@ -368,15 +375,15 @@ export const updatePlayer = async (req: Request, res: Response): Promise<Respons
 
 export const updatePlayerData = async (req: Request, res: Response): Promise<Response> => {
 
-    const { pid, cid } = req.params
-    const { points, assists, cards, serialCards } = req.body
+    const { sid, cid } = req.params
+    const { value } = req.body
 
     try {
 
-        const player = await Player.findById(pid)
+        const statistic = await Statistic.findById(sid)
 
-        if (!player) {
-            return res.status(400).json({ message: "Player does not exists" })
+        if (!statistic) {
+            return res.status(400).json({ message: "Statistic does not exists" })
         }
 
         const user = await Competitor.findById(cid).populate("role")
@@ -386,7 +393,7 @@ export const updatePlayerData = async (req: Request, res: Response): Promise<Res
         }
 
         if (user.role.role !== `${privileged_role}`) {
-            return res.status(401).json({ message: "You cannot update a player" })
+            return res.status(401).json({ message: "You cannot update a statistic" })
         }
 
         const event = await Event.findById(user.event)
@@ -395,11 +402,8 @@ export const updatePlayerData = async (req: Request, res: Response): Promise<Res
             return res.status(400).json({ message: "Event does not exists" })
         }
 
-        await Player.findByIdAndUpdate(pid, {
-            points,
-            assists,
-            cards,
-            serialCards
+        await Statistic.findByIdAndUpdate(sid, {
+            value
         }, {
             new: true
         })
@@ -411,7 +415,9 @@ export const updatePlayerData = async (req: Request, res: Response): Promise<Res
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {

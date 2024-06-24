@@ -13,6 +13,6 @@ router.get('/players/events/:id', playerCtrl.players)
 router.post('/players/teams/:tid/competitors/:cid', auth, createPlayerValid, playerCtrl.createPlayer)
 router.delete('/players/:pid/competitors/:cid', auth, playerCtrl.removePlayer)
 router.put('/players/:pid/competitors/:cid', auth, createPlayerValid, playerCtrl.updatePlayer)
-router.put('/data/players/:pid/competitors/:cid', auth, updatePlayerDataValid, playerCtrl.updatePlayerData)
+router.put('/statistics/:sid/competitors/:cid', auth, updatePlayerDataValid, playerCtrl.updatePlayerData)
 
 export default router

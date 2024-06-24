@@ -270,8 +270,8 @@ export const campusMatchApi = async (mid: string, eid: string, campus: string, t
     })
 }
 
-export const updatePlayerDataApi = async (pid: string, cid: string, playerData: IPlayerData, token: string) => {
-    return await api.put(`/data/players/${pid}/competitors/${cid}`, playerData, {
+export const updatePlayerDataApi = async (sid: string, cid: string, playerData: IPlayerData, token: string) => {
+    return await api.put(`/statistics/${sid}/competitors/${cid}`, playerData, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`

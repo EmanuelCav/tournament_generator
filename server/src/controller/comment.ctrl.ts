@@ -41,7 +41,9 @@ export const createComment = async (req: Request, res: Response): Promise<Respon
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {

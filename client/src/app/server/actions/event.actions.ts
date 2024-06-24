@@ -454,11 +454,11 @@ export const updatePlayerDataAction = createAsyncThunk('events/updateplayerdata'
 
     try {
 
-        const { data } = await eventApi.updatePlayerDataApi(eventData.pid, eventData.cid, eventData.playerData, eventData.token)
+        const { data } = await eventApi.updatePlayerDataApi(eventData.sid, eventData.cid, eventData.playerData, eventData.token)
 
         dispatch(eventReducer.getEvent(data))
 
-        eventData.setIsEditPlayerData(false)
+        eventData.handleClose()
 
     } catch (error: any) {
         dangerMessage(error.response.data[0].message)
@@ -472,7 +472,8 @@ export const createStatisticAction = createAsyncThunk('events/createstatistic', 
 
         const { data } = await eventApi.createStatisticApi(eventData.eid, eventData.cid, eventData.statisticData, eventData.token)
 
-        dispatch(getPlayers(data))
+        dispatch(eventReducer.getEvent(data.event))
+        dispatch(getPlayers(data.players))
 
         eventData.handleAddStatistics()
 
@@ -488,7 +489,8 @@ export const removeStatisticAction = createAsyncThunk('events/removestatistic', 
 
         const { data } = await eventApi.removeStatisticApi(eventData.sid, eventData.cid, eventData.token)
 
-        dispatch(getPlayers(data))
+        dispatch(eventReducer.getEvent(data.event))
+        dispatch(getPlayers(data.players))
 
         eventData.handleSure()
 
@@ -504,7 +506,8 @@ export const updateStatisticAction = createAsyncThunk('events/updatestatistic', 
 
         const { data } = await eventApi.updateStatisticApi(eventData.sid, eventData.cid, eventData.statisticData, eventData.token)
 
-        dispatch(getPlayers(data))
+        dispatch(eventReducer.getEvent(data.event))
+        dispatch(getPlayers(data.players))
 
         eventData.setIsEditStatistic(false)
 

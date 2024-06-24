@@ -58,7 +58,9 @@ export const generateMatch = async (req: Request, res: Response): Promise<Respon
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
@@ -149,7 +151,9 @@ export const restartMatch = async (req: Request, res: Response): Promise<Respons
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
@@ -236,7 +240,9 @@ export const addRefereeMatch = async (req: Request, res: Response): Promise<Resp
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
@@ -322,7 +328,9 @@ export const addCampusMatch = async (req: Request, res: Response): Promise<Respo
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
@@ -555,7 +563,9 @@ export const updateScore = async (req: Request, res: Response): Promise<Response
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
@@ -636,7 +646,9 @@ export const updateDate = async (req: Request, res: Response): Promise<Response>
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {

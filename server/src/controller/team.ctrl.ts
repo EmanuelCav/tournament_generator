@@ -289,7 +289,9 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
                 select: "image"
             }, {
                 path: "players",
-                
+                populate: {
+                    path: "statistics"
+                }
             }, {
                 path: "competitors",
                 populate: {
