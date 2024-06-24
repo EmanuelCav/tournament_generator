@@ -97,7 +97,10 @@ export const addTeam = async (req: Request, res: Response): Promise<Response> =>
                     path: "logo",
                     select: "image"
                 }, {
-                    path: "players"
+                    path: "players",
+                    populate: {
+                        path: "statistics"
+                    }
                 }, {
                     path: "competitors",
                     populate: {
@@ -176,7 +179,10 @@ export const removeTeam = async (req: Request, res: Response): Promise<Response>
                     path: "logo",
                     select: "image"
                 }, {
-                    path: "players"
+                    path: "players",
+                    populate: {
+                        path: "statistics"
+                    }
                 }, {
                     path: "competitors",
                     populate: {
@@ -282,7 +288,8 @@ export const updateTeam = async (req: Request, res: Response): Promise<Response>
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {
@@ -372,7 +379,8 @@ export const joinTeam = async (req: Request, res: Response): Promise<Response> =
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {

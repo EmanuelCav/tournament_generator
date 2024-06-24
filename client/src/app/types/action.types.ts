@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 
 import { ILogin, IRegister } from "../interface/User";
-import { ICreatePlayer, ICreateTeam, IMatch, IPlayerData, ISchedule, ITarget, ITeam } from "../interface/Event";
+import { ICreatePlayer, ICreateStatistic, ICreateTeam, IMatch, IPlayerData, ISchedule, ITarget, ITeam } from "../interface/Event";
 
 export type LoginActionPropsType = {
     navigate: NavigateFunction;
@@ -211,4 +211,12 @@ export type UpdatePlayerDataActionPropsType = {
     playerData: IPlayerData;
     token: string;
     setIsEditPlayerData: (isEditPlayerData: boolean) => void;
+}
+
+export type CreateStatisticActionPropsType = {
+    eid: string;
+    cid: string;
+    statisticData: ICreateStatistic;
+    token: string;
+    handleAddStatistics: () => void;
 }

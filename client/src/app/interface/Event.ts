@@ -57,13 +57,19 @@ export interface IPlayer {
     _id: string;
     name: string;
     position: string;
-    points: number;
-    assists: number;
-    cards: number;
-    serialCards: number;
+    statistics: IStatistic[];
     team: ITeam;
     createdAt: string;
     updatedAt: string;
+}
+
+export interface IStatistic {
+    _id: string;
+    name: string;
+    value: number;
+    event: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface ICampus {
@@ -189,4 +195,8 @@ export interface IPlayerData {
 
 export interface ICreateComment {
     comment: string;
+}
+
+export interface ICreateStatistic {
+    name: string;
 }

@@ -26,6 +26,7 @@ import refereeRoute from './routes/referee.routes'
 import matchRoute from './routes/match.routes'
 import campusRoute from './routes/campus.routes'
 import subscriptionRoute from './routes/subscription.routes'
+import statisticRoute from './routes/statistic.routes'
 
 const app = express()
 
@@ -56,6 +57,7 @@ app.use(refereeRoute)
 app.use(matchRoute)
 app.use(campusRoute)
 app.use(subscriptionRoute)
+app.use(statisticRoute)
 
 app.use(express.static(path.join(__dirname, "../public")))
 

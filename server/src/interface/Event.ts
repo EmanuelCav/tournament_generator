@@ -73,12 +73,10 @@ export interface IReferee extends Document {
 export interface IPlayer extends Document {
     _id: Types.ObjectId;
     name: string;
-    points: number;
-    assists: number;
-    cards: number;
-    serialCards: number;
     position: string;
+    statistics: Types.ObjectId[];
     team: Types.ObjectId;
+    event: Types.ObjectId;
     created_at: NativeDate;
     updated_at: NativeDate;
 }
@@ -96,7 +94,6 @@ export interface ITeam extends Document {
     against: number;
     status: boolean;
     players: IPlayer[];
-    comments: Types.ObjectId[];
     competitors: Types.ObjectId[];
     campus: Types.ObjectId;
     pot: number;
@@ -132,4 +129,13 @@ export interface ICommentFetch {
     id: string;
     comment: string;
     token: string;
+}
+
+export interface IStatistic {
+    _id: Types.ObjectId;
+    name: string;
+    value: number;
+    event: Types.ObjectId;
+    created_at: NativeDate;
+    updated_at: NativeDate;
 }

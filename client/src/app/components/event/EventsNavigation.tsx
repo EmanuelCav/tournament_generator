@@ -12,46 +12,46 @@ import SmsIcon from '@mui/icons-material/Sms';
 
 import EventNavigation from './components/eventsNavigation/EventNavigation'
 
-import { matchdays, teams, people, referees, players, settings, positions, campus, chat } from '../../server/reducer/get.reducer';
+import * as getAction from '../../server/reducer/get.reducer';
 
 import { EventsNavigationPropsType } from '../../types/event.types';
 
 const EventsNavigation = ({ dispatch, get, event, user }: EventsNavigationPropsType) => {
 
   const handleTeams = () => {
-    dispatch(teams(true))
+    dispatch(getAction.teams(true))
   }
 
   const handleMatchdays = () => {
-    dispatch(matchdays(true))
+    dispatch(getAction.matchdays(true))
   }
 
   const handlePeople = () => {
-    dispatch(people(true))
+    dispatch(getAction.people(true))
   }
 
   const handleReferees = () => {
-    dispatch(referees(true))
+    dispatch(getAction.referees(true))
   }
 
   const handlePlayers = () => {
-    dispatch(players(true))
+    dispatch(getAction.players(true))
   }
 
   const handleSettings = () => {
-    dispatch(settings(true))
+    dispatch(getAction.settings(true))
   }
 
   const handlePositions = () => {
-    dispatch(positions(true))
+    dispatch(getAction.positions(true))
   }
 
   const handleCampus = () => {
-    dispatch(campus(true))
+    dispatch(getAction.campus(true))
   }
 
   const handleChat = () => {
-    dispatch(chat(true))
+    dispatch(getAction.chat(true))
   }
 
   return (

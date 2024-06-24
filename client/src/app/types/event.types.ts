@@ -1,7 +1,8 @@
 import { Dispatch } from "react";
 
-import { ICampus, IComment, ICompetitor, IEvent, IMatch, IPlayer, IReducerGet, IReferee, ITeam } from "../interface/Event";
+import { ICampus, IComment, ICompetitor, IEvent, IMatch, IPlayer, IReducerGet, IReferee, IStatistic, ITeam } from "../interface/Event";
 import { IUser, IUserInfo } from "../interface/User";
+import { FilterPlayersKeyPropsType } from "./key.types";
 
 export type EventNavigationPropsType = {
     Icon: any;
@@ -292,4 +293,19 @@ export type ShowMessagesPropsType = {
 export type CommentPropsType = {
     comment: IComment;
     user: IUserInfo;
+}
+
+export type FormStatisticsPropsType = {
+    dispatch: Dispatch<any>;
+    user: IUserInfo;
+    event: IEvent;
+    statisticInfo: IStatistic;
+    isEdit: boolean;
+    handleAddStatistics: () => void;
+    setIsEditStatistic: (isEditStatistic: boolean) => void;
+}
+
+export type HeadPlayersPropsType = {
+    handleFilterPlayers: (filter: FilterPlayersKeyPropsType) => void;
+    player?: IPlayer;
 }

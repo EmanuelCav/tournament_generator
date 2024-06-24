@@ -1,4 +1,4 @@
-import { ICreatePlayer, ICreateTeam, IPlayerData, ISchedule, ITarget } from "../../interface/Event";
+import { ICreatePlayer, ICreateStatistic, ICreateTeam, IPlayerData, ISchedule, ITarget } from "../../interface/Event";
 import { FilterPlayersKeyPropsType } from "../../types/key.types";
 
 import { api } from "./api";
@@ -272,6 +272,33 @@ export const campusMatchApi = async (mid: string, eid: string, campus: string, t
 
 export const updatePlayerDataApi = async (pid: string, cid: string, playerData: IPlayerData, token: string) => {
     return await api.put(`/data/players/${pid}/competitors/${cid}`, playerData, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const createStatisticApi = async (eid: string, cid: string, statisticData: ICreateStatistic, token: string) => {
+    return await api.post(`/statistics/events/${eid}/competitors/${cid}`, statisticData, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const removeStatisticApi = async (sid: string, cid: string, token: string) => {
+    return await api.delete(`/statistics/${sid}/competitors/${cid}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const updateStatisticApi = async (sid: string, cid: string, statisticData: ICreateStatistic, token: string) => {
+    return await api.put(`/statistics/${sid}/competitors/${cid}`, statisticData, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`

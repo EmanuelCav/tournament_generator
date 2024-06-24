@@ -465,3 +465,19 @@ export const updatePlayerDataAction = createAsyncThunk('events/updateplayerdata'
     }
 
 })
+
+export const createStatisticAction = createAsyncThunk('events/createstatistic', async (eventData: typesActionsEvent.CreateStatisticActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await eventApi.createStatisticApi(eventData.eid, eventData.cid, eventData.statisticData, eventData.token)
+
+        dispatch(eventReducer.getEvent(data))
+
+        eventData.handleAddStatistics()
+
+    } catch (error: any) {
+        dangerMessage(error.response.data[0].message)
+    }
+
+})

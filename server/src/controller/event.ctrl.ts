@@ -90,7 +90,8 @@ export const event = async (req: Request, res: Response): Promise<Response> => {
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {
@@ -269,7 +270,8 @@ export const createEvent = async (req: Request, res: Response): Promise<Response
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {
@@ -387,7 +389,8 @@ export const joinEvent = async (req: Request, res: Response): Promise<Response> 
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {
@@ -472,7 +475,8 @@ export const updateRole = async (req: Request, res: Response): Promise<Response>
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {
@@ -550,7 +554,8 @@ export const removeCompetitor = async (req: Request, res: Response): Promise<Res
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {
@@ -682,7 +687,8 @@ export const updateEvent = async (req: Request, res: Response): Promise<Response
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {

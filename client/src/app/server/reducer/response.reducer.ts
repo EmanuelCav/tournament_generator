@@ -328,6 +328,16 @@ const responseSlice = createSlice({
         builder.addCase(eventAction.joinEventAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(eventAction.createStatisticAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(eventAction.createStatisticAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(eventAction.createStatisticAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

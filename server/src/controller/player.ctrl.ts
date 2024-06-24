@@ -22,14 +22,16 @@ export const players = async (req: Request, res: Response): Promise<Response> =>
             path: "teams",
             populate: {
                 path: "players",
-                populate: {
+                populate: [{
                     path: "team",
                     select: "logo",
                     populate: {
                         path: "logo",
                         select: "image"
                     }
-                }
+                }, {
+                    path: "statistics"
+                }]
             }
         })
 
@@ -43,16 +45,16 @@ export const players = async (req: Request, res: Response): Promise<Response> =>
             for (let j = 0; j < event.teams[i].players.length; j++) {
                 playersEvent.push(event.teams[i].players[j])
             }
-        }    
+        }
 
-        playersEvent.sort((a, b) => {
-            if (String(order) === "points") return b.points - a.points
-            if (String(order) === "assists") return b.assists - a.assists
-            if (String(order) === "cards") return b.cards - a.cards
+        // playersEvent.sort((a, b) => {
+        //     if (String(order) === "points") return b.points - a.points
+        //     if (String(order) === "assists") return b.assists - a.assists
+        //     if (String(order) === "cards") return b.cards - a.cards
 
-            return b.serialCards - a.serialCards
-        })
-            
+        //     return b.serialCards - a.serialCards
+        // })
+
         return res.status(200).json(playersEvent)
 
     } catch (error) {
@@ -82,18 +84,18 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
 
         const subscription = await Subscription.findById(userLoggedIn.subscription)
 
-        if(!subscription) {
+        if (!subscription) {
             return res.status(400).json({ message: "Subscription does not exists" })
         }
 
-        if(subscription.hierarchy <= 1) {
-            if(team.players.length >= 15) {
+        if (subscription.hierarchy <= 1) {
+            if (team.players.length >= 15) {
                 return res.status(400).json({ message: "You cannot add more than 15 players per team" })
             }
         }
 
-        if(subscription.hierarchy <= 2) {
-            if(team.players.length >= 30) {
+        if (subscription.hierarchy <= 2) {
+            if (team.players.length >= 30) {
                 return res.status(400).json({ message: "You cannot add more than 30 players per team" })
             }
         }
@@ -117,7 +119,8 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
         const newPlayer = new Player({
             name,
             position,
-            team: team._id
+            team: team._id,
+            event: event._id
         })
 
         const playerSaved = await newPlayer.save()
@@ -136,7 +139,8 @@ export const createPlayer = async (req: Request, res: Response): Promise<Respons
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+
             }, {
                 path: "competitors",
                 populate: {
@@ -228,7 +232,8 @@ export const removePlayer = async (req: Request, res: Response): Promise<Respons
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {
@@ -316,7 +321,8 @@ export const updatePlayer = async (req: Request, res: Response): Promise<Respons
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {
@@ -404,7 +410,8 @@ export const updatePlayerData = async (req: Request, res: Response): Promise<Res
                 path: "logo",
                 select: "image"
             }, {
-                path: "players"
+                path: "players",
+                
             }, {
                 path: "competitors",
                 populate: {

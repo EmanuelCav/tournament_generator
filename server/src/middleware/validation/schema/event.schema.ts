@@ -92,3 +92,11 @@ export const updateScoreSchema = z.object({
         message: "Score must be a number"
     }),
 })
+
+export const createStatisticsSchema = z.object({
+    name: z.string().trim().min(1, {
+        message: "There are empty fields"
+    }).refine((value) => /^[a-zA-Z0-9\sÀ-ÿ\u00f1\u00d1]+$/.test(value), {
+        message: "Special characters are not allowed."
+    })
+})
