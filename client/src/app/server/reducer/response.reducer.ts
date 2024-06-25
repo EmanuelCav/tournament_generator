@@ -368,6 +368,26 @@ const responseSlice = createSlice({
         builder.addCase(userAction.autoLoginAction.rejected, (state) => {
             state.loading = false
         })
+
+        builder.addCase(userAction.forgotPasswordAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(userAction.forgotPasswordAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(userAction.forgotPasswordAction.rejected, (state) => {
+            state.loading = false
+        })
+
+        builder.addCase(userAction.updatePasswordAction.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(userAction.updatePasswordAction.fulfilled, (state) => {
+            state.loading = false
+        })
+        builder.addCase(userAction.updatePasswordAction.rejected, (state) => {
+            state.loading = false
+        })
     }
 })
 

@@ -45,3 +45,12 @@ export interface ISubscription {
     created_at: string;
     updated_at: string;
 }
+
+export interface IForgotPassword {
+    email: string;
+}
+
+export interface IPassword {
+    password: string;
+    confirm: string;
+}

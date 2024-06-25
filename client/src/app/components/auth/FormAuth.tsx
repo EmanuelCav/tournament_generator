@@ -4,7 +4,7 @@ import FormLogin from "./components/FormLogin"
 
 import { FormAuthPropsType } from "../../types/auth.types"
 
-const FormAuth = ({ dispatch, navigate, setIsRegister }: FormAuthPropsType) => {
+const FormAuth = ({ dispatch, navigate, setIsRegister, setIsForgotPassword }: FormAuthPropsType) => {
 
     const showRegister = () => {
         setIsRegister(true)
@@ -15,7 +15,7 @@ const FormAuth = ({ dispatch, navigate, setIsRegister }: FormAuthPropsType) => {
             <Paper elevation={2} sx={{ maxWidth: '47.37%', padding: 2 }}>
                 <Typography color='#33CC33' variant="h5">Log In</Typography>
                 <FormLogin dispatch={dispatch} navigate={navigate} />
-                <Button size='small' variant='text' color='success'>Forgot password?</Button>
+                <Button size='small' variant='text' color='success' onClick={() => setIsForgotPassword(true)}>Forgot password?</Button>
             </Paper>
             <Box display='flex' justifyContent='center' alignItems='center' mt={2}>
                 <Typography variant="body1" mr={2}>Don't you have an account?</Typography>

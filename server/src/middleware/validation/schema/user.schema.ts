@@ -57,3 +57,18 @@ export const createSubscriptionSchema = z.object({
         message: "Price must be a number"
     }),
 })
+
+export const forgotPasswordSchema = z.object({
+    email: z.string().email().trim().min(1, {
+        message: "There are empty fields"
+    })
+})
+
+export const updatePasswordSchema = z.object({
+    password: z.string().trim().min(6, {
+        message: "password field must has more than 5 characters"
+    }),
+    confirm: z.string().trim().min(1, {
+        message: "Confirm password field is empty. Please Complete"
+    }),
+})

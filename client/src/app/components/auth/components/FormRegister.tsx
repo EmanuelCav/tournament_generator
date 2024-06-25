@@ -8,11 +8,11 @@ import Terms from "./Terms"
 
 import { registerAction } from "../../../server/actions/user.actions"
 
-import { FormAuthPropsType } from "../../../types/auth.types"
+import { RegisterPropsType } from "../../../types/auth.types"
 
 import { registerSchema } from "../../../schema/user.schema"
 
-const FormRegister = ({ navigate, dispatch, setIsRegister }: FormAuthPropsType) => {
+const FormRegister = ({ navigate, dispatch, setIsRegister }: RegisterPropsType) => {
 
     const [isPassword, setIsPassword] = useState<boolean>(false)
     const [isConfirm, setIsConfirm] = useState<boolean>(false)

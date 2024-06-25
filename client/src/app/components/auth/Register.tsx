@@ -3,9 +3,9 @@ import { Box, Paper, Typography } from '@mui/material'
 import FormRegister from './components/FormRegister'
 import CloseForm from '../general/CloseForm'
 
-import { FormAuthPropsType } from '../../types/auth.types'
+import { RegisterPropsType } from '../../types/auth.types'
 
-const Register = ({ setIsRegister, navigate, dispatch }: FormAuthPropsType) => {
+const Register = ({ setIsRegister, navigate, dispatch }: RegisterPropsType) => {
 
     const handleClose = () => {
         setIsRegister(false)

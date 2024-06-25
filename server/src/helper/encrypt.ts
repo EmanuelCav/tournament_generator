@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken'
 import { genSalt, hash, compare } from "bcryptjs";
 import { Types } from 'mongoose';
 
-import { jwt_user, jwt_verification } from '../config/config';
-import { IEvent } from 'interface/Event';
+import { jwt_forgot_password, jwt_user, jwt_verification } from '../config/config';
+import { IEvent } from '../interface/Event';
 
 export const hashText = async (password: string): Promise<string> => {
 
@@ -23,6 +23,14 @@ export const generateUserToken = (id: Types.ObjectId): string => {
 
     return jwt.sign({ id }, `${jwt_user}`, {
         expiresIn: '90d'
+    })
+
+}
+
+export const forgotPasswordToken = (id: Types.ObjectId): string => {
+
+    return jwt.sign({ id }, `${jwt_forgot_password}`, {
+        expiresIn: '2h'
     })
 
 }

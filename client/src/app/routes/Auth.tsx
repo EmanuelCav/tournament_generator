@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import FormAuth from "../components/auth/FormAuth"
 import ImageAuth from "../components/auth/ImageAuth"
 import Register from "../components/auth/Register"
+import ForgotPassword from "../components/home/ForgotPassword"
 
 import { selector } from "../server/selector"
 
@@ -16,6 +17,7 @@ const Auth = () => {
     const user = useSelector((state: IReducer) => selector(state).user)
 
     const [isRegister, setIsRegister] = useState<boolean>(false)
+    const [isForgotPassword, setIsForgotPassword] = useState<boolean>(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -29,12 +31,15 @@ const Auth = () => {
     return (
         <Box display="flex" justifyContent="center" alignItems="center" flexWrap="wrap" className="full-screen">
             {
+                isForgotPassword && <ForgotPassword dispatch={dispatch} setIsForgotPassword={setIsForgotPassword} />
+            }
+            {
                 isRegister && <Register setIsRegister={setIsRegister} dispatch={dispatch} navigate={navigate} />
             }
             {
                 !user.isLoggedIn && <>
                     <ImageAuth />
-                    <FormAuth navigate={navigate} dispatch={dispatch} setIsRegister={setIsRegister} />
+                    <FormAuth setIsForgotPassword={setIsForgotPassword} navigate={navigate} dispatch={dispatch} setIsRegister={setIsRegister} />
                 </>
             }
         </Box>

@@ -1,6 +1,6 @@
 import { api } from "./api";
 
-import { ILogin, IRegister } from "../../interface/User";
+import { IForgotPassword, ILogin, IPassword, IRegister } from "../../interface/User";
 
 export const loginApi = async (userData: ILogin) => {
     return await api.post('/users/login', userData, {
@@ -32,4 +32,17 @@ export const statusApi = async (token: string) => {
 
 export const autoLoginApi = async (nickname: string) => {
     return await api.post(`/users/autologin/${nickname}`)
+}
+
+export const forgotPasswordApi = async (userData: IForgotPassword) => {
+    return await api.post('/users/password', userData)
+}
+
+export const updatePasswordApi = async (passwordData: IPassword, token: string) => {
+    return await api.put('/users/password', passwordData, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
 }

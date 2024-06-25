@@ -24,7 +24,7 @@ const Home = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
+  
   const [showSubscriptions, setShowSubscriptions] = useState<ISubscription[]>([])
 
   const getSubscriptions = async () => {

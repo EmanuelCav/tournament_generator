@@ -6,9 +6,9 @@ import Subscription from '../models/subscription'
 
 import { default_role, main_subscription } from "../config/config";
 
-import { compareHash, generateEmailVerification, generateNumberUser, generatePassword, generateUserToken, hashText } from "../helper/encrypt";
+import { compareHash, forgotPasswordToken, generateEmailVerification, generateNumberUser, generatePassword, generateUserToken, hashText } from "../helper/encrypt";
 
-import { infoEmail } from "../messages/messages";
+import { infoEmail, infoEmailPassword } from "../messages/messages";
 
 export const users = async (req: Request, res: Response): Promise<Response> => {
 
@@ -266,6 +266,61 @@ export const updateStatus = async (req: Request, res: Response): Promise<Respons
         }).select("nickname")
 
         return res.status(200).json(userUpdated)
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const forgotPassword = async (req: Request, res: Response): Promise<Response> => {
+
+    const { email } = req.body
+
+    try {
+
+        const user = await User.findOne({ email })
+
+        if (!user) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const token = forgotPasswordToken(user._id)
+
+        await infoEmailPassword(email)
+
+        return res.status(200).json({
+            message: "Check your email",
+            token
+        })
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const updatePassword = async (req: Request, res: Response): Promise<Response> => {
+
+    const { password } = req.body
+
+    try {
+
+        const user = await User.findById(req.changePassword)
+
+        if (!user) {
+            return res.status(400).json({ message: "User does not exists" })
+        }
+
+        const passwordHashed = await hashText(password)
+
+        await User.findByIdAndUpdate(req.changePassword, {
+            password: passwordHashed
+        }, {
+            new: true
+        })
+
+        return res.status(200).json({ message: "Password updated successfully" })
 
     } catch (error) {
         throw error

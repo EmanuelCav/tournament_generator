@@ -3,6 +3,7 @@ export const mongo_uri = process.env.MONGO_URI
 export const default_role = process.env.DEFAULT_ROLE
 export const jwt_user = process.env.JWT_USER
 export const jwt_verification = process.env.JWT_VERIFICATION
+export const jwt_forgot_password = process.env.JWT_FORGOT_PASSWORD
 export const privileged_role = process.env.PRIVILEGED_ROLE
 export const cloud_name = process.env.CLOUD_NAME
 export const api_key = process.env.API_KEY

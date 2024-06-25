@@ -7,10 +7,17 @@ export type FormPropsType = {
     navigate: NavigateFunction;
 }
 
+export type RegisterPropsType = {
+    dispatch: Dispatch<any>;
+    navigate: NavigateFunction;
+    setIsRegister: (isRegister: boolean) => void;
+}
+
 export type FormAuthPropsType = {
     dispatch: Dispatch<any>;
     navigate: NavigateFunction;
     setIsRegister: (isRegister: boolean) => void;
+    setIsForgotPassword: (isForgotPassword: boolean) => void;
 }
 
 export type PasswordInputPropsType = {
@@ -25,4 +32,9 @@ export type PasswordInputPropsType = {
 export type TermsPropsType = {
     handleChecked: (e: ChangeEvent<HTMLInputElement>) => void;
     status: boolean;
+}
+
+export type ForgotPasswordPropsType = {
+    setIsForgotPassword: (isForgotPassword: boolean) => void;
+    dispatch: Dispatch<any>;
 }

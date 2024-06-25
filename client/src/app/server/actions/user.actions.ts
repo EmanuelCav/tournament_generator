@@ -3,7 +3,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as userApi from "../api/user.api";
 import * as userReducer from "../reducer/user.reducer";
 
-import { AutoLoginActionPropsType, LoginActionPropsType, LogoutActionPropsType, RegisterActionPropsType } from "../../types/action.types";
+import { AutoLoginActionPropsType, ForgotPasswordActionPropsType, LoginActionPropsType, LogoutActionPropsType, RegisterActionPropsType, UpdatePasswordActionPropsType } from "../../types/action.types";
+import { IForgotPassword } from "../../interface/User";
 
 import { dangerMessage, successMessage } from "../../helper/message";
 
@@ -73,14 +74,50 @@ export const autoLoginAction = createAsyncThunk('users/autologin', async (userDa
 
         const { data } = await userApi.autoLoginApi(userData.nickname)
 
-        console.log(data);
-
         dispatch(userReducer.login(data))
     
         userData.navigate('/panel')
 
     } catch (error) {
         console.log(error);
+    }
+
+})
+
+export const forgotPasswordAction = createAsyncThunk('users/forgotpassword', async (userData: ForgotPasswordActionPropsType, { dispatch }) => {
+
+    try {
+
+        const { data } = await userApi.forgotPasswordApi(userData.emailData)
+
+        dispatch(userReducer.verification(data.token))
+
+        successMessage(data.message)
+
+        userData.setIsForgotPassword(false)
+
+    } catch (error: any) {
+        dangerMessage(error.response.data[0].message)
+    }
+
+})
+
+export const updatePasswordAction = createAsyncThunk('users/updatepassword', async (userData: UpdatePasswordActionPropsType) => {
+
+    try {
+
+        const { data } = await userApi.updatePasswordApi(userData.passwordData, userData.token)
+
+        successMessage(data.message)
+
+        userData.navigate('/auth')
+
+    } catch (error: any) {
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
