@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
-import PhoneIcon from '@mui/icons-material/Phone';
+// import PhoneIcon from '@mui/icons-material/Phone';
 import PersonIcon from '@mui/icons-material/Person';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
@@ -45,7 +45,7 @@ const Navigation = ({ navigate, location, isLoggedIn, dispatch }: NavigationProp
                         {
                             location.pathname !== "/auth" && <Box>
                                 <ButtonNav text='Start now' Icon={AddIcon} redirect={redirectRoute} route='events' />
-                                <ButtonNav text='Contact us' Icon={PhoneIcon} redirect={redirectRoute} route='auth' />
+                                {/* <ButtonNav text='Contact us' Icon={PhoneIcon} redirect={redirectRoute} route='auth' /> */}
                                 <ButtonNav text='Log in' Icon={PersonIcon} redirect={redirectRoute} route='auth' />
                             </Box>
                         }

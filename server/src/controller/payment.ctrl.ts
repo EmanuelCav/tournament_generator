@@ -3,7 +3,7 @@ import { PreApprovalRequest } from "mercadopago/dist/clients/preApproval/commonT
 
 import Subscription from "../models/subscription";
 
-import { createPlan, preApproval } from "../config/mpago";
+import { createPlan, preApproval } from "../utils/mpago";
 
 export const CreatePayment = async (req: Request, res: Response): Promise<Response> => {
 

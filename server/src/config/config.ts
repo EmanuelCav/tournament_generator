@@ -13,3 +13,5 @@ export const main_subscription = process.env.MAIN_SUBSCRIPTION
 export const my_host = process.env.MY_HOST
 export const my_pass = process.env.MY_PASS
 export const my_mail = process.env.MY_MAIL
+export const host_client = process.env.HOST_CLIENT
+export const host_dev = process.env.HOST_DEV
