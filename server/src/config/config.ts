@@ -15,3 +15,6 @@ export const my_pass = process.env.MY_PASS
 export const my_mail = process.env.MY_MAIL
 export const host_client = process.env.HOST_CLIENT
 export const host_dev = process.env.HOST_DEV
+export const origin_client = process.env.ORIGIN_CLIENT
+export const origin_dev = process.env.ORIGIN_DEV
+export const origin_preview = process.env.ORIGIN_PREVIEW

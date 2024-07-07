@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, /*useState*/ } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box } from '@mui/material'
@@ -12,10 +12,10 @@ import Swiss from '../components/home/Swiss'
 import Footer from '../components/home/Footer'
 
 import { IReducer } from '../interface/General'
-import { ISubscription } from '../interface/User'
+// import { ISubscription } from '../interface/User'
 
 import { selector } from '../server/selector'
-import { statusApi, subscriptionsApi } from '../server/api/user.api'
+import { statusApi, /*subscriptionsApi*/ } from '../server/api/user.api'
 import { autoLoginAction } from '../server/actions/user.actions'
 
 const Home = () => {
@@ -24,21 +24,21 @@ const Home = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  
-  const [showSubscriptions, setShowSubscriptions] = useState<ISubscription[]>([])
 
-  const getSubscriptions = async () => {
+  // const [showSubscriptions, setShowSubscriptions] = useState<ISubscription[]>([])
 
-    try {
+  // const getSubscriptions = async () => {
 
-      const { data } = await subscriptionsApi()
-      setShowSubscriptions(data)
+  //   try {
 
-    } catch (error) {
-      console.log(error);
-    }
+  //     const { data } = await subscriptionsApi()
+  //     setShowSubscriptions(data)
 
-  }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+
+  // }
 
   const getVerification = async () => {
 
@@ -65,9 +65,9 @@ const Home = () => {
     }
   }, [])
 
-  useEffect(() => {
-    getSubscriptions()
-  }, [])
+  // useEffect(() => {
+  //   getSubscriptions()
+  // }, [])
 
   useEffect(() => {
     if (user.isLoggedIn) {

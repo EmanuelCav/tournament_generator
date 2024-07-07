@@ -63,7 +63,11 @@ export const createEventAction = createAsyncThunk('events/createevent', async (e
         eventData.navigate(`/events/${data._id}`)
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -79,7 +83,11 @@ export const createTeamAction = createAsyncThunk('events/createteam', async (tea
         teamData.handleAddTeam()
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -129,7 +137,11 @@ export const updateTeamAction = createAsyncThunk('events/updateteam', async (tea
         teamData.setIsEditTeam(false)
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -145,7 +157,11 @@ export const joinEventAction = createAsyncThunk('events/joinevent', async (teamD
         teamData.navigate(`/events/${data._id}`)
 
     } catch (error: any) {
-        dangerMessage(error.response.data.message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -161,7 +177,11 @@ export const createRefereeAction = createAsyncThunk('events/createreferee', asyn
         refereeData.handleAddReferee()
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -193,7 +213,11 @@ export const updateRefereeAction = createAsyncThunk('events/updatereferee', asyn
         refereeData.setIsEditReferee(false)
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -209,7 +233,11 @@ export const createPlayerAction = createAsyncThunk('events/createplayer', async 
         playerData.handleAddPlayer(playerData.team)
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -241,7 +269,11 @@ export const updatePlayerAction = createAsyncThunk('events/updateplayer', async 
         playerData.setIsEditPlayer(false)
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -301,7 +333,11 @@ export const updateScoreAction = createAsyncThunk('events/addscore', async (even
         eventData.setIsAddScore(false)
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -317,7 +353,11 @@ export const updateScheduleAction = createAsyncThunk('events/updateschedule', as
         eventData.handleUpdateSchedule(eventData.match)
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -381,7 +421,11 @@ export const updateEventAction = createAsyncThunk('events/updateevent', async (e
         dispatch(eventReducer.getEvent(data.event))
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -397,7 +441,11 @@ export const createCampusAction = createAsyncThunk('events/createcampus', async 
         refereeData.handleAddCampus()
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -429,7 +477,11 @@ export const updateCampusAction = createAsyncThunk('events/updatecampus', async 
         refereeData.setIsEditCampus(false)
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -461,7 +513,11 @@ export const updatePlayerDataAction = createAsyncThunk('events/updateplayerdata'
         eventData.handleClose()
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -478,7 +534,11 @@ export const createStatisticAction = createAsyncThunk('events/createstatistic', 
         eventData.handleAddStatistics()
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })
@@ -512,7 +572,11 @@ export const updateStatisticAction = createAsyncThunk('events/updatestatistic', 
         eventData.setIsEditStatistic(false)
 
     } catch (error: any) {
-        dangerMessage(error.response.data[0].message)
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
     }
 
 })

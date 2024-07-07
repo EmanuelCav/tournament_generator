@@ -4,7 +4,6 @@ import * as userApi from "../api/user.api";
 import * as userReducer from "../reducer/user.reducer";
 
 import { AutoLoginActionPropsType, ForgotPasswordActionPropsType, LoginActionPropsType, LogoutActionPropsType, RegisterActionPropsType, UpdatePasswordActionPropsType } from "../../types/action.types";
-import { IForgotPassword } from "../../interface/User";
 
 import { dangerMessage, successMessage } from "../../helper/message";
 
@@ -16,7 +15,7 @@ export const loginAction = createAsyncThunk('users/login', async (loginData: Log
 
         dispatch(userReducer.login(data))
 
-        loginData.navigate('/')
+        loginData.navigate('/panel')
 
     } catch (error: any) {
         if(error.response.data[0]) {

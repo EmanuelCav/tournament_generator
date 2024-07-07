@@ -8,7 +8,7 @@ import { Server } from 'socket.io';
 
 dotenv.config()
 
-import { host_client, host_dev, port } from "./config/config";
+import { origin_client, origin_dev, origin_preview, port } from "./config/config";
 
 import './database/database'
 import socketConnect from './socket';
@@ -30,12 +30,10 @@ import statisticRoute from './routes/statistic.routes'
 
 const app = express()
 
-const url = process.env.NODE_ENV === 'production' ? `${host_client}` : `${host_dev}`
-
 const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
-        origin: `${url}`,
+        origin: [`${origin_dev}`, `${origin_client}`, `${origin_preview}`],
         credentials: true
     }
 })
@@ -49,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(cors({
-    origin: `${url}`,
+    origin: [`${origin_dev}`, `${origin_client}`, `${origin_preview}`],
     credentials: true
 }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
