@@ -17,3 +17,7 @@
 - Material UI
 - MongoDB
 - Node.js & Express.js
+
+## Diagram ##
+
+<img src="https://res.cloudinary.com/projects-emanuek/image/upload/v1721070296/drawSQL-image-export-2024-07-15_1_wxqyq9.png" />
