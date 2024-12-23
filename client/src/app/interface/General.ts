@@ -9,3 +9,16 @@ export interface IReducer {
     get: IReducerGet;
     statistic: IReducerStatistic;
 }
+
+export interface ITournament {
+    title: string;
+    description: string;
+    Icon: any;
+}
+
+export interface IDetail {
+    title: string;
+    description: string;
+    Icon: any;
+    color: string;
+}

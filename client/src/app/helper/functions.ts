@@ -44,3 +44,4 @@ export const eliminationMatch = (matchs: IMatch[][], index: number, n: number): 
 
     return `Round of ${Math.pow(2, (n - index))}`
 }
+  

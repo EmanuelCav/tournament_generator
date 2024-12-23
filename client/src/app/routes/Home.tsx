@@ -1,15 +1,14 @@
-import { useEffect, /*useState*/ } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Box } from '@mui/material'
 
-import Info from '../components/home/Info'
-import Matchdays from '../components/home/Matchdays'
-import Elimination from '../components/home/Elimination'
-import Groups from '../components/home/Groups'
-import Swiss from '../components/home/Swiss'
+import Introduction from '../components/home/Introduction'
+import Tournaments from '../components/home/Tournaments'
 // import Subscriptions from '../components/home/Subscriptions'
+import Details from '../components/home/Details'
+import Display from '../components/home/Display'
 import Footer from '../components/home/Footer'
+import Enjoy from '../components/home/Enjoy'
 
 import { IReducer } from '../interface/General'
 // import { ISubscription } from '../interface/User'
@@ -76,20 +75,20 @@ const Home = () => {
   }, [])
 
   return (
-    <Box>
+    <>
       {
         !user.isLoggedIn &&
         <>
-          <Info />
-          <Matchdays />
-          <Elimination />
-          <Groups />
-          <Swiss />
+          <Introduction />
+          <Tournaments />
+          <Details />
+          <Display />
+          <Enjoy />
           {/* <Subscriptions showSubscriptions={showSubscriptions} /> */}
           <Footer navigate={navigate} />
         </>
       }
-    </Box>
+    </>
   )
 }
 

@@ -1,13 +1,6 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "outDir": "build",
-    "jsx": "react-jsx",
-    "typeRoots": ["/types"],
     "strict": true
-  },
-  "include": [
-    "app"
-  ],
-  "exclude": ["node_modules"]
+  }
 }

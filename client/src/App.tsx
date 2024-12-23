@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
-import { Box } from "@mui/material";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -27,29 +26,27 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ToastContainer limit={1} />
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
+          <ToastContainer limit={1} />
           <Loading />
-          <Header />
-          <Box mt={10}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="*" element={<NotFound />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/resetpassword" element={<ResetPassword />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/create" element={<PrivateRoute />}>
-                <Route path="/create" element={<Create />} />
-              </Route>
-              <Route path="/panel" element={<PrivateRoute />}>
-                <Route path="/panel" element={<Panel />} />
-              </Route>
-              <Route path="/events/:id" element={<PrivateRoute />}>
-                <Route path="/events/:id" element={<Event />} />
-              </Route>
-            </Routes>
-          </Box>
+          {/* <Header /> */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/create" element={<PrivateRoute />}>
+              <Route path="/create" element={<Create />} />
+            </Route>
+            <Route path="/panel" element={<PrivateRoute />}>
+              <Route path="/panel" element={<Panel />} />
+            </Route>
+            <Route path="/events/:id" element={<PrivateRoute />}>
+              <Route path="/events/:id" element={<Event />} />
+            </Route>
+          </Routes>
         </PersistGate>
       </Provider>
     </BrowserRouter>
