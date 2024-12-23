@@ -30,7 +30,7 @@ function App() {
         <PersistGate persistor={persistor} loading={null}>
           <ToastContainer limit={1} />
           <Loading />
-          {/* <Header /> */}
+          <Header />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />

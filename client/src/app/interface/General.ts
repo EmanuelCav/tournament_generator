@@ -22,3 +22,8 @@ export interface IDetail {
     Icon: any;
     color: string;
 }
+
+export interface INavigation {
+    title: string;
+    path: string;
+}

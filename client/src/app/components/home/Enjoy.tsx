@@ -8,13 +8,13 @@ const contenidoSecciones = [
         titulo: "Herramienta Versátil para Todos los Deportes",
         descripcion:
             "Nuestra plataforma se adapta a cualquier deporte, desde fútbol hasta tenis. Configura torneos de manera profesional y personalizada para satisfacer las necesidades de cada disciplina.",
-        icono: <SportsSoccerIcon sx={{ fontSize: 60, color: '#4CAF50' }} />,
+        icono: <SportsSoccerIcon sx={{ fontSize: 60, color: '#2e7d32' }} />,
     },
     {
         titulo: "Crea, Gestiona y Disfruta",
         descripcion:
             "Más que una herramienta de gestión, nuestra plataforma te permite crear experiencias inolvidables para jugadores, equipos y espectadores. Fácil de usar y altamente funcional, es perfecta para organizadores de eventos deportivos.",
-        icono: <EventIcon sx={{ fontSize: 60, color: '#FF5722' }} />,
+        icono: <EventIcon sx={{ fontSize: 60, color: '#2e7d32' }} />,
     },
 ];
 

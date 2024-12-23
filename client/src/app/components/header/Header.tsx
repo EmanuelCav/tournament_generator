@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar } from "@mui/material"
+import { AppBar, Container, Toolbar } from "@mui/material"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -18,22 +18,14 @@ const Header = () => {
     const dispatch = useDispatch()
 
     return (
-        <Box>
-            <AppBar sx={{
-                background: '#87d2ab',
-                padding: 1,
-                zIndex: 6
-            }}>
-                <Toolbar sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                }}>
-                    <Logo navigate={navigate} isLoggedIn={user.isLoggedIn} />
-                    <Navigation navigate={navigate} location={location} isLoggedIn={user.isLoggedIn} dispatch={dispatch} />
+        <AppBar sx={{ bgcolor: '#2e7d32', padding: { xs: 1, sm: 2 } }}>
+            <Container fixed maxWidth="lg">
+                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Logo isLoggedIn={user.isLoggedIn} navigate={navigate} />
+                    <Navigation dispatch={dispatch} location={location} isLoggedIn={user.isLoggedIn} navigate={navigate} />
                 </Toolbar>
-            </AppBar>
-        </Box>
+            </Container>
+        </AppBar>
     )
 }
 

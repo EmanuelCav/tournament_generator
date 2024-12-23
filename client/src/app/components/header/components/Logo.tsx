@@ -15,11 +15,13 @@ const Logo = ({ navigate, isLoggedIn }: LogoPropsType) => {
     return (
         <Box
             component="img"
-            src="/header.png"
+            src="/logo.png"
             alt="logo"
             onClick={redirectIndex}
             sx={{ cursor: 'pointer' }}
             className="no-select"
+            width={60}
+            height={60}
         />
     )
 }

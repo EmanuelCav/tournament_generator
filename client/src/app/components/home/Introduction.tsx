@@ -8,7 +8,7 @@ const Introduction: React.FC = () => {
     return (
         <Box
             sx={{
-                mt: 10,
+                mt: 12,
                 backgroundImage: `url("/background_4.jpg")`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',

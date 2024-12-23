@@ -1,15 +1,22 @@
 import { useState } from 'react';
 import { Box, Button } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add';
-// import PhoneIcon from '@mui/icons-material/Phone';
-import PersonIcon from '@mui/icons-material/Person';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import CoPresentIcon from '@mui/icons-material/CoPresent';
-
-import ButtonNav from './components/ButtonNav';
-import MenuHeader from './components/MenuHeader';
 
 import { NavigationPropsType } from '../../../types/header.types';
+import { INavigation } from '../../../interface/General';
+
+const navigation: INavigation[] = [{
+    title: "Contacto",
+    path: "/"
+}, {
+    title: "Nosotros",
+    path: "/"
+}, {
+    title: "Unirse",
+    path: "/"
+}, {
+    title: "Crear",
+    path: "/"
+}]
 
 const Navigation = ({ navigate, location, isLoggedIn, dispatch }: NavigationPropsType) => {
 
@@ -24,35 +31,51 @@ const Navigation = ({ navigate, location, isLoggedIn, dispatch }: NavigationProp
     }
 
     return (
-        <Box>
+        <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
             {
-                isLoggedIn ? (
-                    <Box>
-                        {
-                            isMenu && <MenuHeader setIsMenu={setIsMenu} dispatch={dispatch} navigate={navigate} />
-                        }
-                        <ButtonNav text='Panel' Icon={CoPresentIcon} redirect={redirectRoute} route='panel' />
-                        <Button variant='contained' sx={{
-                            mx: 4, backgroundColor: '#33CC33', ":hover": {
-                                backgroundColor: '#6CF96C'
-                            }
-                        }} startIcon={<KeyboardArrowDownIcon />} onClick={handleMenu}>
-                            Menu
-                        </Button>
-                    </Box>
-                ) : (
-                    <Box>
-                        {
-                            location.pathname !== "/auth" && <Box>
-                                <ButtonNav text='Start now' Icon={AddIcon} redirect={redirectRoute} route='events' />
-                                {/* <ButtonNav text='Contact us' Icon={PhoneIcon} redirect={redirectRoute} route='auth' /> */}
-                                <ButtonNav text='Log in' Icon={PersonIcon} redirect={redirectRoute} route='auth' />
-                            </Box>
-                        }
-                    </Box>
-                )
+                navigation.map((button, index) => {
+                    return <Button
+                        key={index}
+                        color="inherit"
+                        sx={{
+                            fontWeight: 600,
+                            position: 'relative',
+                            '&:hover': {
+                                color: '#ffffff'
+                            },
+                            '&:after': {
+                                content: '""',
+                                position: 'absolute',
+                                width: '0%',
+                                height: '2px',
+                                bottom: 0,
+                                left: 0,
+                                backgroundColor: '#ffffff',
+                                transition: 'width 0.3s ease-in-out',
+                            },
+                            '&:hover:after': {
+                                width: '100%',
+                            },
+                        }}
+                    >
+                        {button.title}
+                    </Button>
+                })
             }
-        </Box >
+            <Button
+                sx={{
+                    backgroundColor: '#2e7d32',
+                    color: 'white',
+                    border: '2px solid white',
+                    fontWeight: 600,
+                    '&:hover': {
+                        backgroundColor: '#006400'
+                    }
+                }}
+            >
+                Iniciar sesión
+            </Button>
+        </Box>
     )
 }
 
