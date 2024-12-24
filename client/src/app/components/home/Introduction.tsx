@@ -1,10 +1,15 @@
-import React from 'react'
 import { Box, Container, Grid } from '@mui/material'
+import { NavigateFunction } from 'react-router-dom'
 
 import InfoText from './components/introduction/InfoText'
 import InfoImage from './components/introduction/InfoImage'
 
-const Introduction: React.FC = () => {
+const Introduction = ({ navigate }: { navigate: NavigateFunction }) => {
+
+    const redirectLogin = () => {
+        navigate('/auth')
+    }
+
     return (
         <Box
             sx={{
@@ -25,7 +30,7 @@ const Introduction: React.FC = () => {
                     }
                 }}>
                     <Grid container spacing={2} p={4} alignItems="center">
-                        <InfoText />
+                        <InfoText redirectLogin={redirectLogin} />
                         <InfoImage />
                     </Grid>
                 </Box>

@@ -5,6 +5,7 @@ import { NavigateFunction } from "react-router-dom"
 export type FormPropsType = {
     dispatch: Dispatch<any>;
     navigate: NavigateFunction;
+    setIsForgotPassword: (isForgotPassword: boolean) => void;
 }
 
 export type RegisterPropsType = {

@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
 
-const InfoText = () => {
+const InfoText = ({ redirectLogin }: { redirectLogin: () => void }) => {
     return (
         <Grid xs={12} md={6} p={2}>
             <Typography sx={{
@@ -24,6 +24,7 @@ const InfoText = () => {
                             backgroundColor: '#006400'
                         }
                     }}
+                    onClick={redirectLogin}
                 >
                     Comienza Ahora
                 </Button>

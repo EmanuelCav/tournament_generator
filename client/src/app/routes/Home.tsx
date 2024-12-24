@@ -79,7 +79,7 @@ const Home = () => {
       {
         !user.isLoggedIn &&
         <>
-          <Introduction />
+          <Introduction navigate={navigate} />
           <Tournaments />
           <Details />
           <Display />

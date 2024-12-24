@@ -2,65 +2,86 @@ import { useForm } from "react-hook-form";
 import { Box, Button, TextField, Typography } from "@mui/material"
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { ILogin } from "../../../interface/User";
 import { FormPropsType } from "../../../types/auth.types"
 
-import { loginSchema } from "../../../schema/user.schema";
 import { loginAction } from "../../../server/actions/user.actions";
 
-const FormLogin = ({ navigate, dispatch }: FormPropsType) => {
+import { loginSchema } from "../../../schema/user.schema";
+
+const FormLogin = ({ navigate, dispatch, setIsForgotPassword }: FormPropsType) => {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(loginSchema)
     });
 
+    const handleLogin = (data: ILogin) => {
+        dispatch(loginAction({ navigate, userData: data }))
+    }
+
     return (
-        <Box component='form' onSubmit={handleSubmit((data) => dispatch(loginAction({ navigate, userData: data })))} onReset={reset as any}>
+        <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+            onSubmit={handleSubmit((data) => handleLogin(data))} onReset={reset as any}>
             {
                 errors.email && <Typography mt={2} color='#f00'>{errors.email?.message}</Typography>
             }
             <TextField
                 {...register("email")}
-                margin="normal"
+                label="Correo Electrónico"
+                variant="outlined"
                 fullWidth
+                required
+                margin="dense"
                 id="email"
-                label="Email Address"
                 name="email"
                 autoFocus
                 color='success'
                 sx={{
                     '&:hover fieldset': {
-                        borderColor: '#33CC33 !important',
+                        borderColor: '#2e7d32 !important',
                     },
                 }}
+                inputProps={{ maxLength: 50 }}
             />
             {
                 errors.password && <Typography mt={2} color='#f00'>{errors.password?.message}</Typography>
             }
             <TextField
                 {...register("password")}
-                margin="normal"
+                label="Contraseña"
+                variant="outlined"
                 type="password"
                 fullWidth
+                required
+                margin="dense"
                 id="password"
-                label="Password"
                 name="password"
-                autoFocus
                 color='success'
                 sx={{
                     '&:hover fieldset': {
-                        borderColor: '#33CC33 !important'
+                        borderColor: '#2e7d32 !important',
                     },
                 }}
+                autoComplete="off"
+                inputProps={{ maxLength: 50 }}
             />
+            <Typography
+                variant="body1"
+                sx={{
+                    color: 'text.secondary', cursor: 'pointer', ":hover": {
+                        textDecoration: 'underline'
+                    }
+                }}
+                onClick={() => setIsForgotPassword(true)}>
+                ¿Olvido su contraseña?
+            </Typography>
             <Button
                 type="submit"
-                fullWidth
                 variant="contained"
-                sx={{ mt: 2, mb: 2, fontSize: '1.225em' }}
-                color='success'
-                size='large'
+                color="success"
+                sx={{ fontWeight: 600, py: 1 }}
             >
-                Sign in
+                Iniciar Sesión
             </Button>
         </Box>
     )
