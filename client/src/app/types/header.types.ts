@@ -11,8 +11,6 @@ export type ButtonNavPropsType = {
 export type NavigationPropsType = {
     location: Location<any>;
     navigate: NavigateFunction;
-    isLoggedIn: boolean;
-    dispatch: Dispatch<any>;
 }
 
 export type MenuHeaderPropsType = {
@@ -24,4 +22,26 @@ export type MenuHeaderPropsType = {
 export type LogoPropsType = {
     isLoggedIn: boolean;
     navigate: NavigateFunction;
+}
+
+export type SolutionsMenuPropsType = {
+    anchorEl: HTMLButtonElement | null;
+    handleMenuClose: () => void;
+}
+
+export type SolutionCategoryPropsType = {
+    func: () => void;
+    title: string;
+    solutions: string[];
+}
+
+export type MenuDrawerPropsType = {
+    isMenu: boolean;
+    handleMenu: () => void;
+    navigate: NavigateFunction;
+}
+
+export type ListDrawerPropsType = {
+    text: string;
+    func: () => void;
 }

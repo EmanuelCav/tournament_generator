@@ -13,7 +13,7 @@ const Introduction = ({ navigate }: { navigate: NavigateFunction }) => {
     return (
         <Box
             sx={{
-                mt: 12,
+                mt: { xs: 9, sm: 12 },
                 backgroundImage: `url("/background_4.jpg")`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
