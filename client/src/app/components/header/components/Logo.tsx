@@ -2,13 +2,27 @@ import { Box } from "@mui/material"
 
 import { LogoPropsType } from "../../../types/header.types"
 
-const Logo = ({ navigate, isLoggedIn }: LogoPropsType) => {
+const Logo = ({ navigate, isLoggedIn, location }: LogoPropsType) => {
 
     const redirectIndex = () => {
-        if(isLoggedIn) {
-            navigate('/events')
+        if (isLoggedIn) {
+            if (location.pathname === "/events") {
+                const element = document.getElementById("Introduction");
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            } else {
+                navigate('/events')
+            }
         } else {
-            navigate('/')
+            if (location.pathname === "/") {
+                const element = document.getElementById("Introduction");
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            } else {
+                navigate('/')
+            }
         }
     }
 

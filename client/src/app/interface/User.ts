@@ -50,6 +50,10 @@ export interface IForgotPassword {
     email: string;
 }
 
+export interface ICode {
+    code: string;
+}
+
 export interface IPassword {
     password: string;
     confirm: string;

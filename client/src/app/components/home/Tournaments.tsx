@@ -45,6 +45,7 @@ const Tournaments: React.FC = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
             }}
+            id='Formatos'
         >
             <Container fixed maxWidth="lg">
                 <Box bgcolor={"#ffffff"} sx={{

@@ -39,7 +39,7 @@ const Details: React.FC = () => {
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: '#f5f5f5'
-        }}>
+        }} id='Herramientas'>
             <Container fixed maxWidth="lg">
                 <Box sx={{
                     m: { xs: 0, sm: 2, md: 4 },

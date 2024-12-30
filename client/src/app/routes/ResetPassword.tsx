@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField } from "@mui/material"
+import { Box, Button, Paper, TextField } from "@mui/material"
 
 import { IPassword } from "../interface/User"
 import { IReducer } from "../interface/General";
@@ -50,56 +50,63 @@ const ResetPassword = () => {
 
     return (
         <Box display="flex" justifyContent="center" alignItems="center" className="full-screen">
-            <Box component="form" noValidate sx={{ p: 4 }} onSubmit={handleSumbit}>
-                <TextField
-                    type="password"
-                    margin="normal"
-                    fullWidth
-                    id="password"
-                    label="Password"
-                    name="password"
-                    autoFocus
-                    color='success'
-                    value={password}
-                    sx={{
-                        '&:hover fieldset': {
-                            borderColor: '#33CC33 !important',
-                        },
-                    }}
-                    onChange={handleChange}
-                    autoComplete="off"
-                    inputProps={{ maxLength: 75 }}
-                />
-                <TextField
-                    type="password"
-                    margin="normal"
-                    fullWidth
-                    id="confirm"
-                    label="Confirm password"
-                    name="confirm"
-                    autoFocus
-                    color='success'
-                    value={confirm}
-                    sx={{
-                        '&:hover fieldset': {
-                            borderColor: '#33CC33 !important',
-                        },
-                    }}
-                    onChange={handleChange}
-                    autoComplete="off"
-                    inputProps={{ maxLength: 75 }}
-                />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 2, mb: 2, fontSize: '1.225em' }}
-                    color='success'
-                    size='large'
-                >
-                    RESET
-                </Button>
-            </Box>
+            <Paper sx={{
+                maxWidth: {
+                    xs: '90%',
+                    md: '33.33%'
+                } 
+            }} elevation={2}>
+                <Box component="form" noValidate sx={{ p: 4 }} onSubmit={handleSumbit}>
+                    <TextField
+                        type="password"
+                        margin="normal"
+                        fullWidth
+                        id="password"
+                        label="Password"
+                        name="password"
+                        autoFocus
+                        color='success'
+                        value={password}
+                        sx={{
+                            '&:hover fieldset': {
+                                borderColor: '#33CC33 !important',
+                            },
+                        }}
+                        onChange={handleChange}
+                        autoComplete="off"
+                        inputProps={{ maxLength: 75 }}
+                    />
+                    <TextField
+                        type="password"
+                        margin="normal"
+                        fullWidth
+                        id="confirm"
+                        label="Confirm password"
+                        name="confirm"
+                        autoFocus
+                        color='success'
+                        value={confirm}
+                        sx={{
+                            '&:hover fieldset': {
+                                borderColor: '#33CC33 !important',
+                            },
+                        }}
+                        onChange={handleChange}
+                        autoComplete="off"
+                        inputProps={{ maxLength: 75 }}
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 2, mb: 2, fontSize: '1.225em' }}
+                        color='success'
+                        size='large'
+                    >
+                        REESTABLECER
+                    </Button>
+                </Box>
+            </Paper>
         </Box>
     )
 }

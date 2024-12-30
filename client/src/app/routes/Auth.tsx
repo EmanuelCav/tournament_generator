@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import FormAuth from "../components/auth/FormAuth"
 import ImageAuth from "../components/auth/ImageAuth"
 import Register from "../components/auth/Register"
-import ForgotPassword from "../components/home/ForgotPassword"
+import ForgotPassword from "../components/auth/ForgotPassword"
+import CodeForm from "../components/auth/CodeForm";
 
 import { selector } from "../server/selector"
 
@@ -17,6 +18,7 @@ const Auth: React.FC = () => {
     const user = useSelector((state: IReducer) => selector(state).user)
 
     const [isRegister, setIsRegister] = useState<boolean>(false)
+    const [isCode, setIsCode] = useState<boolean>(false)
     const [isForgotPassword, setIsForgotPassword] = useState<boolean>(false)
 
     const dispatch = useDispatch()
@@ -44,7 +46,10 @@ const Auth: React.FC = () => {
                 isRegister && <Register dispatch={dispatch} navigate={navigate} setIsRegister={setIsRegister} />
             }
             {
-                isForgotPassword && <ForgotPassword dispatch={dispatch} setIsForgotPassword={setIsForgotPassword} />
+                isCode && <CodeForm />
+            }
+            {
+                isForgotPassword && <ForgotPassword dispatch={dispatch} setIsForgotPassword={setIsForgotPassword} setIsCode={setIsCode} />
             }
             <Grid
                 container

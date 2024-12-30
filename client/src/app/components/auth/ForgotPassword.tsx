@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react"
-import { Box, Button, Paper, TextField } from "@mui/material"
+import { Box, Button, Paper, TextField, Typography } from "@mui/material"
 
 import CloseForm from "../general/CloseForm"
 
@@ -8,7 +8,7 @@ import { ForgotPasswordPropsType } from "../../types/auth.types"
 
 import { forgotPasswordAction } from "../../server/actions/user.actions"
 
-const ForgotPassword = ({ setIsForgotPassword, dispatch }: ForgotPasswordPropsType) => {
+const ForgotPassword = ({ setIsForgotPassword, setIsCode, dispatch }: ForgotPasswordPropsType) => {
 
     const initialState: IForgotPassword = {
         email: ""
@@ -29,7 +29,8 @@ const ForgotPassword = ({ setIsForgotPassword, dispatch }: ForgotPasswordPropsTy
 
         dispatch(forgotPasswordAction({
             emailData,
-            setIsForgotPassword
+            setIsForgotPassword,
+            setIsCode
         }))
 
     }
@@ -38,14 +39,15 @@ const ForgotPassword = ({ setIsForgotPassword, dispatch }: ForgotPasswordPropsTy
         <Box display='flex' zIndex={16} justifyContent='center' width='100%' height='100vh' alignItems='center' position='fixed' top={0} left={0} sx={{
             background: 'rgba(0, 0, 0, 0.5)'
         }}>
-            <Paper elevation={3} sx={{ p: 2 }}>
+            <Paper elevation={3} sx={{ p: 2, m: 1 }}>
                 <CloseForm handleClose={() => setIsForgotPassword(false)} />
                 <Box component="form" noValidate sx={{ p: 4 }} onSubmit={handleSumbit}>
+                    <Typography variant="body1">Reestablecer contraseña</Typography>
                     <TextField
                         margin="normal"
                         fullWidth
                         id="name"
-                        label="Write your email"
+                        label="Correo electrónico"
                         name="email"
                         autoFocus
                         color='success'
@@ -67,7 +69,7 @@ const ForgotPassword = ({ setIsForgotPassword, dispatch }: ForgotPasswordPropsTy
                         color='success'
                         size='large'
                     >
-                        SEND
+                        CONTINUAR
                     </Button>
                 </Box>
             </Paper>

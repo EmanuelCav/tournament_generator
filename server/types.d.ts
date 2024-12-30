@@ -4,5 +4,6 @@ declare namespace Express {
         permission: string | undefined;
         verification: string | undefined;
         changePassword: string | undefined;
+        code: string;
     }
 }

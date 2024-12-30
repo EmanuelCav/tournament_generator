@@ -8,10 +8,10 @@ const PublicEvents = ({ events, navigate, text, dispatch, user }: PublicEventsPr
 
     return (
         <Box py={4} px={8}>
-            <Typography variant="h3" color='#33cc33'>Public events</Typography>
+            <Typography variant="h4" color='#2e7d32' ml={4} mb={2} fontWeight={600}>Explorar</Typography>
             {
                 events.length > 0 ? <ShowEvents events={events} navigate={navigate} text={text} dispatch={dispatch} user={user} /> : (
-                    <Typography variant="h5" color='#cc3333'>There are not events yet</Typography>
+                    <Typography variant="h5" color='#cc3333'>Por el momento no hay eventos</Typography>
                 )
             }    
         </Box>

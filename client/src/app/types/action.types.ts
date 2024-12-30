@@ -1,6 +1,6 @@
 import { NavigateFunction } from "react-router-dom";
 
-import { IForgotPassword, ILogin, IPassword, IRegister } from "../interface/User";
+import { ICode, IForgotPassword, ILogin, IPassword, IRegister } from "../interface/User";
 import { ICreatePlayer, ICreateStatistic, ICreateTeam, IMatch, IPlayerData, ISchedule, ITarget, ITeam } from "../interface/Event";
 
 export type LoginActionPropsType = {
@@ -244,10 +244,17 @@ export type UpdateStatisticActionPropsType = {
 export type ForgotPasswordActionPropsType = {
     emailData: IForgotPassword;
     setIsForgotPassword: (isForgotPassword: boolean) => void;
+    setIsCode: (isCode: boolean) => void;
 }
 
 export type UpdatePasswordActionPropsType = {
     token: string;
     passwordData: IPassword;
+    navigate: NavigateFunction;
+}
+
+export type UploadCodeActionPropsType = {
+    token: string;
+    codeData: ICode;
     navigate: NavigateFunction;
 }

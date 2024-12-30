@@ -30,7 +30,7 @@ const Display: React.FC = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center'
-    }}>
+    }} id='Visualización'>
       <Container fixed maxWidth="lg">
         <Box bgcolor={"#2e7d32"}
           sx={{

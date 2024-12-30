@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import { Box } from '@mui/material'
 
 import JoinEvent from '../components/events/JoinEvent'
 import PublicEvents from '../components/events/PublicEvents'
@@ -24,10 +23,11 @@ const Events = () => {
     }, [])
     
     return (
-        <Box>
+        <>
             <JoinEvent dispatch={dispatch} navigate={navigate} user={user.user} />
-            <PublicEvents events={event.events.filter(e => !e.competitors?.find(c => c.user._id === user.user.user?._id!))} navigate={navigate} dispatch={dispatch} user={user.user} text='JOIN' />
-        </Box>
+            <PublicEvents events={event.events.filter(e => !e.competitors?.find(c => c.user._id === user.user.user?._id!))} 
+            navigate={navigate} dispatch={dispatch} user={user.user} text='UNIRSE' />
+        </>
     )
 }
 

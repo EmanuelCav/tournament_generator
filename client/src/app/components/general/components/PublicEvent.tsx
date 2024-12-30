@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Grid, Typography } from '@mui/material'
+import { Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material'
 
 import { PublicEventPropsType } from '../../../types/events.types'
 
@@ -12,7 +12,7 @@ const PublicEvent = ({ event, navigate, text, dispatch, user }: PublicEventProps
             return
         }
 
-        if(!user.token) {
+        if (!user.token) {
             navigate('/auth')
             return
         }
@@ -25,32 +25,32 @@ const PublicEvent = ({ event, navigate, text, dispatch, user }: PublicEventProps
     }
 
     return (
-        <Grid item xs={4}>
-            <Card sx={{
-                boxShadow: "0 0 2px 1px #33cc33 inset",
-                p: 2,
-                minHeight: 360,
-                height: '100%',
-                backgroundImage: `url('${event.image?.image}')`,
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexDirection: 'column',
-            }}>
-                <CardContent sx={{ background: '#ffffff', width: '100%', m: 1, border: '2px solid #33cc33' }}>
-                    <Typography variant="h5" color='#33cc33' align="center">
+        <Grid item xs={12} sm={6} md={4} key={event.id}>
+            <Card>
+                <CardMedia
+                    component="img"
+                    sx={{
+                        height: { xs: 150, md: 275 },
+                    }}
+                    image={event.image?.image}
+                    alt={event.event}
+                />
+                <CardContent>
+                    <Typography variant="h6" gutterBottom>
                         {event.event}
                     </Typography>
-                    <Typography variant="h6" align="center">
-                        {
-                            event.description?.length! > 50 ? `${event.description?.slice(0, 50)} ...` : event.description
-                        }
+                    <Typography variant="body1" color="textSecondary" paragraph>
+                        {event.description?.slice(0, 50)} {event.description?.length! > 75 && "..."}
                     </Typography>
+                    <Button
+                        variant="contained"
+                        color="success"
+                        sx={{ fontWeight: 600, py: 1 }}
+                        onClick={joinEvent}
+                    >
+                        {text}
+                    </Button>
                 </CardContent>
-                <Button fullWidth variant='contained' size='medium' color='success' onClick={joinEvent}>{text}</Button>
             </Card>
         </Grid>
     )

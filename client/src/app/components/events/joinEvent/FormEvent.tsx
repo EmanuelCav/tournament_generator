@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent as FE, useState } from 'react'
-import { Box, Button, Paper, TextField } from '@mui/material'
+import { Box, Button, TextField } from '@mui/material'
 
 import { FormEventPropsType } from '../../../types/events.types'
 
@@ -29,38 +29,35 @@ const FormEvent = ({ dispatch, navigate, user }: FormEventPropsType) => {
     }
 
     return (
-        <Paper elevation={3} sx={{ p: 4, width: '33.33%', mt: 2 }}>
-            <Box component="form" noValidate onSubmit={handleSumbit}>
-                <TextField
-                    margin="normal"
-                    fullWidth
-                    id="id"
-                    label="Event ID"
-                    name="id"
-                    autoFocus
-                    color='success'
-                    value={id}
-                    sx={{
-                        '&:hover fieldset': {
-                            borderColor: '#33CC33 !important',
-                        },
-                    }}
-                    onChange={handleChange}
-                    autoComplete='off'
-                    inputProps={{ maxLength: 7 }}
-                />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 2, mb: 2, fontSize: '1.225em' }}
-                    color='success'
-                    size='large'
-                >
-                    Join
-                </Button>
-            </Box>
-        </Paper>
+        <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+            onSubmit={handleSumbit}>
+            <TextField
+                onChange={handleChange}
+                label="Código"
+                variant="outlined"
+                fullWidth
+                required
+                margin="dense"
+                id="id"
+                name="id"
+                autoComplete="off"
+                color='success'
+                sx={{
+                    '&:hover fieldset': {
+                        borderColor: '#2e7d32 !important',
+                    },
+                }}
+                inputProps={{ maxLength: 8 }}
+            />
+            <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                sx={{ fontWeight: 600, py: 1 }}
+            >
+                Unirse
+            </Button>
+        </Box>
     )
 }
 

@@ -21,7 +21,7 @@ const Introduction = ({ navigate }: { navigate: NavigateFunction }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
             }}
-        >
+        id="Introduction">
             <Container fixed maxWidth="lg">
                 <Box sx={{
                     m: { xs: 0, sm: 2, md: 4 },

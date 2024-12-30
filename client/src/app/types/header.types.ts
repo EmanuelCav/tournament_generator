@@ -20,6 +20,7 @@ export type MenuHeaderPropsType = {
 }
 
 export type LogoPropsType = {
+    location: Location<any>;
     isLoggedIn: boolean;
     navigate: NavigateFunction;
 }
@@ -27,10 +28,12 @@ export type LogoPropsType = {
 export type SolutionsMenuPropsType = {
     anchorEl: HTMLButtonElement | null;
     handleMenuClose: () => void;
+    pathname: string; 
+    navigate: NavigateFunction;
 }
 
 export type SolutionCategoryPropsType = {
-    func: () => void;
+    func: (id: string) => void;
     title: string;
     solutions: string[];
 }

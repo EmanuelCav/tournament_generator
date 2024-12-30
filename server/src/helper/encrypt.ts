@@ -27,9 +27,9 @@ export const generateUserToken = (id: Types.ObjectId): string => {
 
 }
 
-export const forgotPasswordToken = (id: Types.ObjectId): string => {
+export const forgotPasswordToken = (id: Types.ObjectId, code: string): string => {
 
-    return jwt.sign({ id }, `${jwt_forgot_password}`, {
+    return jwt.sign({ id, code }, `${jwt_forgot_password}`, {
         expiresIn: '2h'
     })
 

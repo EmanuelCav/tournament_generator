@@ -2,7 +2,7 @@ import { Box, Button, Grid, Typography } from '@mui/material'
 
 const InfoText = ({ redirectLogin }: { redirectLogin: () => void }) => {
     return (
-        <Grid xs={12} md={6} p={2}>
+        <Grid xs={12} md={6} p={2} item>
             <Typography sx={{
             typography: { xs: 'h4', sm: 'h3' }}} gutterBottom color={"#ffffff"} align="center" fontWeight={600}>
                 Organiza Campeonatos Con Facilidad

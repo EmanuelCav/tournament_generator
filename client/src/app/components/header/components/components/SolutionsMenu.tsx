@@ -8,7 +8,19 @@ const format: string[] = ["Todos contra todos", "Fase de grupos", "Formato suizo
 const tools: string[] = ["Estadios", "Árbitros", "Jugadores", "Horarios"]
 const visualization: string[] = ["Posiciones", "Eliminación"]
 
-const SolutionsMenu = ({ anchorEl, handleMenuClose }: SolutionsMenuPropsType) => {
+const SolutionsMenu = ({ anchorEl, handleMenuClose, pathname, navigate }: SolutionsMenuPropsType) => {
+
+    const handleScroll = (id: string) => {
+        if(pathname === "/") {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        } else {
+            navigate("/")
+        }
+    }
+
     return (
         <Menu
             anchorEl={anchorEl}
@@ -20,9 +32,9 @@ const SolutionsMenu = ({ anchorEl, handleMenuClose }: SolutionsMenuPropsType) =>
         >
             <Box sx={{ padding: 2 }}>
                 <Grid container spacing={3}>
-                    <SolutionCategory solutions={format} func={handleMenuClose} title='Formatos' />
-                    <SolutionCategory solutions={tools} func={handleMenuClose} title='Herramientas' />
-                    <SolutionCategory solutions={visualization} func={handleMenuClose} title='Visualización' />
+                    <SolutionCategory solutions={format} func={handleScroll} title='Formatos' />
+                    <SolutionCategory solutions={tools} func={handleScroll} title='Herramientas' />
+                    <SolutionCategory solutions={visualization} func={handleScroll} title='Visualización' />
                 </Grid>
             </Box>
         </Menu>

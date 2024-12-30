@@ -3,11 +3,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as userApi from "../api/user.api";
 import * as userReducer from "../reducer/user.reducer";
 
-import { AutoLoginActionPropsType, ForgotPasswordActionPropsType, LoginActionPropsType, LogoutActionPropsType, RegisterActionPropsType, UpdatePasswordActionPropsType } from "../../types/action.types";
+import * as ActionTypes from "../../types/action.types";
 
 import { dangerMessage, successMessage } from "../../helper/message";
 
-export const loginAction = createAsyncThunk('users/login', async (loginData: LoginActionPropsType, { dispatch }) => {
+export const loginAction = createAsyncThunk('users/login', async (loginData: ActionTypes.LoginActionPropsType, { dispatch }) => {
 
     try {
 
@@ -27,7 +27,7 @@ export const loginAction = createAsyncThunk('users/login', async (loginData: Log
 
 })
 
-export const registerAction = createAsyncThunk('users/register', async (registerData: RegisterActionPropsType, { dispatch }) => {
+export const registerAction = createAsyncThunk('users/register', async (registerData: ActionTypes.RegisterActionPropsType, { dispatch }) => {
 
     try {
 
@@ -51,7 +51,7 @@ export const registerAction = createAsyncThunk('users/register', async (register
 
 })
 
-export const logoutAction = createAsyncThunk('users/logout', async (logoutData: LogoutActionPropsType, { dispatch }) => {
+export const logoutAction = createAsyncThunk('users/logout', async (logoutData: ActionTypes.LogoutActionPropsType, { dispatch }) => {
 
     try {
 
@@ -67,7 +67,7 @@ export const logoutAction = createAsyncThunk('users/logout', async (logoutData: 
 
 })
 
-export const autoLoginAction = createAsyncThunk('users/autologin', async (userData: AutoLoginActionPropsType, { dispatch }) => {
+export const autoLoginAction = createAsyncThunk('users/autologin', async (userData: ActionTypes.AutoLoginActionPropsType, { dispatch }) => {
 
     try {
 
@@ -83,7 +83,7 @@ export const autoLoginAction = createAsyncThunk('users/autologin', async (userDa
 
 })
 
-export const forgotPasswordAction = createAsyncThunk('users/forgotpassword', async (userData: ForgotPasswordActionPropsType, { dispatch }) => {
+export const forgotPasswordAction = createAsyncThunk('users/forgotpassword', async (userData: ActionTypes.ForgotPasswordActionPropsType, { dispatch }) => {
 
     try {
 
@@ -94,6 +94,7 @@ export const forgotPasswordAction = createAsyncThunk('users/forgotpassword', asy
         successMessage(data.message)
 
         userData.setIsForgotPassword(false)
+        userData.setIsCode(true)
 
     } catch (error: any) {
         dangerMessage(error.response.data[0].message)
@@ -101,7 +102,25 @@ export const forgotPasswordAction = createAsyncThunk('users/forgotpassword', asy
 
 })
 
-export const updatePasswordAction = createAsyncThunk('users/updatepassword', async (userData: UpdatePasswordActionPropsType) => {
+export const uploadCode = createAsyncThunk('users/code', async (userData: ActionTypes.UploadCodeActionPropsType) => {
+
+    try {
+
+        await userApi.uploadCodeApi(userData.codeData, userData.token)
+
+        userData.navigate('/resetpassword')
+
+    } catch (error: any) {
+        if(error.response.data[0]) {
+            dangerMessage(error.response.data[0].message)
+        } else {
+            dangerMessage(error.response.data.message)
+        }
+    }
+
+})
+
+export const updatePasswordAction = createAsyncThunk('users/updatepassword', async (userData: ActionTypes.UpdatePasswordActionPropsType) => {
 
     try {
 

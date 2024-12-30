@@ -18,7 +18,6 @@ const MenuDrawer = ({ isMenu, handleMenu, navigate }: MenuDrawerPropsType) => {
                 onKeyDown={handleMenu}
             >
                 <List>
-                    <ListDrawer text="Contacto" func={() => navigate('/contact')} />
                     <ListDrawer text="Explorar" func={() => navigate('/events')} />
                     <ListDrawer text="Crear" func={() => navigate('/create')} />
                     <ListDrawer text="Iniciar sesión" func={() => navigate('/auth')} />

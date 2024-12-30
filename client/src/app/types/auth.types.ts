@@ -38,4 +38,5 @@ export type TermsPropsType = {
 export type ForgotPasswordPropsType = {
     setIsForgotPassword: (isForgotPassword: boolean) => void;
     dispatch: Dispatch<any>;
+    setIsCode: (isCode: boolean) => void;
 }

@@ -8,9 +8,6 @@ import { NavigationPropsType } from '../../../types/header.types';
 import { INavigation } from '../../../interface/General';
 
 const navigation: INavigation[] = [{
-    title: "Contacto",
-    path: "/contact"
-}, {
     title: "Explorar",
     path: "/events"
 }, {
@@ -32,7 +29,8 @@ const Navigation = ({ navigate, location }: NavigationPropsType) => {
 
     return (
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-            <SolutionsMenu handleMenuClose={handleMenuClose} anchorEl={anchorEl} />
+            <SolutionsMenu handleMenuClose={handleMenuClose} anchorEl={anchorEl}
+                navigate={navigate} pathname={location.pathname} />
             <Button
                 color="inherit"
                 sx={{
@@ -102,6 +100,7 @@ const Navigation = ({ navigate, location }: NavigationPropsType) => {
                             backgroundColor: '#006400'
                         }
                     }}
+                    onClick={() => navigate('/auth')}
                 >
                     Iniciar sesión
                 </Button>

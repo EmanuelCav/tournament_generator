@@ -30,7 +30,7 @@ const Header = () => {
             <AppBar sx={{ bgcolor: '#2e7d32', padding: { xs: 1, sm: 2 } }}>
                 <Container fixed maxWidth="lg">
                     <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Logo isLoggedIn={user.isLoggedIn} navigate={navigate} />
+                        <Logo isLoggedIn={user.isLoggedIn} navigate={navigate} location={location} />
                         <Navigation location={location} navigate={navigate} />
                         <MenuIcon fontSize="large" color="inherit" sx={{ display: { xs: 'block', md: 'none' }, cursor: 'pointer' }} onClick={handleMenu} />
                     </Toolbar>

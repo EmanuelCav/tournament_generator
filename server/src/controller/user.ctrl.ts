@@ -273,7 +273,7 @@ export const updateStatus = async (req: Request, res: Response): Promise<Respons
 
 }
 
-export const forgotPassword = async (req: Request, res: Response): Promise<Response> => {
+export const forgotUpdatePassword = async (req: Request, res: Response): Promise<Response> => {
 
     const { email } = req.body
 
@@ -282,16 +282,38 @@ export const forgotPassword = async (req: Request, res: Response): Promise<Respo
         const user = await User.findOne({ email })
 
         if (!user) {
-            return res.status(400).json({ message: "User does not exists" })
+            return res.status(400).json({ message: "Chequea tu correo electrónico" })
         }
 
-        const token = forgotPasswordToken(user._id)
+        const code = generateNumberUser()
 
-        await infoEmailPassword(email)
+        const token = forgotPasswordToken(user._id, code)
+
+        await infoEmailPassword(email, code)
 
         return res.status(200).json({
-            message: "Check your email",
+            message: "Chequea tu correo electrónico",
             token
+        })
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const uploadCode = async (req: Request, res: Response): Promise<Response> => {
+
+    const { code } = req.body
+
+    try {
+
+        if(req.code !== code) {
+            return res.status(400).json({ message: "El código es incorrecto" })
+        }
+
+        return res.status(200).json({
+            message: "Código verificado",
         })
 
     } catch (error) {
@@ -320,7 +342,7 @@ export const updatePassword = async (req: Request, res: Response): Promise<Respo
             new: true
         })
 
-        return res.status(200).json({ message: "Password updated successfully" })
+        return res.status(200).json({ message: "Se ha cambiado la contraseña exitosamente" })
 
     } catch (error) {
         throw error

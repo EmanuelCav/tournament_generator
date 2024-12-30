@@ -1,6 +1,6 @@
 import { api } from "./api";
 
-import { IForgotPassword, ILogin, IPassword, IRegister } from "../../interface/User";
+import { ICode, IForgotPassword, ILogin, IPassword, IRegister } from "../../interface/User";
 
 export const loginApi = async (userData: ILogin) => {
     return await api.post('/users/login', userData, {
@@ -36,6 +36,15 @@ export const autoLoginApi = async (nickname: string) => {
 
 export const forgotPasswordApi = async (userData: IForgotPassword) => {
     return await api.post('/users/password', userData)
+}
+
+export const uploadCodeApi = async (userData: ICode, token: string) => {
+    return await api.post('/users/code', userData, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
 }
 
 export const updatePasswordApi = async (passwordData: IPassword, token: string) => {
