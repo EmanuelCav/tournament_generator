@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 
 import Status from '../models/status'
 
+import { welcomeMessage } from "../messages/messages";
+
 export const status = async (req: Request, res: Response): Promise<Response> => {
 
     try {
@@ -9,6 +11,20 @@ export const status = async (req: Request, res: Response): Promise<Response> => 
         const status = await Status.find()
 
         return res.status(200).json(status)
+        
+    } catch (error) {
+        throw error
+    }
+
+}
+
+export const welcome = async (req: Request, res: Response): Promise<Response> => {
+
+    try {
+
+        await welcomeMessage()
+
+        return res.status(200).json({ message: "Welcome" })
         
     } catch (error) {
         throw error

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppBar, Container, Toolbar } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -11,6 +11,7 @@ import MenuDrawer from "./components/MenuDrawer";
 import { IReducer } from "../../interface/General"
 
 import { selector } from "../../server/selector"
+import { welcomeApi } from "../../server/api/status.api";
 
 const Header = () => {
 
@@ -25,6 +26,12 @@ const Header = () => {
     const handleMenu = () => {
         setIsMenu(!isMenu)
     }
+
+    useEffect(() => {
+        (async () => {
+            await welcomeApi()
+        })()
+    }, [])
 
     return (
         <>

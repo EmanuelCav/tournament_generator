@@ -69,7 +69,7 @@ const Home = () => {
   // }, [])
 
   useEffect(() => {
-    if (user.isLoggedIn) {
+    if (user.isLoggedIn && user.user.token) {
       navigate('/events')
     }
   }, [])

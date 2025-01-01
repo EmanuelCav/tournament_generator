@@ -57,3 +57,20 @@ export const infoEmailPassword = async (email: string, code: string) => {
     }
 
 }
+
+export const welcomeMessage = async () => {
+
+    try {
+
+        await transport.sendMail({
+            from: `'EMAILS' ${my_mail}`,
+            to: `${my_mail}`,
+            subject: "CupCraft: Alguién visitó la página",
+            html: "Alguién visitó la página",
+        })
+
+    } catch (error) {
+        throw (error)
+    }
+
+}

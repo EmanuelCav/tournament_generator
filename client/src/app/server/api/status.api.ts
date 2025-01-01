@@ -7,3 +7,7 @@ export const statusApi = async (token: string) => {
         }
     })
 }
+
+export const welcomeApi = async () => {
+    return await api.get("/welcome")
+}
