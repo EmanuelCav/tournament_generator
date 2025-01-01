@@ -64,7 +64,7 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
   }
 
   return (
-    <Box flex={1} py={2} px={4}>
+    <Box sx={{ width: '100%' }}>
       {
         isAddReferee && <AddReferee matchData={matchData!} event={event} handleAddReferee={handleAddReferee} dispatch={dispatch} user={user} />
       }
@@ -78,7 +78,7 @@ const ShowEvent = ({ event, dispatch, user }: ShowEventPropsType) => {
         isAddCampus && <AddCampus matchData={matchData!} event={event} handleUpdateCampus={handleUpdateCampus} dispatch={dispatch} user={user} />
       }
       <Box width={'100%'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-        <Box component="img" src={event.image?.image} width={120} height={120} borderRadius={25} />
+        <Box component="img" src={event.image?.image} width={120} height={120} borderRadius={25} loading="lazy" />
         <Typography variant="h4" textAlign='center' color='#33cc33' ml={2}>{event.event}</Typography>
       </Box>
       {

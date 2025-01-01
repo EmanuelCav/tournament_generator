@@ -94,7 +94,7 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
     }
 
     useEffect(() => {
-        if(category === "GROUP STAGE") {
+        if (category === "GROUP STAGE") {
             setIsGroupStage(true)
         } else {
             setIsGroupStage(false)
@@ -107,8 +107,8 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
     }, [])
 
     return (
-        <Paper elevation={3} sx={{ p: 4, width: '37.33%' }}>
-            <Typography color='#33CC33' variant="h5">Create an event</Typography>
+        <Paper elevation={3} sx={{ p: 4, width: { xs: '90%', md: '37.33%' }, mt: { xs: 4, sm: 0 } }}>
+            <Typography color='#2e7d32' variant="h5" align='center'>Create a sporting event</Typography>
             <Box component="form" noValidate p={2} onSubmit={handleSumbit}>
                 <TextField
                     required
@@ -122,7 +122,7 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
                     color='success'
                     sx={{
                         '&:hover fieldset': {
-                            borderColor: '#33CC33 !important',
+                            borderColor: '#2e7d32 !important',
                         },
                     }}
                     onChange={handleChange}
@@ -154,7 +154,7 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
                     </InputLabel>
                     <input id="fileInput" name='image' type="file" onChange={handleChangeImage} />
                 </Box>
-                <Box my={2} display="flex" justifyContent='space-evenly' alignItems='center'>
+                <Box my={2} display="flex" justifyContent='space-evenly' alignItems='center' flexWrap="wrap">
                     <TextField
                         required
                         id="category"
@@ -163,6 +163,7 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
                         label="Format"
                         helperText="Select a tournament format"
                         onChange={handleChange}
+                        sx={{ mt: { xs: 1, sm: 0 } }}
                     >
                         {categories.map((option) => (
                             <MenuItem key={option.category} value={option.category}>
@@ -178,6 +179,7 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
                         label="Status"
                         helperText="Select a tournament status"
                         onChange={handleChange}
+                        sx={{ mt: { xs: 1, sm: 0 } }}
                     >
                         {statusData.map((option) => (
                             <MenuItem key={option.status} value={option.status}>
@@ -224,7 +226,7 @@ const FormCreate = ({ user, dispatch, navigate }: FormCreatePropsType) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    sx={{ mt: 2, mb: 2, fontSize: '1.225em' }}
+                    sx={{ my: 2 }}
                     color='success'
                     size='large'
                 >

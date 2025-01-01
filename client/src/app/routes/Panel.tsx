@@ -31,12 +31,12 @@ const Panel = () => {
     }, [])
 
     return (
-        <Box>
+        <Box id="panel">
             {
                 isJoinEvent && <ContainFormJoin handleJoinEvent={handleJoinEvent} />
             }
             <CreatePanel navigate={navigate} handleJoinEvent={handleJoinEvent} />
-            <EventsPanel navigate={navigate} events={event.events} text="VISUALIZE" dispatch={dispatch} user={user.user} />
+            <EventsPanel navigate={navigate} events={event.events} text="VISUALIZAR" dispatch={dispatch} user={user.user} />
         </Box>
     )
 }

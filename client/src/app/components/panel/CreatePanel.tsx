@@ -18,7 +18,7 @@ const CreatePanel = ({ navigate, handleJoinEvent }: CreatePanelPropsType) => {
     }
 
     return (
-        <Box display='flex' justifyContent='space-around' alignItems='center' width='100%' flexWrap='wrap' p={12}>
+        <Box sx={{ mt: { xs: 4, sm: 9 }}} display='flex' justifyContent='space-around' alignItems='center' width='100%' flexWrap='wrap' p={8}>
             <CardPanel text="Public events" func={redirectPublic} Icon={PublicIcon} />
             <CardPanel text="Create an event" func={redirectCreate} Icon={AddIcon} />
             <CardPanel text="Join an event" func={handleJoinEvent} Icon={AdjustIcon} />

@@ -9,6 +9,7 @@ import { IReducer } from '../interface/General'
 
 import { eventsAction } from '../server/actions/event.actions'
 import { selector } from '../server/selector';
+import { Box } from '@mui/material';
 
 const Events = () => {
 
@@ -23,11 +24,11 @@ const Events = () => {
     }, [])
     
     return (
-        <>
+        <Box id='events'>
             <JoinEvent dispatch={dispatch} navigate={navigate} user={user.user} />
             <PublicEvents events={event.events.filter(e => !e.competitors?.find(c => c.user._id === user.user.user?._id!))} 
             navigate={navigate} dispatch={dispatch} user={user.user} text='UNIRSE' />
-        </>
+        </Box>
     )
 }
 

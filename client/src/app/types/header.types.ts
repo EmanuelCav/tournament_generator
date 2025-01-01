@@ -1,6 +1,8 @@
 import { Dispatch } from "react";
 import { Location, NavigateFunction } from "react-router-dom";
 
+import { IReducerUser } from "../interface/User";
+
 export type ButtonNavPropsType = {
     text: string; 
     Icon: any; 
@@ -11,6 +13,9 @@ export type ButtonNavPropsType = {
 export type NavigationPropsType = {
     location: Location<any>;
     navigate: NavigateFunction;
+    user: IReducerUser;
+    dispatch: Dispatch<any>;
+    setIsMenu: (isMenu: boolean) => void;
 }
 
 export type MenuHeaderPropsType = {
@@ -23,6 +28,7 @@ export type LogoPropsType = {
     location: Location<any>;
     isLoggedIn: boolean;
     navigate: NavigateFunction;
+    token: string;
 }
 
 export type SolutionsMenuPropsType = {
@@ -42,6 +48,9 @@ export type MenuDrawerPropsType = {
     isMenu: boolean;
     handleMenu: () => void;
     navigate: NavigateFunction;
+    dispatch: Dispatch<any>;
+    setIsMenu: (isMenu: boolean) => void;
+    user: IReducerUser;
 }
 
 export type ListDrawerPropsType = {

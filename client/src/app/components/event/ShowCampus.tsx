@@ -7,7 +7,7 @@ import { ICampus } from "../../interface/Event"
 
 const ShowCampus = ({ event, handleSure, user, handleEditCampus, handleAddCampus }: ShowCampusPropsType) => {
   return (
-    <Box flex={1} py={2} px={4}>
+    <Box flex={1} py={2} px={4} width={'100%'}>
       {
         event.campus!.length === 0 && <Typography mt={2} textAlign='center' color='#33cc33' variant='h5'>There are not campus yet.</Typography>
       }

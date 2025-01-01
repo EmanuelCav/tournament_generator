@@ -123,7 +123,7 @@ const Settings = ({ user, eventInfo, dispatch, handleSure }: SettingsPropsType) 
   }, [])
 
   return (
-    <Box flex={1} py={2} px={4}>
+    <Box flex={1} py={2} px={4} width={'100%'}>
       {
         isRestartEvent && <RestartEvent func={restartEvent} handleRestartEvent={handleRestartEvent} />
       }

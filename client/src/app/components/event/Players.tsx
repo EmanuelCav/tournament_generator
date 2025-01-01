@@ -64,7 +64,7 @@ const Players = ({ players, event, user, dispatch }: PlayersPropsType) => {
   }, [filterPlayers, event.event])
 
   return (
-    <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4, mt: 2, ml: 1 }}>
+    <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4, mt: 2, ml: 1, width: '100%' }}>
       {
         isAddStatistic && <FormStatistics handleAddStatistics={handleAddStatistics} event={event} dispatch={dispatch} user={user} isEdit={false} statisticInfo={statisticInfo!} setIsEditStatistic={setIsEditStatistic} />
       }

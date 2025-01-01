@@ -25,7 +25,7 @@ const FormEditPlayerData = ({ dispatch, user, playerInfo, event, setIsEditPlayer
                 isEditValue && <FormPlayerData dispatch={dispatch} user={user} statistic={statisticInfo!} event={event} 
                 setIsEditValue={setIsEditValue} setIsEditPlayerData={setIsEditPlayerData} />
             }
-            <Paper elevation={3} sx={{ p: 2, width: '37.33%' }}>
+            <Paper elevation={3} sx={{ p: 2, width: { md: '37.33%', xs: '90%' } }}>
                 <Typography color='#33CC33' variant="h5">Update the player data</Typography>
                 <Box justifyContent='space-evenly' display={'flex'} alignItems={'center'} flexDirection={'column'}>
                     {

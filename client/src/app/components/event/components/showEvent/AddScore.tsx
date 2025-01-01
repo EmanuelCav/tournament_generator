@@ -21,11 +21,7 @@ const AddScore = ({ user, dispatch, event, matchData, setIsAddScore }: AddScoreP
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
-
-        if (Number(value) < 0) return
-
         const valueScore = Number(value)
-
         setTargetData({ ...targetData, [name]: valueScore })
     }
 
@@ -48,7 +44,7 @@ const AddScore = ({ user, dispatch, event, matchData, setIsAddScore }: AddScoreP
         <Box display='flex' zIndex={16} justifyContent='center' width='100%' height='100vh' alignItems='center' position='fixed' top={0} left={0} sx={{
             background: 'rgba(0, 0, 0, 0.5)'
         }}>
-            <Paper elevation={3} sx={{ p: 2, width: '33.33%' }}>
+            <Paper elevation={3} sx={{ p: 2, width: { md: '33.33%', xs: '90%' } }}>
                 <CloseForm handleClose={() => setIsAddScore(false)} />
                 <Typography color='#33CC33' variant="h5">Update the score</Typography>
                 <Box component="form" noValidate p={2} onSubmit={handleSumbit}>
@@ -67,6 +63,9 @@ const AddScore = ({ user, dispatch, event, matchData, setIsAddScore }: AddScoreP
                                 },
                             }}
                             onChange={handleChange}
+                            inputProps={{
+                                min: 0
+                            }}
                         />
                         <TextField
                             type="number"
@@ -82,6 +81,9 @@ const AddScore = ({ user, dispatch, event, matchData, setIsAddScore }: AddScoreP
                                 },
                             }}
                             onChange={handleChange}
+                            inputProps={{
+                                min: 0
+                            }}
                         />
                     </Box>
                     <Button

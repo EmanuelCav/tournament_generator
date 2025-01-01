@@ -10,7 +10,7 @@ const ActionsTeam = ({ handleSure, team, handleEditTeam, handleAddPlayer, event,
             {
                 event.competitors?.find((c) => c.user._id === user._id)?.role.role === 'ADMIN' &&
                 <>
-                    <Button variant="outlined" onClick={() => handleAddPlayer(team)}>Add player</Button>
+                    <Button variant="outlined" sx={{ display: { sm: 'block', xs: 'none' } }} onClick={() => handleAddPlayer(team)}>Add player</Button>
                     <EditIcon color="primary" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => handleEditTeam(team)} />
                     {
                         !event.done && <Delete color="error" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => handleSure(team)} />
@@ -25,7 +25,7 @@ const ActionsTeam = ({ handleSure, team, handleEditTeam, handleAddPlayer, event,
                         }
                     </>
                 ) : (
-                    <Button variant="outlined" color="success" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => joinTeam(team._id)}>JOIN</Button>
+                    <Button variant="outlined" color="success" sx={{ mx: 2, cursor: 'pointer', display: { sm: 'block', xs: 'none' } }} onClick={() => joinTeam(team._id)}>JOIN</Button>
                 )
             }
         </Box>

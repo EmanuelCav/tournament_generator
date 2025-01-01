@@ -7,7 +7,7 @@ import { ChatEventPropsType } from "../../types/event.types"
 
 const ChatEvent = ({ event, user, dispatch }: ChatEventPropsType) => {
   return (
-    <Box flex={1} py={2} px={4}>
+    <Box flex={1} py={2} px={4} width={'100%'}>
         <ShowMessages event={event} user={user} />
         <SendMessages event={event} user={user} dispatch={dispatch} />
     </Box>

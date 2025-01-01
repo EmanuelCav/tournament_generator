@@ -246,99 +246,106 @@ const Event = () => {
     }, [params.id])
 
     return (
-        <Container fixed maxWidth="lg">
-            {
-                isText && <Sure handleSure={handleSure} func={executeEvent} text='event' />
-            }
-            {
-                isRemoveTeam && <Sure handleSure={handleSureRT} func={removeTeam} text='team' />
-            }
-            {
-                isRemoveReferee && <Sure handleSure={handleSureRR} func={removeReferee} text='referee' />
-            }
-            {
-                isRemovePlayer && <Sure handleSure={handleSureRP} func={removePlayer} text='player' />
-            }
-            {
-                isRemoveCompetitor && <Sure handleSure={handleSureRC} func={removeCompetitor} text='competitor' />
-            }
-            {
-                isRemoveCampus && <Sure handleSure={handleSureRCampus} func={removeCampus} text='campus' />
-            }
-            {
-                isRemoveFan && <Sure handleSure={handleSureRFan} func={quitFan} text='fan' />
-            }
-            {
-                isAddPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} dispatch={dispatch} user={user.user} event={event.event} setIsEditPlayer={setIsEditPlayer} isEdit={false} team={infoTeam!} player={infoPlayer!} />
-            }
-            {
-                isAddTeam && <FormAddTeam handleAddTeam={handleAddTeam} dispatch={dispatch} user={user.user} event={event.event} />
-            }
-            {
-                isAddReferee && <FormAddReferee handleAddReferee={handleAddReferee} setIsEditReferee={setIsEditReferee} dispatch={dispatch} user={user.user} event={event.event} isEdit={false} refereeInfo={infoReferee!} />
-            }
-            {
-                isAddCampus && <FormAddCampus dispatch={dispatch} setIsEditCampus={setIsEditCampus} user={user.user} event={event.event} campusInfo={infoCampus!} isEdit={false} handleAddCampus={handleAddCampus} />
-            }
-            {
-                isEditTeam && <EditTeam dispatch={dispatch} team={infoTeam!} eid={event.event._id!} setIsEditTeam={setIsEditTeam} token={user.user.token!} />
-            }
-            {
-                isEditReferee && <FormAddReferee handleAddReferee={handleAddReferee} setIsEditReferee={setIsEditReferee} dispatch={dispatch} user={user.user} event={event.event} isEdit={true} refereeInfo={infoReferee!} />
-            }
-            {
-                isEditPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} setIsEditPlayer={setIsEditPlayer} dispatch={dispatch} user={user.user} event={event.event} isEdit={true} team={infoTeam!} player={infoPlayer!} />
-            }
-            {
-                isEditCampus && <FormAddCampus dispatch={dispatch} setIsEditCampus={setIsEditCampus} user={user.user} event={event.event} campusInfo={infoCampus!} isEdit={true} handleAddCampus={handleAddCampus} />
-            }
-            {
-                isEditPlayerData && <FormEditPlayerData dispatch={dispatch} user={user.user} event={event.event} playerInfo={infoPlayer!} setIsEditPlayerData={setIsEditPlayerData} />
-            }
-            <Box display='flex' justifyContent='flex-start' alignItems='flex-start'>
-                <EventsNavigation dispatch={dispatch} get={get} event={event.event} user={user.user.user!} />
+        <Box sx={{
+            mt: { xs: 9, sm: 12 },
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }}>
+            <Container fixed maxWidth="lg">
                 {
-                    get.isTeams && <ShowTeams user={user.user.user!} handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event}
-                        handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} joinTeam={joinTeam} handleSureQuitFan={handleSureQuitFan} handleEditPlayerData={handleEditPlayerData} />
+                    isText && <Sure handleSure={handleSure} func={executeEvent} text='event' />
                 }
                 {
-                    get.isMatchdays && <ShowEvent event={event.event} user={user.user} dispatch={dispatch} />
+                    isRemoveTeam && <Sure handleSure={handleSureRT} func={removeTeam} text='team' />
                 }
                 {
-                    get.isPositions && (
-                        <>
-                            {
-                                event.event.category?.category === "FIXTURE" && <Positions teams={statistic.teams} dispatch={dispatch} event={event.event} user={user.user} />
-                            }
-                            {
-                                event.event.category?.category === "ELIMINATION" && <EliminationTable event={event.event} />
-                            }
-                            {
-                                event.event.category?.category === "SWISS" && <EliminationTable event={event.event} />
-                            }
-                        </>
-                    )
+                    isRemoveReferee && <Sure handleSure={handleSureRR} func={removeReferee} text='referee' />
                 }
                 {
-                    get.isPeople && <ShowPeople competitors={event.event?.competitors!} event={event.event} user={user.user} handleSureRemoveCompetitor={handleSureRemoveCompetitor} dispatch={dispatch} />
+                    isRemovePlayer && <Sure handleSure={handleSureRP} func={removePlayer} text='player' />
                 }
                 {
-                    get.isReferees && <ShowReferees event={event.event} user={user.user.user!} handleEditReferee={handleEditReferee} handleAddReferee={handleAddReferee} handleSure={handleSureRemoveReferee} />
+                    isRemoveCompetitor && <Sure handleSure={handleSureRC} func={removeCompetitor} text='competitor' />
                 }
                 {
-                    get.isSettings && <Settings user={user.user} dispatch={dispatch} eventInfo={event.event} handleSure={handleSure} />
+                    isRemoveCampus && <Sure handleSure={handleSureRCampus} func={removeCampus} text='campus' />
                 }
                 {
-                    get.isPlayers && <Players players={statistic.players} dispatch={dispatch} event={event.event} user={user.user} />
+                    isRemoveFan && <Sure handleSure={handleSureRFan} func={quitFan} text='fan' />
                 }
                 {
-                    get.isCampus && <ShowCampus event={event.event} user={user.user.user!} handleAddCampus={handleAddCampus} handleSure={handleSureRemoveCampus} handleEditCampus={handleEditCampus} />
+                    isAddPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} dispatch={dispatch} user={user.user} event={event.event} setIsEditPlayer={setIsEditPlayer} isEdit={false} team={infoTeam!} player={infoPlayer!} />
                 }
                 {
-                    get.isChat && <ChatEvent event={event.event} user={user.user} dispatch={dispatch} />
+                    isAddTeam && <FormAddTeam handleAddTeam={handleAddTeam} dispatch={dispatch} user={user.user} event={event.event} />
                 }
-            </Box>
-        </Container>
+                {
+                    isAddReferee && <FormAddReferee handleAddReferee={handleAddReferee} setIsEditReferee={setIsEditReferee} dispatch={dispatch} user={user.user} event={event.event} isEdit={false} refereeInfo={infoReferee!} />
+                }
+                {
+                    isAddCampus && <FormAddCampus dispatch={dispatch} setIsEditCampus={setIsEditCampus} user={user.user} event={event.event} campusInfo={infoCampus!} isEdit={false} handleAddCampus={handleAddCampus} />
+                }
+                {
+                    isEditTeam && <EditTeam dispatch={dispatch} team={infoTeam!} eid={event.event._id!} setIsEditTeam={setIsEditTeam} token={user.user.token!} />
+                }
+                {
+                    isEditReferee && <FormAddReferee handleAddReferee={handleAddReferee} setIsEditReferee={setIsEditReferee} dispatch={dispatch} user={user.user} event={event.event} isEdit={true} refereeInfo={infoReferee!} />
+                }
+                {
+                    isEditPlayer && <FormAddPlayer handleAddPlayer={handleAddPlayer} setIsEditPlayer={setIsEditPlayer} dispatch={dispatch} user={user.user} event={event.event} isEdit={true} team={infoTeam!} player={infoPlayer!} />
+                }
+                {
+                    isEditCampus && <FormAddCampus dispatch={dispatch} setIsEditCampus={setIsEditCampus} user={user.user} event={event.event} campusInfo={infoCampus!} isEdit={true} handleAddCampus={handleAddCampus} />
+                }
+                {
+                    isEditPlayerData && <FormEditPlayerData dispatch={dispatch} user={user.user} event={event.event} playerInfo={infoPlayer!} setIsEditPlayerData={setIsEditPlayerData} />
+                }
+                <Box display='flex' justifyContent='flex-start' alignItems='flex-start' flexDirection="column">
+                    <EventsNavigation dispatch={dispatch} get={get} event={event.event} user={user.user.user!} />
+                    {
+                        get.isTeams && <ShowTeams user={user.user.user!} handleAddTeam={handleAddTeam} handleEditTeam={handleEditTeam} handleSure={handleSureRemoveTeam} event={event.event}
+                            handleAddPlayer={handleAddPlayer} handleSurePlayer={handleSureRemovePlayer} handleEditPlayer={handleEditPlayer} joinTeam={joinTeam} handleSureQuitFan={handleSureQuitFan} handleEditPlayerData={handleEditPlayerData} />
+                    }
+                    {
+                        get.isMatchdays && <ShowEvent event={event.event} user={user.user} dispatch={dispatch} />
+                    }
+                    {
+                        get.isPositions && (
+                            <>
+                                {
+                                    event.event.category?.category === "FIXTURE" && <Positions teams={statistic.teams} dispatch={dispatch} event={event.event} user={user.user} />
+                                }
+                                {
+                                    event.event.category?.category === "ELIMINATION" && <EliminationTable event={event.event} />
+                                }
+                                {
+                                    event.event.category?.category === "SWISS" && <EliminationTable event={event.event} />
+                                }
+                            </>
+                        )
+                    }
+                    {
+                        get.isPeople && <ShowPeople competitors={event.event?.competitors!} event={event.event} user={user.user} handleSureRemoveCompetitor={handleSureRemoveCompetitor} dispatch={dispatch} />
+                    }
+                    {
+                        get.isReferees && <ShowReferees event={event.event} user={user.user.user!} handleEditReferee={handleEditReferee} handleAddReferee={handleAddReferee} handleSure={handleSureRemoveReferee} />
+                    }
+                    {
+                        get.isSettings && <Settings user={user.user} dispatch={dispatch} eventInfo={event.event} handleSure={handleSure} />
+                    }
+                    {
+                        get.isPlayers && <Players players={statistic.players} dispatch={dispatch} event={event.event} user={user.user} />
+                    }
+                    {
+                        get.isCampus && <ShowCampus event={event.event} user={user.user.user!} handleAddCampus={handleAddCampus} handleSure={handleSureRemoveCampus} handleEditCampus={handleEditCampus} />
+                    }
+                    {
+                        get.isChat && <ChatEvent event={event.event} user={user.user} dispatch={dispatch} />
+                    }
+                </Box>
+            </Container>
+        </Box>
     )
 }
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AppBar, Container, Toolbar } from "@mui/material"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useLocation } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -18,6 +18,7 @@ const Header = () => {
 
     const navigate = useNavigate()
     const location = useLocation()
+    const dispatch = useDispatch()
 
     const [isMenu, setIsMenu] = useState<boolean>(false)
 
@@ -30,13 +31,13 @@ const Header = () => {
             <AppBar sx={{ bgcolor: '#2e7d32', padding: { xs: 1, sm: 2 } }}>
                 <Container fixed maxWidth="lg">
                     <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Logo isLoggedIn={user.isLoggedIn} navigate={navigate} location={location} />
-                        <Navigation location={location} navigate={navigate} />
+                        <Logo isLoggedIn={user.isLoggedIn} navigate={navigate} location={location} token={user.user.token!} />
+                        <Navigation location={location} navigate={navigate} user={user} dispatch={dispatch} setIsMenu={setIsMenu} />
                         <MenuIcon fontSize="large" color="inherit" sx={{ display: { xs: 'block', md: 'none' }, cursor: 'pointer' }} onClick={handleMenu} />
                     </Toolbar>
                 </Container>
             </AppBar>
-            <MenuDrawer isMenu={isMenu} handleMenu={handleMenu} navigate={navigate} />
+            <MenuDrawer isMenu={isMenu} handleMenu={handleMenu} navigate={navigate} user={user} dispatch={dispatch} setIsMenu={setIsMenu} />
         </>
     )
 }

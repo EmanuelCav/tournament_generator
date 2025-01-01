@@ -44,7 +44,7 @@ const SendMessages = ({ event, user, dispatch }: SendMessagesPropsType) => {
     }, [socket])
 
     return (
-        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} component="form" noValidate sx={{ p: 4 }} onSubmit={handleSumbit}>
+        <Box display={'flex'} width={'100%'} justifyContent={'space-between'} alignItems={'center'} component="form" noValidate onSubmit={handleSumbit}>
             <TextField
                 margin="normal"
                 multiline

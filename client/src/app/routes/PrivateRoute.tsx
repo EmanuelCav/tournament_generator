@@ -12,7 +12,7 @@ const PrivateRoute = () => {
     return (
         <>
             {
-                user.isLoggedIn ? <Outlet /> : <Navigate to='/auth' />
+                (user.isLoggedIn && user.user.token) ? <Outlet /> : <Navigate to='/auth' />
             }
         </>
     )

@@ -44,7 +44,7 @@ const Positions = ({ teams, dispatch, event, user }: PositionsPropsType) => {
   }, [event.event])
 
   return (
-    <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4, ml: 1 }}>
+    <TableContainer component={Paper} sx={{ flex: 1, py: 2, px: 4, ml: 1, width: '100%' }}>
       <Table>
         <HeadPositions />
         <TableBody>

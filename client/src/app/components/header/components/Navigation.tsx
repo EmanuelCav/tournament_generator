@@ -7,15 +7,17 @@ import SolutionsMenu from './components/SolutionsMenu';
 import { NavigationPropsType } from '../../../types/header.types';
 import { INavigation } from '../../../interface/General';
 
+import { logoutAction } from '../../../server/actions/user.actions';
+
 const navigation: INavigation[] = [{
     title: "Explorar",
     path: "/events"
 }, {
     title: "Crear",
-    path: "/auth"
+    path: "/create"
 }]
 
-const Navigation = ({ navigate, location }: NavigationPropsType) => {
+const Navigation = ({ navigate, location, user, dispatch, setIsMenu }: NavigationPropsType) => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLButtonElement>(null);
 
@@ -27,37 +29,74 @@ const Navigation = ({ navigate, location }: NavigationPropsType) => {
         setAnchorEl(null);
     };
 
+    const logout = () => {
+        dispatch(logoutAction({
+            navigate,
+            setIsMenu
+        }))
+    }
+
     return (
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
             <SolutionsMenu handleMenuClose={handleMenuClose} anchorEl={anchorEl}
                 navigate={navigate} pathname={location.pathname} />
-            <Button
-                color="inherit"
-                sx={{
-                    fontWeight: 600,
-                    position: 'relative',
-                    '&:hover': {
-                        color: '#ffffff'
-                    },
-                    '&:after': {
-                        content: '""',
-                        position: 'absolute',
-                        width: '0%',
-                        height: '2px',
-                        bottom: 0,
-                        left: 0,
-                        backgroundColor: '#ffffff',
-                        transition: 'width 0.3s ease-in-out',
-                    },
-                    '&:hover:after': {
-                        width: '100%',
-                    },
-                }}
-                onClick={handleMenuOpen}
-                endIcon={<KeyboardArrowDownIcon />}
-            >
-                Soluciones
-            </Button>
+            {
+                (!user.isLoggedIn && !user.user.token) ? (<Button
+                    color="inherit"
+                    sx={{
+                        fontWeight: 600,
+                        position: 'relative',
+                        '&:hover': {
+                            color: '#ffffff'
+                        },
+                        '&:after': {
+                            content: '""',
+                            position: 'absolute',
+                            width: '0%',
+                            height: '2px',
+                            bottom: 0,
+                            left: 0,
+                            backgroundColor: '#ffffff',
+                            transition: 'width 0.3s ease-in-out',
+                        },
+                        '&:hover:after': {
+                            width: '100%',
+                        },
+                    }}
+                    onClick={handleMenuOpen}
+                    endIcon={<KeyboardArrowDownIcon />}
+                >
+                    Soluciones
+                </Button>
+                ) : (
+                    <Button
+                        color="inherit"
+                        sx={{
+                            fontWeight: 600,
+                            position: 'relative',
+                            '&:hover': {
+                                color: '#ffffff'
+                            },
+                            '&:after': {
+                                content: '""',
+                                position: 'absolute',
+                                width: '0%',
+                                height: '2px',
+                                bottom: 0,
+                                left: 0,
+                                backgroundColor: '#ffffff',
+                                transition: 'width 0.3s ease-in-out',
+                            },
+                            '&:hover:after': {
+                                width: '100%',
+                            },
+                        }}
+                        onClick={() => navigate("/panel")}
+                    >
+                        Panel
+                    </Button>
+                )
+            }
             {
                 navigation.map((button, index) => {
                     return <Button
@@ -90,7 +129,7 @@ const Navigation = ({ navigate, location }: NavigationPropsType) => {
                 })
             }
             {
-                location.pathname !== "/auth" && <Button
+                (user.isLoggedIn && user.user.token) ? (<Button
                     sx={{
                         backgroundColor: '#2e7d32',
                         color: 'white',
@@ -100,11 +139,29 @@ const Navigation = ({ navigate, location }: NavigationPropsType) => {
                             backgroundColor: '#006400'
                         }
                     }}
-                    onClick={() => navigate('/auth')}
+                    onClick={logout}
                 >
-                    Iniciar sesión
-                </Button>
-            }
+                    Cerrar sesión
+                </Button>) : (
+                    <>
+                        {
+                            location.pathname !== "/auth" && <Button
+                                sx={{
+                                    backgroundColor: '#2e7d32',
+                                    color: 'white',
+                                    border: '2px solid white',
+                                    fontWeight: 600,
+                                    '&:hover': {
+                                        backgroundColor: '#006400'
+                                    }
+                                }}
+                                onClick={() => navigate('/auth')}
+                            >
+                                Iniciar sesión
+                            </Button>
+                        }
+                    </>
+                )}
         </Box>
     )
 }

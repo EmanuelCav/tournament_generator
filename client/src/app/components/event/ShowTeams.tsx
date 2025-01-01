@@ -40,7 +40,7 @@ const ShowTeams = ({ event, user, handleSure, handleAddTeam, handleEditTeam, han
     }, [event.teams])
 
     return (
-        <Box flex={1} alignItems={'center'} justifyContent={'center'} py={2} px={4}>
+        <Box flex={1} alignItems={'center'} flexDirection={'column'} justifyContent={'center'} py={2} px={4} width={'100%'}>
             {
                 event.competitors?.find((c) => c.user._id === user._id)?.role.role === 'ADMIN' &&
                 <Button variant='outlined' sx={{ mt: 4, mx: 2 }} color='success' onClick={handleAddTeam}>

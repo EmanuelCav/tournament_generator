@@ -9,7 +9,7 @@ const Sure = ({ handleSure, func, text }: SurePropsType) => {
         <Box display='flex' zIndex={16} justifyContent='center' width='100%' height='100vh' alignItems='center' position='absolute' top={0} left={0} sx={{
             background: 'rgba(0, 0, 0, 0.5)'
         }}>
-            <Paper elevation={3} sx={{ p: 2 }}>
+            <Paper elevation={3} sx={{ p: 2, width: { md: '33.33%', xs: '90&%' }}}>
                 <CloseForm handleClose={handleSure} />
                 <Typography variant="h6">Are you sure to delele the {text}?</Typography>
                 <Button

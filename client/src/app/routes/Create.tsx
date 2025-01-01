@@ -2,7 +2,6 @@ import { Box } from "@mui/material"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom";
 
-import HeaderCreate from "../components/create/HeaderCreate"
 import FormCreate from "../components/create/FormCreate"
 
 import { IReducer } from "../interface/General"
@@ -18,7 +17,6 @@ const Create = () => {
 
     return (
         <Box className="full-screen" display='flex' justifyContent='space-evenly' alignItems='center' flexDirection="column">
-            <HeaderCreate />
             <FormCreate user={user.user} dispatch={dispatch} navigate={navigate} />
         </Box>
     )

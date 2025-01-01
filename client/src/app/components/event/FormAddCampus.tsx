@@ -50,7 +50,7 @@ const FormAddCampus = ({ handleAddCampus, dispatch, user, event, isEdit, campusI
     <Box display='flex' zIndex={16} justifyContent='center' width='100%' height='100vh' alignItems='center' position='fixed' top={0} left={0} sx={{
       background: 'rgba(0, 0, 0, 0.5)'
     }}>
-      <Paper elevation={3} sx={{ p: 2 }}>
+      <Paper elevation={3} sx={{ p: 2, width: { md: '37.33%', xs: '90%' } }}>
         <CloseForm handleClose={isEdit ? () => setIsEditCampus(false) : handleAddCampus} />
         <Box component="form" noValidate sx={{ p: 4 }} onSubmit={handleSumbit}>
           <TextField

@@ -55,7 +55,7 @@ const EditTeam = ({ dispatch, team, eid, setIsEditTeam, token }: EditTeamPropsTy
         <Box display='flex' zIndex={16} justifyContent='center' width='100%' height='100vh' alignItems='center' position='absolute' top={0} left={0} sx={{
             background: 'rgba(0, 0, 0, 0.5)'
         }}>
-            <Paper elevation={3} sx={{ p: 2 }}>
+            <Paper elevation={3} sx={{ p: 2, width: { sx: '90%', md: '33.33%' } }}>
                 <CloseForm handleClose={() => setIsEditTeam(false)} />
                 <Box component="form" noValidate sx={{ p: 4 }} onSubmit={handleSumbit}>
                     <Box className='image-event-form' display='flex' justifyContent='space-evenly' alignItems='center' flexDirection='column' my={2}>

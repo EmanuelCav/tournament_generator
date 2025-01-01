@@ -57,7 +57,7 @@ const AddCampus = ({ user, dispatch, event, matchData, handleUpdateCampus }: Add
         <Box display='flex' zIndex={16} justifyContent='center' width='100%' height='100vh' alignItems='center' position='fixed' top={0} left={0} sx={{
             background: 'rgba(0, 0, 0, 0.5)'
         }}>
-            <Paper elevation={3} sx={{ p: 2, width: '33.33%' }}>
+            <Paper elevation={3} sx={{ p: 2, width: { md: '33.33%', xs: '90%' } }}>
                 <Typography color='#33CC33' variant="h5">Add a campus</Typography>
                 <Box component="form" noValidate p={2} onSubmit={handleSumbit}>
                     <TextField

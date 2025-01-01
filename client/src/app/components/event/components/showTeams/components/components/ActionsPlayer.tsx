@@ -7,9 +7,9 @@ import { PlayerPropsType } from "../../../../../../types/event.types"
 const ActionsPlayer = ({ player, handleSurePlayer, handleEditPlayer, handleEditPlayerData }: PlayerPropsType) => {
     return (
         <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
-            <Typography mx={2} variant="body1">{player.position}</Typography>
-            <Button color="primary" variant="outlined" onClick={() => handleEditPlayerData(player)}>Update data</Button>
-            <EditIcon color="primary" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => handleEditPlayer(player)} />
+            <Typography mx={2} variant="body1" sx={{ display: { sm: 'block', xs: 'none' }}}>{player.position}</Typography>
+            <Button color="primary" variant="outlined" sx={{ display: { sm: 'block', xs: 'none' }}} onClick={() => handleEditPlayerData(player)}>Update</Button>
+            <EditIcon color="primary" sx={{ mx: 2, cursor: 'pointer', display: { sm: 'block', xs: 'none' } }} onClick={() => handleEditPlayer(player)} />
             <Delete color="error" sx={{ mx: 2, cursor: 'pointer' }} onClick={() => handleSurePlayer(player)} />
         </Box>
     )
